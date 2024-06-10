@@ -1,0 +1,29 @@
+<div class="main">
+    <div class="form" *ngIf="screenWidth > 1000; else tsd">
+        <h2>Вход</h2>
+        <form [formGroup]="userForm">
+            <mat-form-field appearance="outline">
+                <mat-label>Логин</mat-label>
+                <input matInput [(ngModel)]="loginQuery.login">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Пароль</mat-label>
+                <input matInput type="{{inputType}}" [(ngModel)]="loginQuery.password">
+                <button matSuffix mat-icon-button (mousedown)="inputType = 'text'" (mouseup)="inputType = 'password'"
+                    (mouseleave)="inputType = 'password'">
+                    <mat-icon>visibility</mat-icon>
+                </button>
+            </mat-form-field>
+            <button mat-raised-button>Вход</button>
+        </form>
+    </div>
+    <ng-template #tsd>
+        <div class="login-conteiner">
+            <mat-form-field appearance="outline">
+                <mat-label>Предъявите бейдж</mat-label>
+                <input matInput [(ngModel)]="login">
+            </mat-form-field>
+            <button mat-raised-button (click)="onClickTsdLogin()">Вход</button>
+        </div>
+    </ng-template>
+</div>

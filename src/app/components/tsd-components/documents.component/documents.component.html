@@ -1,0 +1,15 @@
+<div class="main">
+    <div class="document-conteiner" *ngFor="let d of documentList">
+        <div class="data-box">
+            <span>Документ: {{d.doc_name}}</span>
+            <span>Создатель: {{d.who_create}}</span>
+            <span>Тип: {{d.doc_type}}</span>
+            <span>Статус: {{d.doc_state}}</span>
+        </div>
+        <div class="control-box">
+            <button mat-raised-button style="color: red;" (click)="DeleteDocument(d.id)">Удалить</button>
+            <button mat-raised-button style="color: green;" (click)="LoadDocument(d.id)">Загрузить</button>
+        </div>
+    </div>
+    <button class="back-button" (click)="Back()">Назад</button>
+</div>

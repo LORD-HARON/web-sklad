@@ -1,0 +1,69 @@
+<mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer class="menu-conteiner" #drawer mode="over">
+        <button>
+            <img src="../../../../assets/find_product.png">
+            ПОИСК ПРОДУКЦИИ
+        </button>
+        <button (click)="openDocumentItems()">
+            <img src="../../../../assets/list_product.png">
+            СПИСОК ПРОДУКЦИИ
+        </button>
+        <button (click)="openAgreeDialog()">
+            <img src="../../../../assets/compl_product.png">
+            ЗАВЕРШИТЬ РАБОТУ
+        </button>
+        <button (click)="goBack()">
+            <img src="../../../../assets/back_product.png">
+            Меню
+        </button>
+    </mat-drawer>
+    <div class="main">
+        <nav class="navbar">
+            <button (click)="drawer.toggle()">
+                <img src="../../../../assets/ham.png">
+            </button>
+            <span>Поиск продукции</span>
+        </nav>
+        <div class="search-conteiner">
+            <span>
+                Наименование товара
+            </span>
+            <span>
+                {{productInfo.name}}
+            </span>
+            <div class="input-conteiner">
+                <ng-container *ngIf="productInfo.img_url">
+                    <img [src]="productInfo.img_url | urlImg">
+                </ng-container>
+                <ng-container *ngIf="!productInfo.img_url">
+                    <img src="../../../../assets/box.png">
+                </ng-container>
+                <div class="input-search-conteiner">
+                    <div>
+                        <span>Артикул:</span>
+                        <span>{{productInfo.article}}</span>
+                    </div>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Штрихкод:</mat-label>
+                        <input id="barcodeInput" matInput type="number" [(ngModel)]="barcode"
+                            (input)="InputHandel($event)" (keyup.enter)="GetProductInfo()">
+                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear" (click)="barcode=''">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="input-box-conteiner">
+                <mat-form-field appearance="outline">
+                    <mat-label>Кол-во:</mat-label>
+                    <input matInput [(ngModel)]="count" type="number">
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>№ по порядку</mat-label>
+                    <input matInput type="number" [(ngModel)]="numberInQueue">
+                </mat-form-field>
+            </div>
+            <button (click)="AddProductToDoc()">Добавить в список продукции</button>
+        </div>
+    </div>
+</mat-drawer-container>

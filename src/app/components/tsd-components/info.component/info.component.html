@@ -1,0 +1,84 @@
+<div class="main">
+    <nav class="navbar">
+        <button mat-fab color="warn" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+        </button>
+        <mat-form-field appearance="outline" color="warn">
+            <mat-label>Выберите торговый объект</mat-label>
+            <select matNativeControl [(ngModel)]="selectedStore">
+                <option value="{{s.storeloc}}" *ngFor="let s of storeList">{{s.name}}</option>
+            </select>
+        </mat-form-field>
+        <button mat-fab color="warn" (click)="allClear()">
+            <mat-icon>delete</mat-icon>
+        </button>
+    </nav>
+    <div class="info-conteiner">
+        <div class="input-conteiner">
+            <ng-container *ngIf="info.img_url">
+                <img [src]="info.img_url | urlImg">
+            </ng-container>
+            <ng-container *ngIf="!info.img_url">
+                <img src="../../../../assets/box.png">
+            </ng-container>
+            <div>
+                <mat-form-field appearance="outline" color="warn">
+                    <mat-label>Артикул:</mat-label>
+                    <input id="inputArticle" matInput (input)="inputHandleBarcode($event)" (keyup.enter)="FindInfo()"
+                        [(ngModel)]="article">
+                    <button class="clear-button" matSuffix mat-icon-button aria-label="Clear" (click)="article=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <mat-form-field appearance="outline" color="warn">
+                    <mat-label>Штрихкод:</mat-label>
+                    <input id="inputBarcode" matInput (input)="inputHandleBarcode($event)" (keyup.enter)="FindInfo()"
+                        [(ngModel)]="barcode">
+                    <button class="clear-button" matSuffix mat-icon-button aria-label="Clear" (click)="barcode=''">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="name-conteiner">
+            <span>
+                Наименование товара:
+            </span>
+            <div>
+                {{info.name}}
+            </div>
+        </div>
+        <div class="count-conteiner">
+            <span>
+                Доступное кол-во:
+            </span>
+            <span>
+                {{info.quantity}}
+            </span>
+        </div>
+        <div class="count-conteiner">
+            <span>СР.СУТ.РЕАЛ(30):</span>
+            <span>
+                {{info.srSut}}
+            </span>
+        </div>
+        <div>
+            <div class="count-conteiner">
+                <span>
+                    Цена:
+                </span>
+                <span>
+                    {{info.price}}
+                </span>
+            </div>
+            <mat-form-field appearance="outline" style="width: 100%;" color="warn">
+                <mat-label>Примечание</mat-label>
+                <input matInput [disabled]="info.name === ''">
+            </mat-form-field>
+        </div>
+        <div class="control-conteiner">
+            <!-- <button>Сохранить</button> -->
+            <button (click)="goMore()">Подробнее</button>
+        </div>
+    </div>
+</div>

@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.red-snackbar {
+    --mdc-snackbar-container-color: rgb(209, 0, 0);
+    --mdc-snackbar-supporting-text-color: white;
+    --mat-mdc-button-persistent-ripple-color:rgb(255, 0, 0)!important;
+    position: relative;
+    top: 2.2rem;
+  }
+  .standart-snackbar{
+    --mdc-snackbar-container-color: rgba(255, 255, 255, 0.1);
+    --mdc-snackbar-supporting-text-color: white;
+    --mat-mdc-button-persistent-ripple-color:white!important;
+    text-shadow: #fff 1px 0 10px;
+    backdrop-filter: blur(5px);
+    position: relative;
+    top: 2.2rem;
+  }
+  .mat-simple-snackbar-action{
+    --mdc-snackbar-container-color: red;
+  }
+  .green-snackbar {
+    --mdc-snackbar-container-color: rgb(31, 133, 0);
+    --mdc-snackbar-supporting-text-color: white;
+    position: relative;
+    top: 2.2rem;
+  }

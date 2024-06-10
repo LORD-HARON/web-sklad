@@ -1,0 +1,58 @@
+<mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer class="menu-conteiner" #drawer mode="over">
+        <button (click)="goWorkSpace() "><img src="../../../../assets/find_product.png">ПОИСК ПРОДУКЦИИ</button>
+        <button><img src="../../../../assets/list_product.png">СПИСОК ПРОДУКЦИИ</button>
+        <button (click)="openAgreeDialog()"><img src="../../../../assets/compl_product.png">ЗАВЕРШИТЬ РАБОТУ</button>
+        <button (click)="goBack()"><img src="../../../../assets/back_product.png">МЕНЮ</button>
+    </mat-drawer>
+    <div class="main">
+        <nav class="navbar">
+            <button (click)="drawer.toggle()">
+                <img src="../../../../assets/ham.png">
+            </button>
+            <span>Поиск продукции</span>
+            <span>Сумма документа: {{totalPrice}}</span>
+        </nav>
+        <div class="list-conteiner" *ngFor="let i of items">
+            <div class="item-conteiner">
+                <div>
+                    <!-- <ng-container *ngIf="i.imgUrl"> -->
+                    <img [src]="i.imgUrl!| urlImg">
+                </div>
+                <div>
+                    <span>Артикул:</span>
+                    <span>{{i.article}}</span>
+                    <span>Штрихкод:</span>
+                    <span>{{i.barcode}}</span>
+                    <span *ngIf="switchEdit===false">Колв-во:</span>
+                    <span *ngIf="switchEdit===false">{{i.count_e}}</span>
+                    <mat-form-field appearance="outline" *ngIf="switchEdit===true">
+                        <mat-label>Кол-во:</mat-label>
+                        <input matInput type="number" [(ngModel)]="count">
+                    </mat-form-field>
+                    <span *ngIf="switchEdit===false">№ в списке:</span>
+                    <span *ngIf="switchEdit===false">{{i.numb}}</span>
+                    <mat-form-field appearance="outline" *ngIf="switchEdit===true">
+                        <mat-label>№ по списку:</mat-label>
+                        <input matInput type="number" [(ngModel)]="numb">
+                    </mat-form-field>
+                    <span>Наименование:</span>
+                    <span>{{i.name}}</span>
+                    <span>Цена в момент добавления:</span>
+                    <span>{{i.price}}</span>
+                </div>
+            </div>
+            <button mat-raised-button style="color: red;margin: 10px; font-weight: bold;" (click)="DeleteItem(i.id)">
+                Удалить
+            </button>
+            <button mat-raised-button style="color: purple;margin: 10px; font-weight: bold;" *ngIf="switchEdit===false"
+                (click)="EditItem(i.id, i.count_e, i.numb)">
+                Редактировать
+            </button>
+            <button mat-raised-button style="color: green;margin: 10px; font-weight: bold;" *ngIf="switchEdit===true"
+                (click)="EditItem(i.id)">
+                Сохранить
+            </button>
+        </div>
+    </div>
+</mat-drawer-container>

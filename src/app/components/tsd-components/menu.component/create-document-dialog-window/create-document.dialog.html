@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>Документ</h2>
+<mat-dialog-content>
+    <mat-form-field appearance="outline" style="width: 100%; margin-top: 5px;">
+        <mat-label>Документ</mat-label>
+        <input matInput [(ngModel)]="docName">
+    </mat-form-field>
+    <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Выберите тип документа</mat-label>
+        <select matNativeControl [(ngModel)]="docType">
+            <option value="Приемка">Приемка</option>
+            <option value="Отборка">Отборка</option>
+            <option value="Ротация">Ротация</option>
+            <option value="Импорт">Импорт</option>
+            <option value="Инвентаризация">Инвентаризация</option>
+            <option value="Возврат">Возврат</option>
+            <option value="Проверка">Проверка</option>
+        </select>
+    </mat-form-field>
+    <button mat-raised-button style="width: 100%;" (click)="createDoc()" [disabled]="!docType || !docName">СОЗДАТЬ
+        ДОКУМЕНТ</button>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Отмена</button>
+</mat-dialog-actions>

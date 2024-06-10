@@ -1,0 +1,29 @@
+.main{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form{
+    width: 533px;
+    height: 270px;
+    border: 1px black solid;
+    border-radius: 20px;
+    padding: 10px;
+    form{
+        display: flex;
+        flex-direction: column;
+    }
+}
+    .login-conteiner{
+        margin-top: 5%;
+        border: 1px solid rgba(77, 77, 77, 0.39);
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        padding: 10px 10px 10px 10px;
+        text-align: center;
+        width: 80%;
+        height: 130px;
+    }
