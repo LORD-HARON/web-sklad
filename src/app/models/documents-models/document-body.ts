@@ -1,7 +1,7 @@
 export class DocumentBodyModel {
     constructor(
         public id: number,
-        public docId: number,
+        public id_doc: number,
         public article: string,
         public barcode: String,
         public name: string,
@@ -9,6 +9,7 @@ export class DocumentBodyModel {
         public numb: number,
         public place: string,
         public price?: string,
-        public imgUrl?: string
+        public imgUrl?: string,
+        public count_s?: string
     ) { }
 }

@@ -4,7 +4,7 @@ import { TokenService } from "../../../services/token.service";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { Router } from "@angular/router";
 import { DocumentsListModel } from "../../../models/documents-models/documents-list";
-import { Token } from "../../../models/token";
+import { TokenModel } from "../../../models/token";
 
 @Component({
     selector: 'app-documents',
@@ -23,7 +23,7 @@ export class DocumentsComponent {
         this.GetDocumentList()
     }
     GetDocumentList() {
-        this.documentService.GetDocumentList(new Token(this.tokenService.getToken())).subscribe({
+        this.documentService.GetDocumentList(new TokenModel(this.tokenService.getToken())).subscribe({
             next: result => {
                 this.documentList = result
             },
@@ -34,7 +34,7 @@ export class DocumentsComponent {
         })
     }
     DeleteDocument(element: number) {
-        this.documentService.DeleteDocument(new Token(this.tokenService.getToken(), element)).subscribe({
+        this.documentService.DeleteDocument(new TokenModel(this.tokenService.getToken(), element)).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':

@@ -1,4 +1,4 @@
-import { SkladUserModel } from "./sklad-user";
+import { SkladUserModel } from "../login-models/sklad-user";
 
 export class UpdateSkladUserModel {
     constructor(

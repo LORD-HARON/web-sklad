@@ -7,6 +7,7 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { TokenService } from "../../services/token.service";
 import { SnackbarService } from "../../services/snackbar.service";
 import { LoginResponse } from "../../models/login-models/login-response";
+import { PersonalService } from "../../services/personal.service";
 
 @Component({
     selector: "app-login",
@@ -16,6 +17,7 @@ import { LoginResponse } from "../../models/login-models/login-response";
 export class LoginComponent implements OnInit {
     constructor(
         private loginService: LoginService,
+        private personalService: PersonalService,
         private adaptive: AdaptiveService,
         private router: Router,
         private tokenService: TokenService,
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit {
         });
     }
     onClickTsdLogin() {
-        this.loginService.AuthSkladUser(new LoginQuery(this.login)).subscribe({
+        this.personalService.AuthSkladUser(new LoginQuery(this.login)).subscribe({
             next: response => {
                 if (this.checkResponse(response)) {
                     this.tokenService.setCookie(response);

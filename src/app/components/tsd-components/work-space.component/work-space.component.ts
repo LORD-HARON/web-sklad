@@ -7,7 +7,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { FindInfoAnswModel } from "../../../models/documents-models/find-info-answ";
 import { FindInfoReqModel } from "../../../models/documents-models/find-info-req";
 import { AddProductModel } from "../../../models/documents-models/add-product";
-import { Token } from "../../../models/token";
+import { TokenModel } from "../../../models/token";
 
 @Component({
     selector: 'app-work-space',
@@ -96,7 +96,7 @@ export class WorkSpaceComponent {
         this.router.navigate(['tsd/menu'])
     }
     pushDoc() {
-        this.documentService.PushDocument(new Token(this.tokenService.getToken(), this.docId)).subscribe({
+        this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), this.docId)).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':

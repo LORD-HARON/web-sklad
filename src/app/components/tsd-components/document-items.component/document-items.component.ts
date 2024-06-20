@@ -4,7 +4,7 @@ import { TokenService } from "../../../services/token.service";
 import { DocumentService } from "../../../services/document.service";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { MatDialog } from "@angular/material/dialog";
-import { Token } from "../../../models/token";
+import { TokenModel } from "../../../models/token";
 import { EditProductModel } from "../../../models/documents-models/edit-product";
 import { AgreeDialogComponent } from "../work-space.component/work-space.component";
 import { DocumentBodyModel } from "../../../models/documents-models/document-body";
@@ -33,7 +33,7 @@ export class DocumentItemsComponent {
         this.GetDocumentItems()
     }
     GetDocumentItems() {
-        this.documentService.GetDocumentBody(new Token(this.tokenService.getToken(), this.docId)).subscribe({
+        this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), this.docId)).subscribe({
             next: result => {
                 this.items = result
                 result.forEach(element => {
@@ -50,7 +50,7 @@ export class DocumentItemsComponent {
         })
     }
     DeleteItem(element: number) {
-        this.documentService.DeleteDocumentItem(new Token(this.tokenService.getToken(), element)).subscribe({
+        this.documentService.DeleteDocumentItem(new TokenModel(this.tokenService.getToken(), element)).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':
@@ -110,7 +110,7 @@ export class DocumentItemsComponent {
         }
     }
     pushDoc() {
-        this.documentService.PushDocument(new Token(this.tokenService.getToken(), this.docId)).subscribe({
+        this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), this.docId)).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':

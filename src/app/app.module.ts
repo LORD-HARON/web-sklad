@@ -31,6 +31,18 @@ import { ExitDialog } from './components/tsd-components/menu.component/menu.comp
 import { CreateDocumentDialog } from './components/tsd-components/menu.component/menu.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { UrlImgPipe } from './pipes/url-img.pipe';
+import { ServiceComponent } from './components/sklad-components/service-component/service.component';
+import { NavigationComponent } from './components/sklad-components/navigation-component/navigation.component';
+import { ProductComponent } from './components/sklad-components/product-component/product.component';
+import { TaskComponent } from './components/sklad-components/task-component/task.component';
+import { PersonalMenegmentComponent } from './components/sklad-components/porsonal-menegment-component/personal-menegment.component';
+import { ListDocumentComponent } from './components/sklad-components/list-document-component/list-document.component';
+import { ErrorJournalComponent } from './components/sklad-components/error-journal-component/error-journal.component';
+import { HistoryComponent } from './components/sklad-components/history-component/history.component';
+import { MotivationComponent } from './components/sklad-components/motivation-component/motivation.component';
+import { UnloadingDocumentsComponent } from './components/sklad-components/unloading-documents-component/unloading-documents.component';
+import { MapComponent } from './components/sklad-components/map-menegment/map-component/map.component';
+import { MapEditorComponent } from './components/sklad-components/map-menegment/map-editor.component/map-editor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,7 +55,19 @@ import { UrlImgPipe } from './pipes/url-img.pipe';
     TsdComponent,
     ExitDialog,
     CreateDocumentDialog,
-    UrlImgPipe
+    UrlImgPipe,
+    ServiceComponent,
+    NavigationComponent,
+    ProductComponent,
+    TaskComponent,
+    PersonalMenegmentComponent,
+    ListDocumentComponent,
+    ErrorJournalComponent,
+    HistoryComponent,
+    MotivationComponent,
+    UnloadingDocumentsComponent,
+    MapComponent,
+    MapEditorComponent
   ],
   imports: [
     BrowserModule,

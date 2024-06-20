@@ -4,7 +4,7 @@ import { HttpClient } from "@angular/common/http"
 import { CreateDocumentModel } from "../models/documents-models/create-document"
 import { Observable } from "rxjs"
 import { DocumentsListModel } from "../models/documents-models/documents-list"
-import { Token } from "../models/token"
+import { TokenModel } from "../models/token"
 import { Status } from "../models/status"
 import { FindInfoAnswModel } from "../models/documents-models/find-info-answ"
 import { FindInfoReqModel } from "../models/documents-models/find-info-req"
@@ -32,13 +32,13 @@ export class DocumentService {
     CreateDocument(data: CreateDocumentModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.createDocumentURL, data)
     }
-    GetDocumentList(data: Token): Observable<DocumentsListModel[]> {
+    GetDocumentList(data: TokenModel): Observable<DocumentsListModel[]> {
         return this.http.post<DocumentsListModel[]>(this.getDocumentListURL, data)
     }
-    DeleteDocument(data: Token): Observable<Status> {
+    DeleteDocument(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.deleteDocumentURL, data)
     }
-    GetDocument(data: Token): Observable<DocumentsListModel> {
+    GetDocument(data: TokenModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.getDocumentURL, data)
     }
     FindInfo(data: FindInfoReqModel): Observable<FindInfoAnswModel> {
@@ -47,16 +47,16 @@ export class DocumentService {
     AddProduct(data: AddProductModel): Observable<Status> {
         return this.http.post<Status>(this.addProductURL, data)
     }
-    GetDocumentBody(data: Token): Observable<DocumentBodyModel[]> {
+    GetDocumentBody(data: TokenModel): Observable<DocumentBodyModel[]> {
         return this.http.post<DocumentBodyModel[]>(this.getDocumentBodyURL, data)
     }
-    DeleteDocumentItem(data: Token): Observable<Status> {
+    DeleteDocumentItem(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.deleteDocumentItemURL, data)
     }
     EditProduct(data: EditProductModel): Observable<Status> {
         return this.http.post<Status>(this.editProductURL, data)
     }
-    PushDocument(data: Token): Observable<Status> {
+    PushDocument(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.pushDocumentURL, data)
     }
 }
