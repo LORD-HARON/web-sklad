@@ -1,0 +1,35 @@
+<div class="main">
+    <div class="nav-conteiner">
+        <a routerLink="/service/product" class="menu-button">Учет продукции по группам</a>
+        <a [matMenuTriggerFor]="menu" class="menu-button">
+            <span>Внутрискладские процессы</span>
+            <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
+        </a>
+        <mat-menu #menu="matMenu">
+            <a mat-menu-item routerLink="/service/task">Задания</a>
+            <a mat-menu-item routerLink="/service/list-doc">Список документов</a>
+            <a mat-menu-item routerLink="/service/unloading-doc">Документы разгрузки</a>
+        </mat-menu>
+        <a [matMenuTriggerFor]="menu1" class="menu-button">
+            <span>Топология склада</span>
+            <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
+        </a>
+        <mat-menu #menu1="matMenu">
+            <a mat-menu-item routerLink="/service/map">Карта склада</a>
+            <a mat-menu-item routerLink="/service/map-editor">Редактирование склада</a>
+            <a mat-menu-item routerLink="/service/error-journal">Журнал</a>
+            <a mat-menu-item routerLink="/service/history">История</a>
+        </mat-menu>
+        <a [matMenuTriggerFor]="menu2" class="menu-button">
+            <span>Управление персоналом</span>
+            <mat-icon fontIcon="keyboard_arrow_down"></mat-icon>
+        </a>
+        <mat-menu #menu2="matMenu">
+            <a mat-menu-item routerLink="/service/personal">Персонал</a>
+            <a mat-menu-item routerLink="/service/motivation">Мотивация</a>
+        </mat-menu>
+    </div>
+    <div class="nav-conteiner">
+        <button mat-raised-button style="background-color: #6b747c; color: white;" (click)="logOut()">Выход</button>
+    </div>
+</div>

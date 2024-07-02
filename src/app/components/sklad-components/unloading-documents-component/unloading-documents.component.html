@@ -1,0 +1,209 @@
+<div class="data-filter form-inline">
+    <div class="bts-search">
+        <button id="bt-search" mat-raised-button color="primary" (click)="onSearch()" #btSearch
+            [ngClass]="{ 'bt-search-activ': !btSearchDisabled, 'bt-search-disabled': btSearchDisabled }"> Поиск
+        </button>
+        <button id="bt-clear" mat-raised-button (click)="onClear()"> Очистить </button>
+    </div>
+    <div class="search-input">
+        <mat-form-field id="only" appearance="outline">
+            <mat-label> НПЦ </mat-label>
+            <input matInput placeholder="Поиск" [(ngModel)]="searchNpc" data-placement="bottom" matTooltip="Поле НПЦ">
+        </mat-form-field>
+        <mat-form-field id="only" appearance="outline">
+            <mat-label> ЗПЦ </mat-label>
+            <input matInput placeholder="Поиск" [(ngModel)]="searchZpc" data-placement="bottom" matTooltip="Поле ЗПЦ">
+        </mat-form-field>
+    </div>
+</div>
+
+<!-- <mat-divider></mat-divider> -->
+
+<div class="table-conteiner">
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="table-hover" matSort>
+
+            <ng-container matColumnDef="doc_num">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> № Документ </th>
+                <td mat-cell *matCellDef="let element"> {{element.doc_num}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="article">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Артикул </th>
+                <td mat-cell *matCellDef="let element"> {{element.article}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Наименование </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="count">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Кол. </th>
+                <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="count_export">
+                <th mat-header-cell *matHeaderCellDef> Не отгруж. </th>
+                <td mat-cell *matCellDef="let element"> {{element.count_export}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ost_main">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Остаток осн. </th>
+                <td mat-cell *matCellDef="let element"> {{element.ost_main}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ost_braq">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Остаток брак </th>
+                <td mat-cell *matCellDef="let element"> {{element.ost_braq}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="place">
+                <th mat-header-cell *matHeaderCellDef> Место хранения </th>
+                <td mat-cell *matCellDef="let element"> {{element.place}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef>
+                    <button mat-mini-fab color="primary" (click)="exportToExcel()" [disabled]="disabledValue"
+                        data-toggle="tooltip" data-placement="bottom" matTooltip="Скачать Excel">
+                        <mat-icon> cloud_download</mat-icon>
+                    </button>
+                </th>
+                <td mat-cell *matCellDef="let element"> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{ 'row-yellow': row.count_export > '0' }"></tr>
+
+        </table>
+    </div>
+    <div class="mat-elevation-z8">
+        <table mat-table class="table-hover">
+
+            <ng-container matColumnDef="npc">
+                <th mat-header-cell *matHeaderCellDef>НПЦ </th>
+                <td mat-cell *matCellDef="let element"> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="zpc">
+                <th mat-header-cell *matHeaderCellDef> ЗПЦ </th>
+                <td mat-cell *matCellDef="let element"> {{element.article}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedPcColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedPcColumns;"></tr>
+
+        </table>
+    </div>
+    <div id="block1">
+
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let npc of listNpc">
+                <mat-expansion-panel-header [ngClass]="{ 'row-yellow': npc.style === 'yellow' }">
+                    {{npc.npC_NAME}}
+                </mat-expansion-panel-header>
+                {{npc.anY_DATA1}} - {{npc.anY_DATA2}} - {{npc.anY_DATA3}}
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="npc.body" class="table-hover">
+
+                        <ng-container matColumnDef="article">
+                            <th mat-header-cell *matHeaderCellDef> Артикул </th>
+                            <td mat-cell *matCellDef="let element"> {{element.article}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Наименование </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count">
+                            <th mat-header-cell *matHeaderCellDef> Кол. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count_ext">
+                            <th mat-header-cell *matHeaderCellDef> Не отгруж. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_ext}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count_main">
+                            <th mat-header-cell *matHeaderCellDef> Остаток осн. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_main}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count_braq">
+                            <th mat-header-cell *matHeaderCellDef> Остаток брак </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_braq}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="place">
+                            <th mat-header-cell *matHeaderCellDef> Места храниения </th>
+                            <td mat-cell *matCellDef="let element"> {{element.place}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedCurrentPcColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedCurrentPcColumns;"
+                            [ngClass]="{ 'row-yellow': row.count_ext > '0' }"></tr>
+
+                    </table>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+    <div id="block2">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let zpc of listZpc">
+                <mat-expansion-panel-header [ngClass]="{ 'row-yellow': zpc.style === 'yellow' }">
+                    {{zpc.zpC_NAME}}
+                </mat-expansion-panel-header>
+                {{zpc.anY_DATA1}} - {{zpc.anY_DATA2}} - {{zpc.anY_DATA3}}
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="zpc.body" class="table-hover">
+
+                        <ng-container matColumnDef="article">
+                            <th mat-header-cell *matHeaderCellDef> Артикул </th>
+                            <td mat-cell *matCellDef="let element"> {{element.article}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Наименование </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count">
+                            <th mat-header-cell *matHeaderCellDef> Кол. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count_ext">
+                            <th mat-header-cell *matHeaderCellDef> Не отгруж. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_ext}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count_main">
+                            <th mat-header-cell *matHeaderCellDef> Остаток осн. </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_main}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="count_braq">
+                            <th mat-header-cell *matHeaderCellDef> Остаток брак </th>
+                            <td mat-cell *matCellDef="let element"> {{element.count_braq}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="place">
+                            <th mat-header-cell *matHeaderCellDef> Места храниения </th>
+                            <td mat-cell *matCellDef="let element"> {{element.place}} </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedCurrentPcColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedCurrentPcColumns;"
+                            [ngClass]="{ 'row-yellow': row.count_ext > '0' }"></tr>
+
+                    </table>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

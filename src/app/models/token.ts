@@ -1,6 +1,6 @@
 export class TokenModel {
     constructor(
         public token: string,
-        public id?: number
+        public id?: number | string
     ) { }
 }

@@ -23,7 +23,7 @@ export class ProductService {
     putCountProductUrl = environment.apiUrl + '/PutCountProduct/'
 
     GetTree(): Observable<any> {
-        return this.http.post<any>(this.getTreeUrl, null)
+        return this.http.get<any>(this.getTreeUrl)
     }
     GetProduct(data: ProductQueryModel): Observable<ProductResponceModel[]> {
         return this.http.post<ProductResponceModel[]>(this.getProductUrl, data)

@@ -24,11 +24,10 @@ export class LoginComponent implements OnInit {
         private snackbarService: SnackbarService
     ) { }
     isLoginUser = false;
-    loginQuery = new LoginQuery("", "");
     inputType: string = 'password'
     userForm: FormGroup = new FormGroup({
-        "login": new FormControl('', Validators.required),
-        "password": new FormControl('', Validators.required),
+        login: new FormControl('', Validators.required),
+        password: new FormControl('', Validators.required),
     })
     screenWidth: number
     login: string

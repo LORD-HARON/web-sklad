@@ -1,4 +1,4 @@
-import { StillageItemModel } from "./Stillage-itame";
+import { StillageItemModel } from "./stillage-item";
 
 export class StillagesModel {
     constructor(

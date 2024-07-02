@@ -4,17 +4,17 @@
         <form [formGroup]="userForm">
             <mat-form-field appearance="outline">
                 <mat-label>Логин</mat-label>
-                <input matInput [(ngModel)]="loginQuery.login">
+                <input matInput formControlName="login">
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Пароль</mat-label>
-                <input matInput type="{{inputType}}" [(ngModel)]="loginQuery.password">
+                <input matInput type="{{inputType}}" formControlName='password'>
                 <button matSuffix mat-icon-button (mousedown)="inputType = 'text'" (mouseup)="inputType = 'password'"
                     (mouseleave)="inputType = 'password'">
                     <mat-icon>visibility</mat-icon>
                 </button>
             </mat-form-field>
-            <button mat-raised-button>Вход</button>
+            <button mat-raised-button (click)="onClickLogin()">Вход</button>
         </form>
     </div>
     <ng-template #tsd>

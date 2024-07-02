@@ -1,0 +1,40 @@
+<table>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c51,
+            'cell-red': stillageItem.cells.c51 === 'red', 
+            'cell-yellow': stillageItem.cells.c51 === 'yellow', 
+            'cell-green': stillageItem.cells.c51 === 'green'}" (click)="onClickCell('5', '1')">51</td>
+        <td [ngClass]="{'select-cell': selItem.c52,
+            'cell-red': stillageItem.cells.c52 === 'red', 
+            'cell-yellow': stillageItem.cells.c52 === 'yellow', 
+            'cell-green': stillageItem.cells.c52 === 'green'}" (click)="onClickCell('5', '2')">52</td>
+        <td [ngClass]="{'select-cell': selItem.c53,
+            'cell-red': stillageItem.cells.c53 === 'red', 
+            'cell-yellow': stillageItem.cells.c53 === 'yellow', 
+            'cell-green': stillageItem.cells.c53 === 'green'}" (click)="onClickCell('5', '3')">53</td>
+    </tr>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c53,
+            'cell-red': stillageItem.cells.c53 === 'red', 
+            'cell-yellow': stillageItem.cells.c53 === 'yellow', 
+            'cell-green': stillageItem.cells.c53 === 'green'}" (click)="onClickCell('5', '3')" colspan="3">41</td>
+    </tr>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c31,
+            'cell-red': stillageItem.cells.c31 === 'red', 
+            'cell-yellow': stillageItem.cells.c31 === 'yellow', 
+            'cell-green': stillageItem.cells.c31 === 'green'}" (click)="onClickCell('3', '1')" colspan="3">31</td>
+    </tr>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c21,
+            'cell-red': stillageItem.cells.c21 === 'red', 
+            'cell-yellow': stillageItem.cells.c21 === 'yellow', 
+            'cell-green': stillageItem.cells.c21 === 'green'}" (click)="onClickCell('2', '1')" colspan="3">21</td>
+    </tr>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c11, 
+            'cell-red': stillageItem.cells.c11 === 'red', 
+            'cell-yellow': stillageItem.cells.c11 === 'yellow', 
+            'cell-green': stillageItem.cells.c11 === 'green'}" (click)="onClickCell('1', '1')" colspan="3">11</td>
+    </tr>
+</table>

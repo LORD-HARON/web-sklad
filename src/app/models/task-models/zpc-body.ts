@@ -2,10 +2,11 @@ import { AnyBodyModel } from "./any-body";
 
 export class ZPCBodyModel {
     constructor(
-        public ZPC_NAME: string,
-        public ANY_DATA1: string,
-        public ANY_DATA2: string,
-        public ANY_DATA3: string,
-        public body: AnyBodyModel[]
+        public zpC_NAME: string,
+        public anY_DATA1: string,
+        public anY_DATA2: string,
+        public anY_DATA3: string,
+        public body: AnyBodyModel[],
+        public style?: string,
     ) { }
 }

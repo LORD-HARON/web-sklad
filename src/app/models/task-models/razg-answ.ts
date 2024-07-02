@@ -10,7 +10,7 @@ export class RazgAnswModel {
         public notSent: string[],
         public notSetCount: number,
         public badSent: ProblemListModel[],
-        public NPCList: NPCBodyModel[],
-        public ZPCList: ZPCBodyModel[]
+        public npcList: NPCBodyModel[],
+        public zpcList: ZPCBodyModel[]
     ) { }
 }

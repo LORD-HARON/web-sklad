@@ -1,0 +1,14 @@
+<table>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c11, 
+            'cell-red': stillageItem.cells.c11 === 'red', 
+            'cell-yellow': stillageItem.cells.c11 === 'yellow', 
+            'cell-green': stillageItem.cells.c11 === 'green'}" (click)="onClickCell('1')"> {{cellup}} </td>
+    </tr>
+    <tr>
+        <td [ngClass]="{'select-cell': selItem.c12, 
+            'cell-red': stillageItem.cells.c12 === 'red', 
+            'cell-yellow': stillageItem.cells.c12 === 'yellow', 
+            'cell-green': stillageItem.cells.c12 === 'green'}" (click)="onClickCell('2')"> {{celldown}} </td>
+    </tr>
+</table>

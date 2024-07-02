@@ -1,0 +1,33 @@
+table {
+    border-collapse: collapse;
+    border-left-width: 2px; /* Толщина линии внизу */
+    border-left-style: solid; /* Стиль линии внизу */
+    border-left-color: black; /* Цвет линии внизу */
+    border-right-width: 2px; /* Толщина линии внизу */
+    border-right-style: solid; /* Стиль линии внизу */
+    border-right-color: black; /* Цвет линии внизу */
+    width: 25px;
+    height: 20px;
+    font-size: 8px;
+    padding: 0%;
+    margin: 0%;
+    width: 49px;
+    height: 49px;
+} 
+td {
+    border: 1px solid rgba(128, 128, 128, 0.25);
+    padding: 0%;
+    margin: 0%;
+}
+.select-cell {
+    background-color: aquamarine; 
+}
+.cell-red {
+    background-color: rgba(255, 0, 0, 0.5); 
+}
+.cell-yellow {
+    background-color: rgba(255, 255, 0, 0.5); 
+}
+.cell-green {
+    background-color: rgba(0, 128, 0, 0.5); 
+}

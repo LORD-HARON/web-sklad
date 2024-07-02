@@ -34,7 +34,7 @@ import { UrlImgPipe } from './pipes/url-img.pipe';
 import { ServiceComponent } from './components/sklad-components/service-component/service.component';
 import { NavigationComponent } from './components/sklad-components/navigation-component/navigation.component';
 import { ProductComponent } from './components/sklad-components/product-component/product.component';
-import { TaskComponent } from './components/sklad-components/task-component/task.component';
+import { TaskComponent } from './components/sklad-components/task-managment/task-component/task.component';
 import { PersonalMenegmentComponent } from './components/sklad-components/porsonal-menegment-component/personal-menegment.component';
 import { ListDocumentComponent } from './components/sklad-components/list-document-component/list-document.component';
 import { ErrorJournalComponent } from './components/sklad-components/error-journal-component/error-journal.component';
@@ -43,6 +43,15 @@ import { MotivationComponent } from './components/sklad-components/motivation-co
 import { UnloadingDocumentsComponent } from './components/sklad-components/unloading-documents-component/unloading-documents.component';
 import { MapComponent } from './components/sklad-components/map-menegment/map-component/map.component';
 import { MapEditorComponent } from './components/sklad-components/map-menegment/map-editor.component/map-editor.component';
+import { CdkTreeModule } from '@angular/cdk/tree';
+import { MatListModule } from '@angular/material/list';
+import { NgxPrintModule } from 'ngx-print';
+import { MatTableModule } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
+import { BaseFormComponent } from './components/sklad-components/task-managment/base-form.component/base-form.component';
+import { ProcPersonalListFormComponent } from './components/sklad-components/task-managment/proc-personal-list-form-component/proc-personal-list-from.component';
+import { ProcessesFormComponent } from './components/sklad-components/task-managment/processes-form-component/process-form.component';
+import { StillagesModule } from './components/sklad-components/stillages/stillages.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,9 +76,13 @@ import { MapEditorComponent } from './components/sklad-components/map-menegment/
     MotivationComponent,
     UnloadingDocumentsComponent,
     MapComponent,
-    MapEditorComponent
+    MapEditorComponent,
+    BaseFormComponent,
+    ProcPersonalListFormComponent,
+    ProcessesFormComponent,
   ],
   imports: [
+    StillagesModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -89,10 +102,15 @@ import { MapEditorComponent } from './components/sklad-components/map-menegment/
     MatExpansionModule,
     MatDatepickerModule,
     ReactiveFormsModule,
-    MatSidenavModule
+    MatSidenavModule,
+    CdkTreeModule,
+    MatListModule,
+    NgxPrintModule,
+    MatTableModule,
   ],
   providers: [
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

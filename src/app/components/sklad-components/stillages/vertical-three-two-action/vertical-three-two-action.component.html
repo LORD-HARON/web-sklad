@@ -1,0 +1,38 @@
+<table>
+    <tr>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td [ngClass]="{'select-cell': selItem.c31,
+            'cell-red': stillageItem.cells.c31 === 'red', 
+            'cell-yellow': stillageItem.cells.c31 === 'yellow', 
+            'cell-green': stillageItem.cells.c31 === 'green'}" (click)="onClickCell('3', '1')">31</td>
+        <td [ngClass]="{'select-cell': selItem.c41,
+            'cell-red': stillageItem.cells.c41 === 'red', 
+            'cell-yellow': stillageItem.cells.c41 === 'yellow', 
+            'cell-green': stillageItem.cells.c41 === 'green'}" (click)="onClickCell('4', '1')">41</td>
+    </tr>
+    <tr>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td [ngClass]="{'select-cell': selItem.c32,
+            'cell-red': stillageItem.cells.c32 === 'red', 
+            'cell-yellow': stillageItem.cells.c32 === 'yellow', 
+            'cell-green': stillageItem.cells.c32 === 'green'}" (click)="onClickCell('3', '2')">32</td>
+        <td [ngClass]="{'select-cell': selItem.c42,
+            'cell-red': stillageItem.cells.c42 === 'red', 
+            'cell-yellow': stillageItem.cells.c42 === 'yellow', 
+            'cell-green': stillageItem.cells.c42 === 'green'}" (click)="onClickCell('4', '2')">42</td>
+    </tr>
+    <tr>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
+        <td [ngClass]="{'select-cell': selItem.c33,
+            'cell-red': stillageItem.cells.c33 === 'red', 
+            'cell-yellow': stillageItem.cells.c33 === 'yellow', 
+            'cell-green': stillageItem.cells.c33 === 'green'}" (click)="onClickCell('3', '3')">33</td>
+        <td [ngClass]="{'select-cell': selItem.c43,
+            'cell-red': stillageItem.cells.c43 === 'red', 
+            'cell-yellow': stillageItem.cells.c43 === 'yellow', 
+            'cell-green': stillageItem.cells.c43 === 'green'}" (click)="onClickCell('4', '3')">43</td>
+    </tr>
+</table>

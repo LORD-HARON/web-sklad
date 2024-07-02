@@ -1,0 +1,153 @@
+<mat-drawer-container class="main">
+    <mat-drawer mode="side" opened>
+        <div class="tree-group">
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding (click)="onSelectNode(node)"
+                    [ngClass]="{ 'select-row': selectedRowTree == node.name }">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+                        (click)="onSelectNode(node)">
+                        <mat-icon class="mat-icon-rtl-mirror" *ngIf="node.children">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                        <label> {{node.name}} </label>
+                    </button>
+                </mat-tree-node>
+                <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding (click)="onSelectNode(node)"
+                    [ngClass]="{ 'select-row': selectedRowTree == node.name }">
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
+                        (click)="onSelectNode(node)">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                        <label> {{node.name}} </label>
+                    </button>
+                </mat-tree-node>
+            </mat-tree>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div class="search-control-conteiner">
+            <mat-form-field appearance="outline">
+                <mat-label>Поиск</mat-label>
+                <input matInput [(ngModel)]="searchValue">
+            </mat-form-field>
+            <button mat-raised-button style="background-color: #673ab7; color:#ffff; width: 105px;"
+                (click)="onSearch()">Поиск</button>
+            <button mat-raised-button [disabled]="!searchValue">Очистить</button>
+            <mat-button-toggle-group appearance="legacy" name="fontStyle" aria-label="Font Style"
+                [(ngModel)]="selectedSearchVar">
+                <mat-button-toggle id="but" value="article" data-toggle="tooltip" data-placement="bottom"
+                    title="Артикул">
+                    Артикул
+                </mat-button-toggle>
+                <mat-button-toggle value="barcode" data-toggle="tooltip" data-placement="bottom" title="Штрихкод">
+                    Штрихкод
+                </mat-button-toggle>
+                <mat-button-toggle value="name" data-toggle="tooltip" data-placement="bottom" title="Наименование">
+                    Наименование
+                </mat-button-toggle>
+                <mat-button-toggle value="storage" data-toggle="tooltip" data-placement="bottom" title="Место хранения">
+                    Место хранения
+                </mat-button-toggle>
+                <mat-button-toggle value="provider" data-toggle="tooltip" data-placement="bottom" title="Поставщик">
+                    Поставщик
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div class="table-conteiner" (scroll)="onScroll($event)">
+            <table>
+                <tr>
+                    <td *ngFor="let h of tableHead">
+                        {{h}}
+                    </td>
+                </tr>
+                <tr *ngFor="let i of productList" (click)="onSelectRow(i.article)"
+                    [ngClass]="{ 'select-row': selectedRow == i.article}">
+                    <td>
+                        {{i.article}}
+                    </td>
+                    <td>
+                        {{i.name}}
+                    </td>
+                    <td>
+                        {{i.status}}
+                    </td>
+                    <td>
+                        {{i.barcode}}
+                    </td>
+                    <td>
+                        {{i.quantity}}
+                    </td>
+                    <td>
+                        {{i.braquantity}}
+                    </td>
+                    <td>
+                        <button mat-mini-fab style="background-color: inherit;">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="product-property-conteiner">
+            <div class="product-property-conteiner-box">
+                <div class="product-property-conteiner-box-item">
+                    <mat-form-field appearance="outline" style="width: 170px;">
+                        <mat-label>Артикул</mat-label>
+                        <input [(ngModel)]="productProp.article" matInput readonly>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 170px;">
+                        <mat-label>Тип</mat-label>
+                        <input matInput readonly [(ngModel)]="productProp.type">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 170px;">
+                        <mat-label>Страна</mat-label>
+                        <input matInput readonly [(ngModel)]="productProp.country">
+                    </mat-form-field>
+                </div>
+                <div class="product-property-conteiner-box-item">
+                    <mat-form-field appearance="outline" style="width: 400px;">
+                        <mat-label>Наименование</mat-label>
+                        <textarea matInput readonly [(ngModel)]="productProp.name"></textarea>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 150px;">
+                        <mat-label>Ед. Имерения</mat-label>
+                        <input matInput readonly [(ngModel)]="productProp.mesabbrev">
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" style="width: 150px;">
+                        <mat-label>Группа</mat-label>
+                        <input matInput readonly [(ngModel)]="productProp.group">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="product-property-conteiner-box">
+                <div class="product-property-conteiner-box-list">
+                    <div class="product-property-conteiner-box-list-table">
+                        <table>
+                            <tr>
+                                <td>
+                                    Места хранения
+                                </td>
+                            </tr>
+                            <tr *ngFor="let p of productProp.place">
+                                {{p}}
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="product-property-conteiner-box-list-table">
+                        <table>
+                            <tr>
+                                <td>
+                                    Поставщики
+                                </td>
+                            </tr>
+                            <tr *ngFor="let d of productProp.delivers">
+                                {{d}}
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
