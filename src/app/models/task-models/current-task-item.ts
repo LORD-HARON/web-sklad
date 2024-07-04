@@ -1,6 +1,6 @@
 export class CurrentTaskItemModel {
     constructor(
-        public id: string,
+        public iD: string,
         public order_id: string,
         public order_article: string,
         public order_count: string,

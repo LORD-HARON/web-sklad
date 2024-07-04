@@ -2,7 +2,7 @@ import { CurrentTaskModel } from "./current-task";
 
 export class MainTaskModel {
     constructor(
-        public id: string,
+        public iD: string,
         public order_status: string,
         public order_base: string,
         public order_prog: string,

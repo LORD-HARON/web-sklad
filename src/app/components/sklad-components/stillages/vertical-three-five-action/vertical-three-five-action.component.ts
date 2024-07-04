@@ -3,6 +3,7 @@ import { StillageItemModel } from "../../../../models/map-models/stillage-item";
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { StillageService } from "../../../../services/stillage.service";
+import { StillageDialogComponent } from "../stillage-dialog.component/stillage-dialog.component";
 export class Item {
     constructor(
         public c11: boolean,
@@ -79,13 +80,13 @@ export class VerticalThreeFiveActionComponent implements OnInit {
     }
 
     onOpenDetailWindow(cell: string, stillage: string, floor: string, number: string,) {
-        //   const dialogRef = this.dialog.open(StillgeDialogFormComponent, {
-        //     data: { cell: cell, stillage: stillage, floor: floor, num: number },
-        //   });
-        //   dialogRef.afterClosed().subscribe(result => {
-        //     if(result) {
-        //     }
-        //   });
+        const dialogRef = this.dialog.open(StillageDialogComponent, {
+            data: { cell: cell, stillage: stillage, floor: floor, num: number },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+        });
     }
 
     listenEvent(event: Array<string>) {

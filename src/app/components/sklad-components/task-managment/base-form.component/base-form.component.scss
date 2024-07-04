@@ -1,0 +1,26 @@
+.example-chip-list {
+    width: 94%;
+}
+p {
+    margin-top: 1em;
+    margin-bottom: 0rem !important;
+    color: rgba(128, 128, 128);
+} 
+button {
+    margin-right: 0%;
+    border: none;
+    outline: none;
+    float: right;
+}
+mat-icon#push {
+    padding: 4px 0px 0px 0px;
+    cursor: pointer;
+    
+    position: relative;
+    right: 20px;
+    bottom: 10px;
+}
+mat-icon#push:hover {
+    font-size: 26px;
+    color: blueviolet;
+}

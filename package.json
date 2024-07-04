@@ -20,6 +20,8 @@
     "@angular/platform-browser": "^17.3.0",
     "@angular/platform-browser-dynamic": "^17.3.0",
     "@angular/router": "^17.3.0",
+    "@meddv/ngx-pinch-zoom": "^18.0.1",
+    "angular-confirmation-popover": "^7.0.0",
     "exceljs": "^4.4.0",
     "ngx-cookie-service": "^18.0.0",
     "ngx-filesaver": "^18.0.0",

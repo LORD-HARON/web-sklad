@@ -11,6 +11,7 @@ import { TokenModel } from "../models/token";
 import { DocSendsUsersModel } from "../models/personal-models/doc-sends.users";
 import { MotivationQueryModel } from "../models/personal-models/motivation-query";
 import { MotivationAnswModel } from "../models/personal-models/motivation-answ";
+import { SkladUserModel } from "../models/login-models/sklad-user";
 
 
 @Injectable({
@@ -26,6 +27,11 @@ export class PersonalService {
     private authSkladUserUrl = environment.apiUrl + '/AuthSkladTsdUser/'
     private getSendedDocUsersUrl = environment.apiUrl + '/GetSendedDocUsersUrl/'
     private getMotivationUrl = environment.apiUrl + '/GetMotivation/'
+    private getSkladUserURL = environment.apiUrl + '/GetSkladUser/'
+
+    GetSkladUser(data: TokenModel): Observable<SkladUserModel[]> {
+        return this.http.post<SkladUserModel[]>(this.getSkladUserURL, data)
+    }
     AddNewSkladUser(data: NewSkladUserModel): Observable<LoginResponse> {
         return this.http.post<LoginResponse>(this.addNewSkladUserUrl, data)
     }

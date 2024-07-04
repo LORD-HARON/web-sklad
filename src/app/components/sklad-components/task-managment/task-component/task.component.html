@@ -1,8 +1,9 @@
-<mat-drawer-container class="example-container">
+<mat-drawer-container class="drawer-container">
+
     <mat-drawer mode="side" opened>
 
         <h5> Новое задание </h5>
-        <!-- 
+
         <app-process-form (onDataSelected)="addProcesses($event)"></app-process-form>
         <app-base-form (onDataSelected)="addBase($event)"></app-base-form>
         <app-proc-personal-list-form (onDataSelected)="addUser($event)"></app-proc-personal-list-form>
@@ -40,10 +41,532 @@
                     </button>
                 </div>
             </div>
-        </div> -->
+        </div>
 
     </mat-drawer>
     <mat-drawer-content>
+        <div class="list-icon">
 
+            <img src="../../assets/pending_ico.ico" width="20" height="20" data-placement="bottom"
+                matTooltip="Новая в очереди" />
+            <small><span id="status" class="mybadge-new"> Новая в очереди </span></small>
+
+            <img src="../../assets/favicon_arrows.ico" width="20" height="20" data-placement="bottom"
+                matTooltip="Принято в исполнение" />
+            <small><span id="status" class="mybadge-just"> Принято в исполнение </span></small>
+
+            <img src="../../assets/favicon-red.ico" width="20" height="20" data-placement="bottom"
+                matTooltip="Завершено частично" />
+            <small><span id="status" class="mybadge-notall"> Завершено частично </span></small>
+
+            <img src="../../assets/favicon-green.ico" width="20" height="20" data-placement="bottom"
+                matTooltip="Завершено полностью" />
+            <small><span id="status" class="mybadge-all"> Завершено полностью </span></small>
+
+            <img src="../../assets/57-512.png" width="20" height="20" data-placement="bottom"
+                matTooltip="Некорректная заявка" />
+            <small><span id="status" class="mybadge-notall"> Некорректная заявка </span></small>
+
+        </div>
+        <div>
+            <link href="https://fonts.googleapis.com/css?family=Work+Sans:400,600,700&display=swap" rel="stylesheet">
+            <div class="layout">
+                <input name="nav" type="radio" class="nav home-radio" id="home" checked="checked" />
+                <div class="page home-page">
+                    <div class="page-contents">
+                        <table mat-table [dataSource]="dataSource" class="table-hover table-container"
+                            multiTemplateDataRows>
+
+                            <ng-container matColumnDef="mainstatus">
+                                <th mat-header-cell *matHeaderCellDef> Статус </th>
+                                <td mat-cell *matCellDef="let element">
+
+                                    <ng-container *ngIf="element.order_status === 'Новое в очереди'">
+                                        <img src="../../assets/pending_ico.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Новая в очереди" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Принято в исполнение'">
+                                        <img src="../../assets/favicon_arrows.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Принято в исполнение" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Завершено частично'">
+                                        <img src="../../assets/favicon-red.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Завершено частично" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Завершено полностью'">
+                                        <img src="../../assets/favicon-green.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Завершено полностью" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Нет на складе'">
+                                        <img src="../../assets/57-512.png" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Некорректная заявка" />
+                                    </ng-container>
+
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="mainnom">
+                                <th mat-header-cell *matHeaderCellDef> № заявки </th>
+                                <td mat-cell *matCellDef="let element"> {{element.iD}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="maindate">
+                                <th mat-header-cell *matHeaderCellDef> Дата </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_date}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="mainbase">
+                                <th mat-header-cell *matHeaderCellDef> Основание </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_base}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="mainpercent">
+                                <th mat-header-cell *matHeaderCellDef> Прогресс </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-grid-list cols="1" rowHeight="1em">
+                                        <mat-grid-tile id="percent"> {{element.order_prog}}% </mat-grid-tile>
+                                        <mat-grid-tile data-placement="bottom" matTooltip="{{element.percent}}%">
+                                            <mat-progress-bar mode="determinate"
+                                                [value]="element.percent"></mat-progress-bar>
+                                        </mat-grid-tile>
+                                    </mat-grid-list>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="mainaction">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="expandedDetail">
+
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+                                    <div class="example-element-detail"
+                                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                        <!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+
+
+                                        <table mat-table [dataSource]="element.curTaskList"
+                                            class="table-hover table-container" multiTemplateDataRows>
+
+                                            <ng-container matColumnDef="status">
+                                                <th mat-header-cell *matHeaderCellDef> Статус </th>
+                                                <td mat-cell *matCellDef="let element">
+
+                                                    <ng-container *ngIf="element.order_status === 'Новое в очереди'">
+                                                        <img src="../../assets/pending_ico.ico" width="20" height="20"
+                                                            data-placement="bottom" matTooltip="Новая в очереди" />
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="element.order_status === 'Принято в исполнение'">
+                                                        <img src="../../assets/favicon_arrows.ico" width="20"
+                                                            height="20" data-placement="bottom"
+                                                            matTooltip="Принято в исполнение" />
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="element.order_status === 'Завершено частично'">
+                                                        <img src="../../assets/favicon-red.ico" width="20" height="20"
+                                                            data-placement="bottom" matTooltip="Завершено частично" />
+                                                    </ng-container>
+
+                                                    <ng-container
+                                                        *ngIf="element.order_status === 'Завершено полностью'">
+                                                        <img src="../../assets/favicon-green.ico" width="20" height="20"
+                                                            data-placement="bottom" matTooltip="Завершено полностью" />
+                                                    </ng-container>
+
+                                                    <ng-container *ngIf="element.order_status === 'Нет на складе'">
+                                                        <img src="../../assets/57-512.png" width="20" height="20"
+                                                            data-placement="bottom" matTooltip="Некорректная заявка" />
+                                                    </ng-container>
+
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="nom">
+                                                <th mat-header-cell *matHeaderCellDef> № заявки </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <mat-grid-list cols="1" rowHeight="20px">
+                                                        <mat-grid-tile> {{element.iD}} </mat-grid-tile>
+                                                        <mat-grid-tile> {{element.order_datetime}} </mat-grid-tile>
+                                                    </mat-grid-list>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="process">
+                                                <th mat-header-cell *matHeaderCellDef> Процесс </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_process}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="base">
+                                                <th mat-header-cell *matHeaderCellDef> Основание </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_base}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="executor">
+                                                <th mat-header-cell *matHeaderCellDef> Исполнитель </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_candoit}}
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="type">
+                                                <th mat-header-cell *matHeaderCellDef> Метод сборки </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <!-- {{element.order_method}}  -->
+                                                    <ng-container *ngIf="element.order_method === 'auto-hand'">
+                                                        Автоматически-ручной
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element.order_method === 'auto-shtabel'">
+                                                        Автоматически-штабелер
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element.order_method === 'auto-none'">
+                                                        Нет на складе
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element.order_method === 'hand'">
+                                                        Ручной
+                                                    </ng-container>
+                                                    <ng-container *ngIf="element.order_method === 'shtabel'">
+                                                        Штабелер
+                                                    </ng-container>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="place">
+                                                <th mat-header-cell *matHeaderCellDef> Место расположения </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_place}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="percent">
+                                                <th mat-header-cell *matHeaderCellDef> Прогресс </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <mat-grid-list cols="1" rowHeight="1em">
+                                                        <mat-grid-tile id="percent"> {{element.order_prog}}%
+                                                        </mat-grid-tile>
+                                                        <mat-grid-tile data-placement="bottom"
+                                                            matTooltip="{{element.percent}}%">
+                                                            <mat-progress-bar mode="determinate"
+                                                                [value]="element.percent"></mat-progress-bar>
+                                                        </mat-grid-tile>
+                                                    </mat-grid-list>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef> </th>
+                                                <td mat-cell *matCellDef="let element"> </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="expandedDetail">
+                                                <td mat-cell *matCellDef="let element"
+                                                    [attr.colspan]="columnsToDisplayWithout.length">
+                                                    <div class="example-element-detail"
+                                                        [@detailExpandWithout]="element == expandedElementWithout ? 'expandedWithout' : 'collapsedWithout'">
+                                                        <!-- 111111111111111111111111111 -->
+
+                                                        <table mat-table [dataSource]="element.items"
+                                                            class="table-hover">
+
+                                                            <ng-container matColumnDef="id">
+                                                                <th mat-header-cell *matHeaderCellDef> id </th>
+                                                                <td mat-cell *matCellDef="let element"> {{iD}} </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="nom">
+                                                                <th mat-header-cell *matHeaderCellDef> № заявки </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    {{element.order_id}} </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="article">
+                                                                <th mat-header-cell *matHeaderCellDef> article </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    {{element.order_article}} </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="count">
+                                                                <th mat-header-cell *matHeaderCellDef> count </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    {{element.order_count}} </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="place">
+                                                                <th mat-header-cell *matHeaderCellDef> place </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    {{element.order_place}} </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="need">
+                                                                <th mat-header-cell *matHeaderCellDef> need </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    {{element.order_need}} </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="prog">
+                                                                <th mat-header-cell *matHeaderCellDef> Прогресс </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    <mat-grid-list cols="1" rowHeight="1em">
+                                                                        <mat-grid-tile id="percent">
+                                                                            {{element.order_prog}}% </mat-grid-tile>
+                                                                        <mat-grid-tile data-placement="bottom"
+                                                                            matTooltip="{{element.percent}}%">
+                                                                            <mat-progress-bar mode="determinate"
+                                                                                [value]="element.percent"></mat-progress-bar>
+                                                                        </mat-grid-tile>
+                                                                    </mat-grid-list>
+                                                                </td>
+                                                            </ng-container>
+
+                                                            <ng-container matColumnDef="key">
+                                                                <th mat-header-cell *matHeaderCellDef> key </th>
+                                                                <td mat-cell *matCellDef="let element">
+                                                                    {{element.order_key}} </td>
+                                                            </ng-container>
+
+
+
+                                                            <ng-container matColumnDef="action">
+                                                                <th mat-header-cell *matHeaderCellDef> </th>
+                                                                <td mat-cell *matCellDef="let element"> </td>
+                                                            </ng-container>
+
+                                                            <tr mat-header-row
+                                                                *matHeaderRowDef="columnsToDisplayItem; sticky: true">
+                                                            </tr>
+                                                            <tr mat-row
+                                                                *matRowDef="let row; columns: columnsToDisplayItem;"
+                                                                [ngClass]="{ 'select-row': selectedRowIndex == row[0] }">
+                                                            </tr>
+                                                            <!-- (click)="onSelectRowClick(row)" -->
+                                                        </table>
+
+                                                        <!-- 111111111111111111111111111 -->
+                                                    </div>
+                                                </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithout; sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithout;"
+                                                class="example-element-row"
+                                                [class.example-expanded-row]="expandedElementWithout === element"
+                                                (click)="expandedElementWithout = expandedElementWithout === element ? null : element">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']"
+                                                class="example-detail-row"></tr>
+
+                                        </table>
+
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row"
+                                [class.example-expanded-row]="expandedElement === element"
+                                (click)="expandedElement = expandedElement === element ? null : element">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <label class="nav" for="home">
+                    <span>
+                        С основанием
+                    </span>
+                </label>
+
+                <input name="nav" type="radio" class="about-radio" id="about" />
+                <div class="page about-page">
+                    <div class="page-contents">
+                        <table mat-table [dataSource]="dataSourceWithout" class="table-hover table-container"
+                            multiTemplateDataRows>
+
+                            <ng-container matColumnDef="status">
+                                <th mat-header-cell *matHeaderCellDef> Статус </th>
+                                <td mat-cell *matCellDef="let element">
+
+                                    <ng-container *ngIf="element.order_status === 'Новое в очереди'">
+                                        <img src="../../assets/pending_ico.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Новая в очереди" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Принято в исполнение'">
+                                        <img src="../../assets/favicon_arrows.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Принято в исполнение" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Завершено частично'">
+                                        <img src="../../assets/favicon-red.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Завершено частично" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Завершено полностью'">
+                                        <img src="../../assets/favicon-green.ico" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Завершено полностью" />
+                                    </ng-container>
+
+                                    <ng-container *ngIf="element.order_status === 'Нет на складе'">
+                                        <img src="../../assets/57-512.png" width="20" height="20"
+                                            data-placement="bottom" matTooltip="Некорректная заявка" />
+                                    </ng-container>
+
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="nom">
+                                <th mat-header-cell *matHeaderCellDef> № заявки </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-grid-list cols="1" rowHeight="20px">
+                                        <mat-grid-tile> {{element.iD}} </mat-grid-tile>
+                                        <mat-grid-tile> {{element.order_datetime}} </mat-grid-tile>
+                                    </mat-grid-list>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="process">
+                                <th mat-header-cell *matHeaderCellDef> Процесс </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_process}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="base">
+                                <th mat-header-cell *matHeaderCellDef> Основание </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_base}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="executor">
+                                <th mat-header-cell *matHeaderCellDef> Исполнитель </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_candoit}}
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="type">
+                                <th mat-header-cell *matHeaderCellDef> Метод сборки </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_method}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="place">
+                                <th mat-header-cell *matHeaderCellDef> Место расположения </th>
+                                <td mat-cell *matCellDef="let element"> {{element.order_place}} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="percent">
+                                <th mat-header-cell *matHeaderCellDef> Прогресс </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-grid-list cols="1" rowHeight="1em">
+                                        <mat-grid-tile id="percent"> {{element.order_prog}}% </mat-grid-tile>
+                                        <mat-grid-tile data-placement="bottom" matTooltip="{{element.percent}}%">
+                                            <mat-progress-bar mode="determinate"
+                                                [value]="element.percent"></mat-progress-bar>
+                                        </mat-grid-tile>
+                                    </mat-grid-list>
+                                </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef> </th>
+                                <td mat-cell *matCellDef="let element"> </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="expandedDetail">
+                                <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplayWithout.length">
+                                    <div class="example-element-detail"
+                                        [@detailExpandWithout]="element == expandedElementWithout ? 'expandedWithout' : 'collapsedWithout'">
+                                        <!-- 111111111111111111111111111 -->
+
+                                        <table mat-table [dataSource]="element.items" class="table-hover">
+
+                                            <ng-container matColumnDef="id">
+                                                <th mat-header-cell *matHeaderCellDef> id </th>
+                                                <td mat-cell *matCellDef="let element"> {{iD}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="nom">
+                                                <th mat-header-cell *matHeaderCellDef> № заявки </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_id}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="article">
+                                                <th mat-header-cell *matHeaderCellDef> article </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_article}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="count">
+                                                <th mat-header-cell *matHeaderCellDef> count </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_count}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="place">
+                                                <th mat-header-cell *matHeaderCellDef> place </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_place}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="need">
+                                                <th mat-header-cell *matHeaderCellDef> need </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_need}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="prog">
+                                                <th mat-header-cell *matHeaderCellDef> Прогресс </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <mat-grid-list cols="1" rowHeight="1em">
+                                                        <mat-grid-tile id="percent"> {{element.order_prog}}%
+                                                        </mat-grid-tile>
+                                                        <mat-grid-tile data-placement="bottom"
+                                                            matTooltip="{{element.percent}}%">
+                                                            <mat-progress-bar mode="determinate"
+                                                                [value]="element.percent"></mat-progress-bar>
+                                                        </mat-grid-tile>
+                                                    </mat-grid-list>
+                                                </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="key">
+                                                <th mat-header-cell *matHeaderCellDef> key </th>
+                                                <td mat-cell *matCellDef="let element"> {{element.order_key}} </td>
+                                            </ng-container>
+
+                                            <ng-container matColumnDef="action">
+                                                <th mat-header-cell *matHeaderCellDef> </th>
+                                                <td mat-cell *matCellDef="let element"> </td>
+                                            </ng-container>
+
+                                            <tr mat-header-row *matHeaderRowDef="columnsToDisplayItem; sticky: true">
+                                            </tr>
+                                            <tr mat-row *matRowDef="let row; columns: columnsToDisplayItem;"
+                                                [ngClass]="{ 'select-row': selectedRowIndex == row[0] }"></tr>
+                                            <!-- (click)="onSelectRowClick(row)" -->
+                                        </table>
+
+                                        <!-- 111111111111111111111111111 -->
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="columnsToDisplayWithout; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let element; columns: columnsToDisplayWithout;"
+                                class="example-element-row"
+                                [class.example-expanded-row]="expandedElementWithout === element"
+                                (click)="expandedElementWithout = expandedElementWithout === element ? null : element">
+                            </tr>
+                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row">
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+                <label class="nav" for="about" (click)="onWithoutBase()">
+                    <span>
+                        Без основания
+                    </span>
+                </label>
+            </div>
+        </div>
     </mat-drawer-content>
 </mat-drawer-container>

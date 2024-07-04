@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from "@angular/core";
 import { ProcessModel } from "../../../../models/task-models/new-task";
 import { MatDialog } from "@angular/material/dialog";
 import { TaskCommonService } from "../../../../services/task-common.service";
+import { SelectCellFormComponent } from "../task-dialog/select-cell-form/select-cell-form.component";
 
 interface IProcess {
     id: number;
@@ -130,19 +131,19 @@ export class ProcessesFormComponent implements OnInit {
     }
 
     onOpenSelectCell(element: IProcess) {
-        // const dialogRef = this.dialog.open(SelectCellFormComponent, {
-        //     width: '65em',
-        //     height: '35em',
-        //     data: { select: this.selectedProc },
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result.length > 0) {
-        //         this.listSelected = this.listSelected.concat(result);
-        //         this.isSllowedAdd = true;
-        //     } else {
-        //         this.selectedZone = 'auto';
-        //     }
-        // });
+        const dialogRef = this.dialog.open(SelectCellFormComponent, {
+            width: '65em',
+            height: '35em',
+            data: { select: this.selectedProc },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result.length > 0) {
+                this.listSelected = this.listSelected.concat(result);
+                this.isSllowedAdd = true;
+            } else {
+                this.selectedZone = 'auto';
+            }
+        });
     }
 
     onChange(selectedValue: string) {

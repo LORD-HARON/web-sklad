@@ -1,0 +1,230 @@
+<div>
+    <div class="block">
+        <mat-list>
+            <ng-container *ngIf="data.select !== 'Ротация' && data.select !== 'Инвентаризация'">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Ячейка" [(ngModel)]="cellName" (keyup.enter)="onEnterAdd()"
+                        (input)="isIncorrect = false">
+                    <div *ngIf="isIncorrect" class="attention"> Такая ячейка ужу в списке! </div>
+                </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngIf="data.select === 'Инвентаризация'">
+                <mat-form-field>
+                    <input type="text" matInput placeholder="Зона" [(ngModel)]="cellName" (keyup.enter)="onEnterAdd()"
+                        (input)="isIncorrect = false">
+                    <div *ngIf="isIncorrect" class="attention"> Такая ячейка ужу в списке! </div>
+                </mat-form-field>
+            </ng-container>
+
+            <ng-container *ngIf="data.select === 'Ротация'">
+                <mat-form-field id="fromto">
+                    <input type="text" matInput placeholder="Откуда" [(ngModel)]="cellFrom">
+                    <img id="img-clear" src="../../../../../../assets/outline_cancel_black_24dp.png"
+                        (click)="onClickClearFrom()" />
+                </mat-form-field>
+
+                <mat-form-field id="fromto">
+                    <input type="text" matInput placeholder="Куда" [(ngModel)]="cellTo">
+                    <img id="img-clear" src="../../../../../../assets/outline_cancel_black_24dp.png"
+                        (click)="onClickClearTo()" />
+                </mat-form-field>
+
+                <ng-container *ngIf="cellFrom && cellTo">
+                    <button mat-mini-fab color="primary" cdkFocusInitial (click)="onEnterAddRotation()">
+                        <mat-icon aria-hidden="false" aria-label="Example home icon"> check </mat-icon>
+                    </button>
+                </ng-container>
+            </ng-container>
+
+            <ng-container *ngIf="cellName">
+                <!-- <button mat-mini-fab color="primary" cdkFocusInitial (click)="onEnterAdd()">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon"> check </mat-icon>
+                </button> -->
+                <mat-icon id="push" aria-hidden="false" aria-label="Example home icon" (click)="onEnterAdd()"
+                    matTooltip="Очистить"> add </mat-icon>
+            </ng-container>
+
+            <mat-list-item *ngFor="let item of listSelected">
+                <h3 matLine> {{item}} </h3>
+                <!-- <button mat-mini-fab color="warn" (click)="onDelete(item)">
+                    <mat-icon aria-hidden="false" aria-label="Example home icon"> clear </mat-icon>
+                </button> -->
+                <mat-icon id="push" aria-hidden="false" aria-label="Example home icon" (click)="onDelete(item)"
+                    matTooltip="Очистить"> clear </mat-icon>
+            </mat-list-item>
+        </mat-list>
+        <div class="form-inline br-pad">
+            <div mat-dialog-actions>
+                <button mat-raised-button id="butt-cancel" color="primary" class="btn btn-default"
+                    (click)="onCancelClick()">
+                    Закрыть
+                </button>
+                <button mat-raised-button id="butt-cancel" color="primary" class="btn btn-default">
+                    Очистить
+                </button>
+                <button mat-raised-button cdkFocusInitial color="primary" class="btn btn-default" (click)="onOkClick()">
+                    Ок
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="block1-overflow">
+        <ng-container *ngIf="data.select !== 'Инвентаризация'">
+            <pinch-zoom class="block1">
+                <table class="table-bord">
+                    <tr class="tr-bord" *ngFor="let col of tab_map; let i = index">
+                        <td class="td-bord" *ngFor="let row of col; let j = index" (click)="onClickCell(row)" [ngClass]="{
+                            'stillage-row-with-out-name': row.isStillageRowWithOutNameHor || row.isStillageRowWithOutNameVer,
+                            'stillage-cell-with-out-name': row.isStillageOneWithOutName,
+                            'road': row.element === 'road',
+                            'office': row.element === 'office',
+                            'zone_send': row.element === 'zone_send',
+                            'zone_unload': row.element === 'zone_unload',
+                            'zone_storage': row.element === 'zone_storage',
+                            's-left-bottom-top': row.style === 's-left-bottom-top',
+                            's-bottom-top': row.style === 's-bottom-top',
+                            's-right-bottom-top': row.style === 's-right-bottom-top',
+                            's-left-top-right': row.style === 's-left-top-right',
+                            's-left-right': row.style === 's-left-right',
+                            's-left-bottom-right': row.style === 's-left-bottom-right',
+                            's-left-top': row.style === 's-left-top',
+                            's-right-top': row.style === 's-right-top',
+                            's-right-bottom': row.style === 's-right-bottom',
+                            's-left-bottom': row.style === 's-left-bottom',
+                            's-left': row.style === 's-left',
+                            's-right': row.style === 's-right',
+                            's-bottom': row.style === 's-bottom',
+                            's-top': row.style === 's-top'
+                        }">
+                            {{row.cellName}}
+                            <div>
+                                <p id="row-name-ver" *ngIf="row.isBraceVer">{{row.rowName}}</p>
+                                <img id="img-ver1" [src]="row.imageUrl" *ngIf="row.isBraceVer" />
+                            </div>
+                            <div id="name-row-hor" class="form-inline">
+                                <p id="row-name-hor" *ngIf="row.isBraceHor">{{row.rowName}}</p>
+                                <img id="img-hor1" [src]="row.imageUrl" *ngIf="row.isBraceHor" />
+                            </div>
+                            <app-vertical-three-four-action *ngIf="row.element === 'ver-3-4'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-four-action>
+                            <app-vertical-three-four-right-action *ngIf="row.element === 'ver-3-4r'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-four-right-action>
+                            <app-horizontal-three-four-action *ngIf="row.element === 'hor-3-4'" [data]="row"
+                                (listChange)="onListCange($event)"></app-horizontal-three-four-action>
+                            <app-vertical-three-three-action *ngIf="row.element === 'ver-3-3'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-three-action>
+                            <app-vertical-three-three-right-action *ngIf="row.element === 'ver-3-3r'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-three-right-action>
+                            <app-vertical-three-two-action *ngIf="row.element === 'ver-3-2'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-two-action>
+                            <app-vertical-three-two-right-action *ngIf="row.element === 'ver-3-2r'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-two-right-action>
+                            <app-horizontal-three-two *ngIf="row.element === 'hor-3-2'"></app-horizontal-three-two>
+                            <app-vertical-three-five-action *ngIf="row.element === 'ver-3-5'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-five-action>
+                            <app-vertical-three-five-right-action *ngIf="row.element === 'ver-3-5r'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-three-five-right-action>
+                            <app-horizontal-three-five *ngIf="row.element === 'hor-3-5'"></app-horizontal-three-five>
+                            <app-vertical-two-five-action *ngIf="row.element === 'ver-2-5'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-two-five-action>
+                            <app-vertical-two-five-right-action *ngIf="row.element === 'ver-2-5r'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-two-five-right-action>
+                            <app-horizontal-two-five *ngIf="row.element === 'hor-2-5'"></app-horizontal-two-five>
+                            <app-vertical-two-four-action *ngIf="row.element === 'ver-2-4'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-two-four-action>
+                            <app-vertical-two-four-right-action *ngIf="row.element === 'ver-2-4r'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-two-four-right-action>
+                            <app-horizontal-two-four *ngIf="row.element === 'hor-2-4'"></app-horizontal-two-four>
+                            <app-long-three-one-five-action *ngIf="row.element === 'long-3-1-5'" [data]="row"
+                                (listChange)="onListCange($event)"></app-long-three-one-five-action>
+                            <app-long-two-three-four-action *ngIf="row.element === 'long-2-3-4'" [data]="row"
+                                (listChange)="onListCange($event)"></app-long-two-three-four-action>
+                            <app-long-three-five-action *ngIf="row.element === 'long-3-5'" [data]="row"
+                                (listChange)="onListCange($event)"></app-long-three-five-action>
+                            <app-long-three-four-action *ngIf="row.element === 'long-3-4'" [data]="row"
+                                (listChange)="onListCange($event)"></app-long-three-four-action>
+                            <app-vertical-two-three-action *ngIf="row.element === 'ver-2-3'" [data]="row"
+                                (listChange)="onListCange($event)"></app-vertical-two-three-action>
+                            <app-zona-storage-action *ngIf="row.element === 'zona-storage-pallet'" [data]="row"
+                                (listChange)="onListCange($event)"></app-zona-storage-action>
+                        </td>
+                    </tr>
+                </table>
+            </pinch-zoom>
+        </ng-container>
+        <ng-container *ngIf="data.select == 'Инвентаризация'">
+            <pinch-zoom class="block1">
+                <table class="table-bord">
+                    <tr class="tr-bord" *ngFor="let col of tab_map; let i = index">
+                        <td class="td-bord" *ngFor="let row of col; let j = index" (click)="onClickCell(row)" [ngClass]="{
+                            'stillage-row-with-out-name': row.isStillageRowWithOutNameHor || row.isStillageRowWithOutNameVer,
+                            'stillage-cell-with-out-name': row.isStillageOneWithOutName,
+                            'stillage-select-cell': row.isSelectCellStillage,
+                            'road': row.element === 'road',
+                            'office': row.element === 'office',
+                            'zone_send': row.element === 'zone_send',
+                            'zone_unload': row.element === 'zone_unload',
+                            'zone_storage': row.element === 'zone_storage',
+                            's-left-bottom-top': row.style === 's-left-bottom-top',
+                            's-bottom-top': row.style === 's-bottom-top',
+                            's-right-bottom-top': row.style === 's-right-bottom-top',
+                            's-left-top-right': row.style === 's-left-top-right',
+                            's-left-right': row.style === 's-left-right',
+                            's-left-bottom-right': row.style === 's-left-bottom-right',
+                            's-left-top': row.style === 's-left-top',
+                            's-right-top': row.style === 's-right-top',
+                            's-right-bottom': row.style === 's-right-bottom',
+                            's-left-bottom': row.style === 's-left-bottom',
+                            's-left': row.style === 's-left',
+                            's-right': row.style === 's-right',
+                            's-bottom': row.style === 's-bottom',
+                            's-top': row.style === 's-top'
+                        }">
+                            {{row.cellName}}
+                            <div>
+                                <p id="row-name-ver" *ngIf="row.isBraceVer">{{row.rowName}}</p>
+                                <img id="img-ver1" [src]="row.imageUrl" *ngIf="row.isBraceVer" />
+                            </div>
+                            <div id="name-row-hor" class="form-inline">
+                                <p id="row-name-hor" *ngIf="row.isBraceHor">{{row.rowName}}</p>
+                                <img id="img-hor1" [src]="row.imageUrl" *ngIf="row.isBraceHor" />
+                            </div>
+                            <app-vertical-three-four *ngIf="row.element === 'ver-3-4'"></app-vertical-three-four>
+                            <app-vertical-three-four-right
+                                *ngIf="row.element === 'ver-3-4r'"></app-vertical-three-four-right>
+                            <app-horizontal-three-four *ngIf="row.element === 'hor-3-4'"></app-horizontal-three-four>
+                            <app-vertical-three-three *ngIf="row.element === 'ver-3-3'"></app-vertical-three-three>
+                            <app-vertical-three-three-right
+                                *ngIf="row.element === 'ver-3-3r'"></app-vertical-three-three-right>
+                            <app-horizontal-three-three *ngIf="row.element === 'hor-3-3'"></app-horizontal-three-three>
+                            <app-vertical-three-two *ngIf="row.element === 'ver-3-2'"></app-vertical-three-two>
+                            <app-vertical-three-two-right
+                                *ngIf="row.element === 'ver-3-2r'"></app-vertical-three-two-right>
+                            <app-horizontal-three-two *ngIf="row.element === 'hor-3-2'"></app-horizontal-three-two>
+                            <app-vertical-three-five *ngIf="row.element === 'ver-3-5'"></app-vertical-three-five>
+                            <app-vertical-three-five-right
+                                *ngIf="row.element === 'ver-3-5r'"></app-vertical-three-five-right>
+                            <app-horizontal-three-five *ngIf="row.element === 'hor-3-5'"></app-horizontal-three-five>
+                            <app-vertical-two-five *ngIf="row.element === 'ver-2-5'"></app-vertical-two-five>
+                            <app-vertical-two-five-right
+                                *ngIf="row.element === 'ver-2-5r'"></app-vertical-two-five-right>
+                            <app-horizontal-two-five *ngIf="row.element === 'hor-2-5'"></app-horizontal-two-five>
+                            <app-vertical-two-four *ngIf="row.element === 'ver-2-4'"></app-vertical-two-four>
+                            <app-vertical-two-four-right
+                                *ngIf="row.element === 'ver-2-4r'"></app-vertical-two-four-right>
+                            <app-horizontal-two-four *ngIf="row.element === 'hor-2-4'"></app-horizontal-two-four>
+                            <app-long-three-one-five *ngIf="row.element === 'long-3-1-5'"></app-long-three-one-five>
+                            <app-long-two-three-four *ngIf="row.element === 'long-2-3-4'"></app-long-two-three-four>
+                            <app-long-three-five *ngIf="row.element === 'long-3-5'"></app-long-three-five>
+                            <app-long-three-four *ngIf="row.element === 'long-3-4'"></app-long-three-four>
+                            <app-vertical-two-three *ngIf="row.element === 'ver-2-3'"></app-vertical-two-three>
+                            <app-zona-storage *ngIf="row.element === 'zona-storage-pallet'"></app-zona-storage>
+                        </td>
+                    </tr>
+                </table>
+            </pinch-zoom>
+        </ng-container>
+
+    </div>
+</div>

@@ -1,0 +1,18 @@
+<p> Основание </p>
+<div class="form-inline">
+    <mat-form-field class="example-chip-list" appearance="outline">
+        <mat-chip-grid #chipList aria-label="Docs selection">
+            <mat-chip-option *ngFor="let item of list" [selectable]="selectable" [removable]="removable"
+                (removed)="remove(item)">
+                {{item}}
+                <mat-icon matChipRemove *ngIf="removable"> cancel </mat-icon>
+            </mat-chip-option>
+            <input placeholder="№ документа" matTooltip="Введите основание или выберите из списка"
+                [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
+        </mat-chip-grid>
+
+    </mat-form-field>
+    <mat-icon id="push" aria-hidden="false" aria-label="Example home icon" (click)="openDocList()"
+        matTooltip="Выбрать из списка"> add </mat-icon>
+</div>

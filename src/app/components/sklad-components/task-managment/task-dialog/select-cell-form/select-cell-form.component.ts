@@ -5,7 +5,7 @@ import { TokenService } from "../../../../../services/token.service";
 import { StillageService } from "../../../../../services/stillage.service";
 import { MapService } from "../../../../../services/map.service";
 import { TokenModel } from "../../../../../models/token";
-
+import { StillagesModule } from "../../../stillages/stillages.module";
 export interface DialogData {
     select: string;
 }
@@ -47,11 +47,10 @@ export class SelectCellFormComponent implements OnInit {
             },
             error: error => {
                 console.log(error);
-                alert("Сервер не отвечает.");
             }
         });
     }
-    onClickCell(stillage: StillageItemModel, numberCell: string, floorCell: string) {
+    onClickCell(stillage: StillageItemModel, numberCell?: string, floorCell?: string) {
         if (this.data.select !== 'Инвентаризация') {
             if (stillage.element === 'office' || stillage.element === 'zone_send' || stillage.element === 'zone_unload' || stillage.element === 'zone_storage') {
                 if (stillage.cellName) {

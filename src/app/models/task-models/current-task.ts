@@ -2,7 +2,7 @@ import { CurrentTaskItemModel } from "./current-task-item";
 
 export class CurrentTaskModel {
     constructor(
-        public id: string,
+        public iD: string,
         public order_process: string,
         public order_base: string,
         public order_candoit: string,

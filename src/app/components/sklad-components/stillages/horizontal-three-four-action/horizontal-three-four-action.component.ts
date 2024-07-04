@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatDialog } from "@angular/material/dialog";
 import { StillageService } from "../../../../services/stillage.service";
 import { StillageItemModel } from "../../../../models/map-models/stillage-item";
+import { DetailViewCellComponent } from "../detail-view-cell/detail-view-cell.component";
 
 export class Item {
     constructor(
@@ -67,13 +68,13 @@ export class HorizontalThreeFourActionComponent implements OnInit {
     }
 
     onOpenDetailWindow(numberCell: any, floorCell: any) {
-        // const dialogRef = this.dialog.open(DetailViewCellComponent, {
-        //     data: { stillageItem: this.stillageItem, num: numberCell, floor: floorCell },
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result)
-        //         this.ngOnInit();
-        // });
+        const dialogRef = this.dialog.open(DetailViewCellComponent, {
+            data: { stillageItem: this.stillageItem, num: numberCell, floor: floorCell },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result)
+                this.ngOnInit();
+        });
     }
 
     listenEvent(event: Array<string>) {

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { environment } from "../environment";
-import { Token } from "../models/token";
+import { TokenModel } from "../models/token";
 import { Observable } from "rxjs";
 import { StillagesModel } from "../models/map-models/stillages";
 import { HttpClient } from "@angular/common/http";
@@ -18,13 +18,13 @@ export class MapService {
     setStillagesUrl = environment.apiUrl + '/SetStillages/'
     getCellUrl = environment.apiUrl + '/GetCell/'
 
-    GetSklad(data: Token): Observable<StillagesModel> {
+    GetSklad(data: TokenModel): Observable<StillagesModel> {
         return this.http.post<StillagesModel>(this.getStillagesUrl, data)
     }
-    SetSklad(data: Token): Observable<Status> {
+    SetSklad(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.setStillagesUrl, data)
     }
-    GetCell(data: Token): Observable<CellAnswModel> {
+    GetCell(data: TokenModel): Observable<CellAnswModel> {
         return this.http.post<CellAnswModel>(this.getCellUrl, data)
     }
 }

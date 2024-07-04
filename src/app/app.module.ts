@@ -52,6 +52,19 @@ import { BaseFormComponent } from './components/sklad-components/task-managment/
 import { ProcPersonalListFormComponent } from './components/sklad-components/task-managment/proc-personal-list-form-component/proc-personal-list-from.component';
 import { ProcessesFormComponent } from './components/sklad-components/task-managment/processes-form-component/process-form.component';
 import { StillagesModule } from './components/sklad-components/stillages/stillages.module';
+import { SelectCellFormComponent } from './components/sklad-components/task-managment/task-dialog/select-cell-form/select-cell-form.component';
+import { PinchZoomModule } from '@meddv/ngx-pinch-zoom';
+import { ClearFormDialogComponent } from './components/sklad-components/task-managment/task-dialog/clear-form-dialog/clear-form-dialog.component';
+import { ConfirmationPopoverModule } from 'angular-confirmation-popover';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatChipsModule } from '@angular/material/chips';
+import { DocListComponent } from './components/sklad-components/task-managment/task-dialog/doc-list/doc-list.component';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatSortModule } from '@angular/material/sort';
+import { DetailDocFormComponent } from './components/sklad-components/task-managment/task-dialog/detail-doc-form/detail-doc-form.component';
+import { SelectUserFormComponent } from './components/sklad-components/task-managment/task-dialog/select-user-form/select-user-form.component';
+import { PersonalListFormComponent } from './components/sklad-components/porsonal-menegment-component/personal-list-form/personal-list-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -80,6 +93,12 @@ import { StillagesModule } from './components/sklad-components/stillages/stillag
     BaseFormComponent,
     ProcPersonalListFormComponent,
     ProcessesFormComponent,
+    SelectCellFormComponent,
+    ClearFormDialogComponent,
+    DocListComponent,
+    DetailDocFormComponent,
+    SelectUserFormComponent,
+    PersonalListFormComponent
   ],
   imports: [
     StillagesModule,
@@ -107,6 +126,15 @@ import { StillagesModule } from './components/sklad-components/stillages/stillag
     MatListModule,
     NgxPrintModule,
     MatTableModule,
+    PinchZoomModule,
+    ConfirmationPopoverModule.forRoot({
+      confirmButtonType: 'danger', // set defaults here
+    }),
+    MatGridListModule,
+    MatProgressBarModule,
+    MatChipsModule,
+    MatTabsModule,
+    MatSortModule
   ],
   providers: [
     provideAnimationsAsync(),

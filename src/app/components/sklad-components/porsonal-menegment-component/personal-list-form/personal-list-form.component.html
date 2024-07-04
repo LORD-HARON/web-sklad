@@ -1,0 +1,23 @@
+<div class="tab-container">
+    <table mat-table [dataSource]="dataSource" class="table-hover">
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Поьзователь </th>
+            <td mat-cell *matCellDef="let element"> {{element.login}} </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="group">
+                <th mat-header-cell *matHeaderCellDef> Группа </th>
+                <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+            </ng-container>  -->
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr id="row" mat-row *matRowDef="let row; columns: displayedColumns;let i = index" (click)="onSelectRow(i, row)"
+            [ngClass]="{ 'select-row': i === selectItem }"></tr>
+
+    </table>
+</div>
+<div mat-dialog-actions>
+    <button type="button" id="bt" class="btn btn-light" (click)="onNoClick()"> Отмена </button>
+    <button type="button" id="bt" class="btn btn-primary" [mat-dialog-close]="selectName" cdkFocusInitial> Ok </button>
+</div>

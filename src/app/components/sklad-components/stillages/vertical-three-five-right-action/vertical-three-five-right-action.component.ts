@@ -4,6 +4,7 @@ import { CellItemBoolean } from "../../../../models/map-models/cell-item-boolean
 import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { StillageService } from "../../../../services/stillage.service";
+import { StillageDialogComponent } from "../stillage-dialog.component/stillage-dialog.component";
 
 @Component({
     selector: 'app-vertical-three-five-right-action',
@@ -60,14 +61,14 @@ export class VerticalThreeFiveRightActionComponent implements OnInit {
     }
 
     onOpenDetailWindow(cell: string, stillage: string, floor: string, number: string,) {
-        // const dialogRef = this.dialog.open(StillgeDialogFormComponent, {
-        //     data: { cell: cell, stillage: stillage, floor: floor, num: number },
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     if (result) {
+        const dialogRef = this.dialog.open(StillageDialogComponent, {
+            data: { cell: cell, stillage: stillage, floor: floor, num: number },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
 
-        //     }
-        // });
+            }
+        });
     }
 
     listenEvent(event: Array<string>) {

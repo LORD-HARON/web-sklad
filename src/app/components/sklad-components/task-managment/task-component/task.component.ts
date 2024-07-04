@@ -10,35 +10,23 @@ import { SnackbarService } from "../../../../services/snackbar.service";
 import { TaskCommonService } from "../../../../services/task-common.service";
 import { TaskService } from "../../../../services/task.service";
 import { TokenModel } from "../../../../models/token";
+import { ConfirmationNewTaskFormComponent } from "../task-dialog/confirmation-new-task/confirmation-new-task.component";
 @Component({
     selector: 'app-task',
     templateUrl: './task.component.html',
     styleUrl: './task.component.scss',
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed', style({ height: '0px', minHeight: '0' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-        trigger('detailExpandWithout', [
-            state('collapsedWithout', style({ height: '0px', minHeight: '0' })),
-            state('expandedWithout', style({ height: '*' })),
-            transition('expandedWithout <=> collapsedWithout', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-        ]),
-    ],
 })
 export class TaskComponent {
     listProcesses: Array<ProcessModel> = [];
     listBase: Array<string> = [];
     executorTask: ExecutorTaskModel = new ExecutorTaskModel('all', '');
-
+    selectedRowIndex: any
     displayedColumnsProcesses = ['processe'];
     selectedMethod: any = 'auto';
     confirmText: string = 'Да';
     cancelText: string = 'Нет';
     cancelClicked = false;
     isDisabled = true;
-
     color = 'primary';
     mode = 'determinate';
     value = 50;
@@ -56,6 +44,7 @@ export class TaskComponent {
     messageNoConnect = 'Нет соединения, попробуйте позже.';
     action = 'Ok';
     styleNoConnect = 'red-snackbar';
+    iD: any;
 
     constructor(
         public dialog: MatDialog,
@@ -126,18 +115,18 @@ export class TaskComponent {
         this.controlData();
     }
 
-    // onOpenConfirmationForm() {
-    //     var newTask = new NewTaskModel(this.tokenService.getToken(), this.listProcesses, this.listBase, this.executorTask, this.selectedMethod);
-    //     const dialogRef = this.dialog.open(ConfirmationNewTaskFormComponent, {
-    //         width: '50em',
-    //         // height: '85vh',
-    //         data: { task: newTask },
-    //     });
-    //     dialogRef.afterClosed().subscribe(result => {
-    //         if (result) {
-    //         }
-    //     });
-    // }
+    onOpenConfirmationForm() {
+        var newTask = new NewTaskModel(this.tokenService.getToken(), this.listProcesses, this.listBase, this.executorTask, this.selectedMethod);
+        const dialogRef = this.dialog.open(ConfirmationNewTaskFormComponent, {
+            width: '50em',
+            // height: '85vh',
+            data: { task: newTask },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+            }
+        });
+    }
 
     controlData() {
         this.listProcesses.forEach(element => {
