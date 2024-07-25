@@ -1,0 +1,30 @@
+.main{
+    width: 100%;
+    .control-conteiner{
+        padding: 10px;
+        button{
+            margin-right: 10px;
+            width: 105px;
+        }
+        mat-form-field{
+            margin-right: 10px;
+        }
+    }
+    .table-conteiner{
+        width: 100vw;
+        height: 80vh;
+        overflow: auto;
+
+        table{
+            border: 1px solid #e0e0e0;
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+            table-layout: fixed;
+            th, td{
+                text-align: center;
+                color: #757575;
+            }
+        }
+    }
+}

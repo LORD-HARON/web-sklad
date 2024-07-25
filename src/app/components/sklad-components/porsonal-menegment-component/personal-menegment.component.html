@@ -1,0 +1,21 @@
+<mat-drawer-container class="drawer-container">
+    <mat-drawer mode="side" opened class="drawer">
+        <div class="nav-conteiner">
+            <a (click)="selectedTemp = 'users'" [ngClass]="{ 'selected': selectedTemp == 'users' }">Персонал</a>
+            <a (click)="selectedTemp = 'group'" [ngClass]="{ 'selected': selectedTemp == 'group' }">Группы</a>
+            <a (click)="selectedTemp = 'docChange'" [ngClass]="{ 'selected': selectedTemp == 'docChange' }">
+                Изменение документа
+            </a>
+        </div>
+    </mat-drawer>
+    <mat-drawer-content>
+        <div *ngIf="selectedTemp == 'users'" class="temp-conteiner">
+            <app-personal-users></app-personal-users>
+        </div>
+        <div *ngIf="selectedTemp == 'group'" class="temp-conteiner">
+        </div>
+        <div *ngIf="selectedTemp == 'docChange'" class="temp-conteiner">
+            <app-change-who-send-doc></app-change-who-send-doc>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

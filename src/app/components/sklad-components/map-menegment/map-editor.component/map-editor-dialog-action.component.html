@@ -1,0 +1,15 @@
+<div class="dialog-template" *ngIf="dialogeMode == 'cancel'">
+    <span>Вы действительно хотите отменить изменения?</span>
+    <div class="dialog-controller">
+        <button mat-raised-button style="background-color: green; color: white;" (click)="Cansel()">Да</button>
+        <button mat-raised-button style="background-color: red; color: white;" (click)="noCancel()">Нет</button>
+    </div>
+</div>
+
+<div class="dialog-template" *ngIf="dialogeMode == 'save'">
+    <span>Вы действительно хотите сохранить изменения?</span>
+    <div class="dialog-controller">
+        <button mat-raised-button style="background-color: green; color: white;" (click)="save()">Да</button>
+        <button mat-raised-button style="background-color: red; color: white;" (click)="saveCansel()">Нет</button>
+    </div>
+</div>

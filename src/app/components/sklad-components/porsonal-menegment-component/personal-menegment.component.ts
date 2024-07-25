@@ -6,5 +6,6 @@ import { Component } from "@angular/core";
     styleUrl: './personal-menegment.component.scss'
 })
 export class PersonalMenegmentComponent {
+    selectedTemp: string = 'users'
 
 }

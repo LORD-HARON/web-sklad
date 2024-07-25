@@ -45,7 +45,6 @@ import { ZonaStorageComponent } from "./zona-storage/zona-storage.component";
 import { ZonaStorageActionComponent } from "./zona-storage-action/zona-storage-action.component";
 import { CommonModule } from "@angular/common";
 import { DetailViewCellComponent } from "./detail-view-cell/detail-view-cell.component";
-import { StillageDialogComponent } from "./stillage-dialog.component/stillage-dialog.component";
 @NgModule({
     declarations: [
         HorizontalThreeFourActionComponent,
@@ -93,7 +92,6 @@ import { StillageDialogComponent } from "./stillage-dialog.component/stillage-di
         ZonaStorageComponent,
         ZonaStorageActionComponent,
         DetailViewCellComponent,
-        StillageDialogComponent
     ],
     imports: [
         CommonModule
@@ -145,7 +143,6 @@ import { StillageDialogComponent } from "./stillage-dialog.component/stillage-di
         ZonaStorageComponent,
         ZonaStorageActionComponent,
         DetailViewCellComponent,
-        StillageDialogComponent
     ]
 })
 export class StillagesModule {

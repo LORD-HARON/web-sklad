@@ -1,18 +1,21 @@
-<div id="print-section">
-    <div class="date">
-        Дата печати: {{date | date:"dd/MM/yyyy HH:mm"}}
+<div class="main" id="print-section">
+    <div class="header-conteiner">
+        <div class="header-conteiner-barcode-box">
+            <span>Дата печати: {{date | date:"dd/MM/yyyy HH:mm"}}</span>
+            <img [src]="imgSource">
+        </div>
+        <div class="header-conteiner-box">
+            <span>№:{{wDocAnswer.docname}}</span>
+            <span>Грузуотправитель:</span>
+            <span>Грузополучатель:</span>
+        </div>
+        <div class="header-conteiner-box">
+            <span>Дата:{{wDocAnswer.docdate}}</span>
+            <span>{{wDocAnswer.docfrom}}</span>
+            <span>{{wDocAnswer.docto}}</span>
+        </div>
     </div>
-    <mat-grid-list cols="4" rowHeight="3em">
-        <mat-grid-tile [colspan]="1" [rowspan]="3"> <img [src]="imgSource"> </mat-grid-tile>
-        <mat-grid-tile [colspan]="1" [rowspan]="1"> №: {{wDocAnswer.docname}} </mat-grid-tile>
-        <mat-grid-tile [colspan]="2" [rowspan]="1"> Дата: {{wDocAnswer.docdate}} </mat-grid-tile>
-        <mat-grid-tile> Грузоотправитель: </mat-grid-tile>
-        <mat-grid-tile [colspan]="2" [rowspan]="1"> {{wDocAnswer.docfrom}} </mat-grid-tile>
-        <mat-grid-tile> Грузополучатель: </mat-grid-tile>
-        <mat-grid-tile [colspan]="2" [rowspan]="1"> {{wDocAnswer.docto}} </mat-grid-tile>
-    </mat-grid-list>
-
-    <div class="mat-elevation-z8 table-container">
+    <div class="table-conteiner">
         <table mat-table [dataSource]="dataSource" class="table-hover" matSort>
 
             <ng-container matColumnDef="num">
@@ -60,17 +63,16 @@
 
         </table>
     </div>
-
-</div>
-<div mat-dialog-actions>
-    <button mat-raised-button color="primary" class="btn btn-default" (click)="onCancelClick()">
-        Отмена
-    </button>
-    <button mat-raised-button (click)="onGetDateNow()" color="primary" class="btn btn-default"> Печать
-    </button>
-
-    <button hidden #ngxPrint color="primary" class="btn btn-default"
-        [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse'}}"
-        printSectionId="print-section" ngxPrint>
-    </button>
+    <div class="control-conteiner">
+        <button mat-raised-button color="primary" (click)="onCancelClick()">
+            Отмена
+        </button>
+        <button mat-raised-button (click)="onGetDateNow()" color="primary">
+            Печать
+        </button>
+        <button hidden #ngxPrint color="primary" class="btn btn-default"
+            [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse'}}"
+            printSectionId="print-section" ngxPrint>
+        </button>
+    </div>
 </div>

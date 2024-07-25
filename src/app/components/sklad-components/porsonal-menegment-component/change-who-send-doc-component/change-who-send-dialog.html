@@ -1,0 +1,10 @@
+<div class="dialog-main">
+    <mat-form-field appearance="outline">
+        <mat-label>Отправил документ</mat-label>
+        <input matInput type="text" [(ngModel)]="changeRow">
+        <mat-icon id="push" matSuffix data-toggle="tooltip" data-placement="bottom" title="Принять"
+            style="color: green; cursor: pointer;" (click)="apply()">check</mat-icon>
+        <mat-icon id="push" matSuffix data-toggle="tooltip" data-placement="bottom" title="Отменить"
+            style="color: red;cursor: pointer;" (click)="cancel()">close</mat-icon>
+    </mat-form-field>
+</div>

@@ -1,110 +1,70 @@
-<div id="main">
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-3">
-                        <h5 class="card-title"> Процессы </h5>
+<div class="main">
+    <div class="table-conteiner">
+        <table>
+            <tr>
+                <td>
+                    <span>Процессы</span>
+                </td>
+                <td *ngFor="let poc of data.task.process">
+                    <span class="bordered-span">{{poc.type}}</span>
+                    <span class="bordered-span">{{poc.zone}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Основание</span>
+                    <p>№ Документа</p>
+                </td>
+                <td>
+                    <div class="doc-list">
+                        <ul *ngFor="let base of data.task.baseList">
+                            <li>
+                                <span class="bordered-span">{{base}}</span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush" *ngFor="let poc of data.task.process">
-                                <li class="list-group-item">
-                                    <div class="border-bot">
-                                        <ul class="list-group list-group-horizontal">
-                                            <li id="type" class="list-group-item"> {{poc.type}} </li>
-                                            <li class="list-group-item"> {{poc.zone}} </li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-3">
-                        <h5 id="base" class="card-title">
-                            Основание
-                            <p class="card-text"><small class="text-muted"> № Документа </small></p>
-                        </h5>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <!-- <ng-container *ngIf="data.task.baselist.length == '0'"> --- </ng-container> -->
-                            <ul class="list-group list-group-flush" *ngFor="let base of data.task.baselist">
-                                <div class="border-bot">
-                                    <li id="base" class="list-group-item"> {{base}} </li>
-                                </div>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-3">
-                        <h5 class="card-title">
-                            Исполнитель
-                        </h5>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <ul class="list-group list-group-horizontal">
-                                        <li id="type" class="list-group-item">
-                                            <ng-container *ngIf="data.task.executor.type === 'all'"> Общедоступный
-                                            </ng-container>
-                                            <ng-container *ngIf="data.task.executor.type === 'group'"> Группа
-                                            </ng-container>
-                                            <ng-container *ngIf="data.task.executor.type === 'user'"> Пользователь
-                                            </ng-container>
-                                        </li>
-                                        <li class="list-group-item" *ngIf="data.task.executor.name">
-                                            {{data.task.executor.name}} </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="list-group-item">
-            <div class="card mb-3">
-                <div class="row no-gutters">
-                    <div class="col-md-3">
-                        <h5 class="card-title">
-                            Способ сборки
-                        </h5>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <ul class="list-group list-group-flush">
-                                <li id="method" class="list-group-item">
-                                    <ng-container *ngIf="data.task.method === 'auto'"> Автомачиский </ng-container>
-                                    <ng-container *ngIf="data.task.method === 'hand'"> Ручной </ng-container>
-                                    <ng-container *ngIf="data.task.method === 'shtabel'"> Штабелером </ng-container>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </li>
-    </ul>
-</div>
-<div mat-dialog-actions id="bt-group">
-    <button mat-raised-button color="primary" class="btn btn-default" (click)="onCancelClick()">
-        Отмена
-    </button>
-    <button mat-raised-button color="primary" class="btn btn-default" (click)="onCreate()">
-        Создать
-    </button>
+
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Исполнитель</span>
+                </td>
+                <td>
+                    <ng-container *ngIf="data.task.executor.type === 'all'">
+                        <span class="bordered-span">Общедоступный</span>
+                    </ng-container>
+                    <ng-container *ngIf="data.task.executor.type === 'group'">
+                        <span class="bordered-span">Группа</span>
+                    </ng-container>
+                    <ng-container *ngIf="data.task.executor.type === 'user'">
+                        <span class="bordered-span">Пользователь</span>
+                    </ng-container>
+                </td>
+                <td *ngIf="data.task.executor.name">
+                    <span class="bordered-span">{{data.task.executor.name}}</span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Способ сборки</span>
+                </td>
+                <td>
+                    <ng-container *ngIf="data.task.method === 'auto'">
+                        <span class="bordered-span">Автомачиский</span>
+                    </ng-container>
+                    <ng-container *ngIf="data.task.method === 'hand'">
+                        <span class="bordered-span">Ручной</span>
+                    </ng-container>
+                    <ng-container *ngIf="data.task.method === 'shtabel'">
+                        <span class="bordered-span">Штабелером</span>
+                    </ng-container>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="control-conteiner">
+        <button mat-raised-button color="primary">Отмена</button>
+        <button mat-raised-button color="primary">Создать</button>
+    </div>
 </div>

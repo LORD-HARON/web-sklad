@@ -22,6 +22,8 @@ export class JournalService {
         return this.http.post<HistAnswModel>(this.getHistoryUrl, data)
     }
     GetJournal(data: JournalReqModel): Observable<JournalModel[]> {
+        console.log(data);
+
         return this.http.post<JournalModel[]>(this.getJournalUrl, data)
     }
 }

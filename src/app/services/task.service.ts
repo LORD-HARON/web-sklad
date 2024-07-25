@@ -10,6 +10,7 @@ import { CurrentTaskModel } from "../models/task-models/current-task";
 import { PrintAnswModel } from "../models/task-models/print-answ";
 import { RazgReqModel } from "../models/task-models/razg-req";
 import { RazgAnswModel } from "../models/task-models/razg-answ";
+import { PrintComplateRequestModel } from "../models/task-models/print-complate-request";
 
 @Injectable({
     providedIn: 'root'
@@ -34,7 +35,7 @@ export class TaskService {
     GetCurrentTask(data: TokenModel): Observable<CurrentTaskModel[]> {
         return this.http.post<CurrentTaskModel[]>(this.getCurrnetTaskUrl, data)
     }
-    PrintComplate(data: TokenModel): Observable<PrintAnswModel[]> {
+    PrintComplate(data: PrintComplateRequestModel): Observable<PrintAnswModel[]> {
         return this.http.post<PrintAnswModel[]>(this.printComplateUrl, data)
     }
     Razg(data: RazgReqModel): Observable<RazgAnswModel> {

@@ -37,7 +37,7 @@ export class DocListComponent implements OnInit {
     @ViewChild('sortPerem', { static: true }) sortPerem: MatSort;
     @ViewChild('sortVozv', { static: true }) sortVozv: MatSort;
 
-    displayedColumns = ['doclabel', 'docid', 'docdate', 'docloc', 'icon'];
+    displayedColumns = ['docLabel', 'docId', 'docDate', 'docLoc', 'icon'];
     displayedListColumns = ['title'];
 
     dataSourcePrihod: MatTableDataSource<AnswerDocModel>;
@@ -83,22 +83,22 @@ export class DocListComponent implements OnInit {
         this.list = [];
         this.data.list = [];
         if (this.dataSourcePrihod)
-            if (this.dataSourcePrihod.data.length > 0)
+            if (this.dataSourcePrihod.data)
                 this.dataSourcePrihod.data.forEach(element => {
                     element.highLighted = false;
                 });
         if (this.dataSourceZpc)
-            if (this.dataSourceZpc.data.length > 0)
+            if (this.dataSourceZpc.data)
                 this.dataSourceZpc.data.forEach(element => {
                     element.highLighted = false;
                 });
         if (this.dataSourcePerem)
-            if (this.dataSourcePerem.data.length > 0)
+            if (this.dataSourcePerem.data)
                 this.dataSourcePerem.data.forEach(element => {
                     element.highLighted = false;
                 });
         if (this.dataSourceVozv)
-            if (this.dataSourceVozv.data.length > 0)
+            if (this.dataSourceVozv.data)
                 this.dataSourceVozv.data.forEach(element => {
                     element.highLighted = false;
                 });
@@ -282,27 +282,31 @@ export class DocListComponent implements OnInit {
     }
 
     getDataSourcePrihod() {
-        this.procService.GetPrihod(new TokenModel(this.tokenService.getToken())).subscribe(response => {
-            this.dataSourcePrihod = new MatTableDataSource(response);
-            this.deleteZero(this.dataSourcePrihod.data);
-            this.dataSourcePrihod.sort = this.sortPrihod;
-        },
-            error => {
+        this.procService.GetPrihod(new TokenModel(this.tokenService.getToken())).subscribe({
+            next: response => {
+                this.dataSourcePrihod = new MatTableDataSource(response);
+                this.deleteZero(this.dataSourcePrihod.data)
+                this.dataSourcePrihod.sort = this.sortPrihod
+            },
+            error: error => {
                 console.log(error);
                 this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-            });
+            }
+        });
     }
 
     getDataSourceZpc() {
-        this.procService.GetZPC(new TokenModel(this.tokenService.getToken())).subscribe(response => {
-            this.dataSourceZpc = new MatTableDataSource(response);
-            this.deleteZero(this.dataSourceZpc.data);
-            this.dataSourceZpc.sort = this.sortZpc;
-        },
-            error => {
+        this.procService.GetZPC(new TokenModel(this.tokenService.getToken())).subscribe({
+            next: response => {
+                this.dataSourceZpc = new MatTableDataSource(response);
+                this.deleteZero(this.dataSourceZpc.data);
+                this.dataSourceZpc.sort = this.sortZpc;
+            },
+            error: error => {
                 console.log(error);
                 this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-            });
+            }
+        });
     }
 
     getDataSourcePerem() {
@@ -330,7 +334,7 @@ export class DocListComponent implements OnInit {
     }
 
     deleteZero(list: Array<AnswerDocModel>) {
-        if (list.length > 0)
+        if (list)
             list.forEach(element => {
                 element.docDate = element.docDate.split(' ')[0];
             });

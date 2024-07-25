@@ -1,46 +1,71 @@
-.card-body {
-    margin: 0%;
-    padding: 0%;
+.main{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    .table-conteiner {
+        width: 95%;
+        height: 80%;
+        margin: 5px;
+        border: 1px solid #dfdfdf;
+        border-radius: 10px;
+        padding: 5px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        overflow: auto;
+        table{
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+            tr{
+                border-bottom: 1px solid #dfdfdf;
+                max-width: 144px;
+                &:last-child{
+                    border: none;
+                }
+                td{
+                    .doc-list{
+                        width: 100%;
+                        height: 100%;
+                        display: flex;
+                        flex-wrap: wrap;
+                    }
+                    span{
+                        font-size: 20px;
+                    }
+                    p{
+                        font-size: 15px;
+                        color: #666666;
+                    }
+                }
+            }
+        }
+    }
+    .control-conteiner{
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        button{
+            margin-right: 15px;
+        }
+    }
 }
-.list-group-item {
-    margin: 0%;
-    padding: 0%;
-}
-.list-group-horizontal {
-    margin: 0.2em 1em 0 0;
-    padding: 0.2em;
-}
-.list-group-horizontal .list-group-item {
-    border: 0 none;
-}
-.list-group-item#type {
-    width: 9em;
-}
-h5 {
-    margin: 0.2em;
-}
-h5#base {
-    margin: 0.2em 0.2em 0 0.2em;
-}
-p .card-text .text-muted {
-    margin-bottom: 0%;
-}
-li#base {
-    margin-left: 0.2em;
-}
-li#method {
-    margin-left: 0.2em;
-}
-.card {
-    border: 0 none;
-}
-div#main {
-    border: 0.12em solid rgba(128, 128, 128, 0.4);
-    border-radius: 5px;
-}
-.mat-dialog-actions {
-    justify-content: flex-end;
-}
-.border-bot {
-    border-bottom: 2px solid rgba(128, 128, 128, 0.4);
+li {
+    list-style-type: none;
+    /* Убираем маркеры */
+  }
+  
+  ul {
+    margin-left: 0;
+    /* Отступ слева в браузере IE и Opera */
+    padding-left: 0;
+    /* Отступ слева в браузере Firefox, Safari, Chrome */
+  }
+.bordered-span{
+    border-bottom: #dfdfdf 3px solid;
+    padding: 0 10px 0 10px;
+    font-size: 15px!important;
 }

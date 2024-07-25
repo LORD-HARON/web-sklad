@@ -11,8 +11,8 @@
                 [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                 [matChipInputAddOnBlur]="addOnBlur" (matChipInputTokenEnd)="add($event)">
         </mat-chip-grid>
-
     </mat-form-field>
-    <mat-icon id="push" aria-hidden="false" aria-label="Example home icon" (click)="openDocList()"
-        matTooltip="Выбрать из списка"> add </mat-icon>
+    <button mat-mini-fab (click)="openDocList()">
+        <mat-icon>add</mat-icon>
+    </button>
 </div>

@@ -49,7 +49,6 @@ export class HorizontalThreeFourActionComponent implements OnInit {
         private stillageService: StillageService,
     ) {
         this.stillageService.events$.forEach(event => {
-            console.log(event);
             this.listenEvent(event)
         });
     }
@@ -61,7 +60,10 @@ export class HorizontalThreeFourActionComponent implements OnInit {
     }
 
     onClickCell(numberCell: any, floorCell: any) {
+
+
         if (this.stillageItem.stillageName) {
+            console.log(numberCell + '::' + floorCell);
             this.getCellItem(numberCell, floorCell);
             this.listChange.emit(this.stillageItem.stillageName + '-' + numberCell + '-' + floorCell);
         }
@@ -78,12 +80,16 @@ export class HorizontalThreeFourActionComponent implements OnInit {
     }
 
     listenEvent(event: Array<string>) {
+        console.log(event);
+
         if (this.stillageItem.stillageName === event[0]) {
             this.getCellItem(event[1], event[2]);
         }
     }
 
-    getCellItem(floor: any, number: any) {
+    getCellItem(floor: string, number: string) {
+        console.log(floor + '<>>' + number);
+
         if (floor + number === '11')
             this.selItem.c11 = !this.selItem.c11;
         if (floor + number === '21')

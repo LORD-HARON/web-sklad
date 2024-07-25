@@ -1,3 +1,6 @@
+*{
+    text-align: center;
+}
 .example-margin {
     margin: 0 10px;
 }
@@ -52,7 +55,8 @@ mat-icon#push:hover {
 .block1-overflow {
     overflow: auto;
     height: 500px;
-    width: 650px;
+    width: 700px;
+    margin-top: 10px;
 }
 button#but-size-out {
     margin-left: 0.3em;
@@ -347,10 +351,16 @@ button {
     outline: none!important;
 }
 mat-list {
-    height: 450px;
+    height: 500px;
     border: 2px solid rgba(128, 128, 128, 0.25);
     border-radius: 5px;
     overflow: auto;
+}
+.list-conteiner{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 mat-list-item:hover {
     background-color: rgba(128, 128, 128, 0.5);
@@ -390,4 +400,9 @@ img#img-clear:hover {
 mat-form-field#fromto {
     width: 5em;
     margin: 0% 0.4em;
+}
+.control-conteiner{
+    margin-top: 20px;
+    width: 100%;
+
 }

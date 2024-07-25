@@ -5,7 +5,9 @@
 }
 .drawer{
   width: 563px;
+  padding: 10px;
 }
+
 .list-icon {
     margin: 0.5em 0.4em;
     display: flex;
@@ -37,4 +39,17 @@ span#status {
   color: green;
   border: 1px solid green;
   border-radius: 10px;
+}
+.assembly-method-container{
+  display: flex;
+  align-items: center;
+  mat-button-toggle-group{
+    height: 30px;
+    margin-left: 15px;
+  }
+}
+.task-control-box{
+  button{
+    margin: 10px 10px 0 0;
+  }
 }

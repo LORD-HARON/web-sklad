@@ -78,8 +78,8 @@ export class TaskComponent {
         });
     }
 
-    checkResponse(response: any) {
-        if (response.status === 'empty')
+    checkResponse(response: MainTaskModel[]) {
+        if (!response)
             this.snackbarService.openSnackBar('Нет доступных заданий', this.action);
         else if (response.length > 0) {
             this.dataSource = response;
@@ -119,7 +119,7 @@ export class TaskComponent {
         var newTask = new NewTaskModel(this.tokenService.getToken(), this.listProcesses, this.listBase, this.executorTask, this.selectedMethod);
         const dialogRef = this.dialog.open(ConfirmationNewTaskFormComponent, {
             width: '50em',
-            // height: '85vh',
+            height: '40vh',
             data: { task: newTask },
         });
         dialogRef.afterClosed().subscribe(result => {

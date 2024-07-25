@@ -70,7 +70,7 @@ export class VerticalThreeFiveActionComponent implements OnInit {
     onClickCell(floor: string, number: string) {
         if (this.stillageItem.stillageName) {
             this.nameCell = this.stillageItem.stillageName + '-' + floor + '-' + number;
-            if (this.router.url === '/map') {
+            if (this.router.url === '/service/map') {
                 this.onOpenDetailWindow(this.nameCell, this.stillageItem.stillageName, floor, number)
             } else {
                 this.getCellItem(number, floor);
@@ -81,7 +81,10 @@ export class VerticalThreeFiveActionComponent implements OnInit {
 
     onOpenDetailWindow(cell: string, stillage: string, floor: string, number: string,) {
         const dialogRef = this.dialog.open(StillageDialogComponent, {
+            width: '700px',
+            height: '500px',
             data: { cell: cell, stillage: stillage, floor: floor, num: number },
+
         });
         dialogRef.afterClosed().subscribe(result => {
             if (result) {

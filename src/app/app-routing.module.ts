@@ -14,7 +14,7 @@ import { TaskComponent } from './components/sklad-components/task-managment/task
 import { PersonalMenegmentComponent } from './components/sklad-components/porsonal-menegment-component/personal-menegment.component';
 import { HistoryComponent } from './components/sklad-components/history-component/history.component';
 import { MotivationComponent } from './components/sklad-components/motivation-component/motivation.component';
-import { ErrorJournalComponent } from './components/sklad-components/error-journal-component/error-journal.component';
+import { JournalComponent } from './components/sklad-components/journal-component/journal.component';
 import { ListDocumentComponent } from './components/sklad-components/list-document-component/list-document.component';
 import { UnloadingDocumentsComponent } from './components/sklad-components/unloading-documents-component/unloading-documents.component';
 import { MapComponent } from './components/sklad-components/map-menegment/map-component/map.component';
@@ -34,7 +34,7 @@ const serviceRoutes: Routes = [
   { path: 'personal', component: PersonalMenegmentComponent },
   { path: 'history', component: HistoryComponent },
   { path: 'motivation', component: MotivationComponent },
-  { path: 'error-journal', component: ErrorJournalComponent },
+  { path: 'error-journal', component: JournalComponent },
   { path: 'list-doc', component: ListDocumentComponent },
   { path: 'unloading-doc', component: UnloadingDocumentsComponent },
   { path: 'map', component: MapComponent },

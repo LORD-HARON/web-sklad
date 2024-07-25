@@ -1,0 +1,48 @@
+<div class="main">
+    <div class="control-conteiner">
+        <mat-form-field appearance="outline">
+            <mat-label>Поиск</mat-label>
+            <input matInput type="text" [(ngModel)]="searchInput">
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" (click)="searchDoc()">Поиск</button>
+    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>Фильтр</mat-label>
+        <input matInput type="text" (keyup)="applyFilter($event)">
+    </mat-form-field>
+    <div class="table-conteiner">
+        <table mat-table [dataSource]="docList">
+            <ng-container matColumnDef="docName">
+                <th mat-header-cell *matHeaderCellDef> Имя документа </th>
+                <td mat-cell *matCellDef="let element"> {{element.doc_name}} </td>
+            </ng-container>
+            <ng-container matColumnDef="whoset">
+                <th mat-header-cell *matHeaderCellDef> Отправил документ </th>
+                <td mat-cell *matCellDef="let element">{{element.whoset}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="docType">
+                <th mat-header-cell *matHeaderCellDef>Тип документа</th>
+                <td mat-cell *matCellDef="let element">{{element.doc_type}}</td>
+            </ng-container>
+            <ng-container matColumnDef="docDate">
+                <th mat-header-cell *matHeaderCellDef>Дата документа </th>
+                <td mat-cell *matCellDef="let element">{{element.doc_date}}</td>
+            </ng-container>
+            <ng-container matColumnDef="doc_state">
+                <th mat-header-cell *matHeaderCellDef>Статус документа</th>
+                <td mat-cell *matCellDef="let element">{{element.doc_state}}</td>
+            </ng-container>
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-raised-button color="primary" (click)="openChangeDialog(element)">Изменить</button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr id="row" mat-row *matRowDef="let row; columns: displayedColumns; let i = index"></tr>
+        </table>
+    </div>
+</div>

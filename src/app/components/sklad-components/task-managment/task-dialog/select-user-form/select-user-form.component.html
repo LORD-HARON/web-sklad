@@ -1,6 +1,6 @@
-<div class="wrapper">
-    <div class="tab-container content">
-        <table mat-table class="table-hover" [dataSource]="usersSource">
+<div class="main">
+    <div class="table-conteiner">
+        <table mat-table [dataSource]="usersSource">
 
             <ng-container matColumnDef="index">
                 <th mat-header-cell *matHeaderCellDef> № </th>
@@ -23,15 +23,14 @@
 
         </table>
     </div>
-    <!-- <div mat-dialog-actions align="end"> -->
-    <div mat-dialog-actions class="footer">
-        <button mat-raised-button color="primary" class="btn btn-default" (click)="onCancelClick()">
+    <div class="control-conteiner">
+        <button mat-raised-button color="primary" (click)="onCancelClick()">
             Отмена
         </button>
-        <button mat-raised-button color="primary" class="btn btn-default" (click)="onClearClick()">
+        <button mat-raised-button color="primary" (click)="onClearClick()">
             Очистить
         </button>
-        <button mat-raised-button color="primary" class="btn btn-default" (click)="onOkClick()">
+        <button mat-raised-button color="primary" (click)="onOkClick()">
             Ок
         </button>
     </div>

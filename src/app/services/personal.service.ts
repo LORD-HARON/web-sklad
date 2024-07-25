@@ -12,6 +12,8 @@ import { DocSendsUsersModel } from "../models/personal-models/doc-sends.users";
 import { MotivationQueryModel } from "../models/personal-models/motivation-query";
 import { MotivationAnswModel } from "../models/personal-models/motivation-answ";
 import { SkladUserModel } from "../models/login-models/sklad-user";
+import { DocumentsListModel } from "../models/documents-models/documents-list";
+import { WhoSendDocChangeModel } from "../models/personal-models/who-send-doc-change-model";
 
 
 @Injectable({
@@ -25,15 +27,17 @@ export class PersonalService {
     private deleteSkladUserUrl = environment.apiUrl + '/DeleteSkladUser/'
     private updateSkladUserUrl = environment.apiUrl + '/UpdateSkladUser/'
     private authSkladUserUrl = environment.apiUrl + '/AuthSkladTsdUser/'
-    private getSendedDocUsersUrl = environment.apiUrl + '/GetSendedDocUsersUrl/'
+    private getSendedDocUsersUrl = environment.apiUrl + '/GetSendedDocUsers/'
     private getMotivationUrl = environment.apiUrl + '/GetMotivation/'
     private getSkladUserURL = environment.apiUrl + '/GetSkladUser/'
+    private getUserDocURL = environment.apiUrl + '/GetUserDoc/'
+    private changeWhoSetDocURL = environment.apiUrl + '/ChangeWhoSetDoc/'
 
     GetSkladUser(data: TokenModel): Observable<SkladUserModel[]> {
         return this.http.post<SkladUserModel[]>(this.getSkladUserURL, data)
     }
-    AddNewSkladUser(data: NewSkladUserModel): Observable<LoginResponse> {
-        return this.http.post<LoginResponse>(this.addNewSkladUserUrl, data)
+    AddNewSkladUser(data: NewSkladUserModel): Observable<Status> {
+        return this.http.post<Status>(this.addNewSkladUserUrl, data)
     }
     DeleteSkladUser(data: NewSkladUserModel): Observable<Status> {
         return this.http.post<Status>(this.deleteSkladUserUrl, data)
@@ -49,5 +53,11 @@ export class PersonalService {
     }
     GetMotivation(data: MotivationQueryModel): Observable<MotivationAnswModel[]> {
         return this.http.post<MotivationAnswModel[]>(this.getMotivationUrl, data)
+    }
+    GetUserDoc(data: TokenModel): Observable<DocumentsListModel[]> {
+        return this.http.post<DocumentsListModel[]>(this.getUserDocURL, data)
+    }
+    ChangeWhoSetDoc(data: WhoSendDocChangeModel): Observable<Status> {
+        return this.http.post<Status>(this.changeWhoSetDocURL, data)
     }
 }

@@ -1,0 +1,20 @@
+.main {
+    width: 100%;
+    .filter-conteiner {
+        padding: 10px 0 0 10px;
+        .filter-box {
+            mat-form-field, button{
+                margin-right: 10px;
+            }
+        }
+    }
+    .table-conteiner {
+        width: 100%;
+        height: 75vh;
+        overflow: auto;
+        table{
+            border-top: 1px solid #e0e0e0;
+            width: 100%;
+        }
+    }
+}

@@ -1,64 +1,72 @@
 import { Component, ViewChild } from "@angular/core";
-import { PrintAnswModel } from "../../../models/task-models/print-answ";
-import { DocumentBodyModel } from "../../../models/documents-models/document-body";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { MatTableDataSource } from "@angular/material/table";
-import { MatDialog } from "@angular/material/dialog";
-import { ProcService } from "../../../services/proc.service";
-import { TokenService } from "../../../services/token.service";
-import { SnackbarService } from "../../../services/snackbar.service";
-import { TaskService } from "../../../services/task.service";
-import { TokenModel } from "../../../models/token";
+import { DocumentBodyModel } from "../../../models/documents-models/document-body";
+import { PrintAnswModel } from "../../../models/task-models/print-answ";
 import { MatSort } from "@angular/material/sort";
-
+import { TaskService } from "../../../services/task.service";
+import { SnackbarService } from "../../../services/snackbar.service";
+import { TokenService } from "../../../services/token.service";
+import { MatDialog } from "@angular/material/dialog";
+import { formatDate } from "@angular/common";
+import { PrintComplateRequestModel } from "../../../models/task-models/print-complate-request";
 @Component({
     selector: 'app-list-document',
     templateUrl: './list-document.component.html',
-    styleUrl: './list-document.component.scss'
+    styleUrl: './list-document.component.scss',
+    providers: [{
+        provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+        useValue: {
+            subscriptSizing: 'dynamic'
+        }
+    }]
 })
 export class ListDocumentComponent {
     @ViewChild(MatSort, { static: true }) sort: MatSort;
-    doc: PrintAnswModel;
-    list: Array<PrintAnswModel> = [];
-    docBodys: Array<DocumentBodyModel> = [];
-    dataSource: MatTableDataSource<DocumentBodyModel>;
-    docName: string = '';
-    docNameSelect: string = '';
-    summ: number = 0;
 
+    selectedSearchMode: string = 'docName'
+    searchValue: string
+    startDate: Date = new Date()
+    finishDate: Date = new Date()
+    docName: string = '';
+    summ: number = 0;
+    list: PrintAnswModel[] = [];
+    docBodys: DocumentBodyModel[] = [];
+    doc: PrintAnswModel;
+    dataSource: MatTableDataSource<DocumentBodyModel>;
     displayedColumns = ['numb', 'article', 'barcode', 'count_e', 'place'];
 
     constructor(
-        private dialog: MatDialog,
-        private procService: ProcService,
-        private tokenService: TokenService,
+        private taskService: TaskService,
         private snackBarService: SnackbarService,
-        private taskService: TaskService
+        private tokenService: TokenService,
     ) { }
 
-    ngOnInit() {
-        this.loadData();
+    onSearch() {
+        switch (this.selectedSearchMode) {
+            case 'docName':
+                this.loadData(this.searchValue)
+                break;
+            case 'whoset':
+                this.loadData('', this.searchValue)
+                break;
+            case 'date':
+                this.loadData('', '', formatDate(this.startDate, 'dd.MM.yyyy', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy', 'en-US'))
+                break;
+        }
     }
-
-    loadData() {
-        this.taskService.PrintComplate(new TokenModel(this.tokenService.getToken(), '')).subscribe({
-            next: response => {
-                this.checkResponse(response);
+    loadData(docName: string = '', worker: string = '', dateFrom: string = '', dateTo: string = '') {
+        this.taskService.PrintComplate(new PrintComplateRequestModel(this.tokenService.getToken(), docName, worker, dateFrom, dateTo)).subscribe({
+            next: result => {
+                this.list = result
             },
             error: error => {
                 console.log(error);
-                this.snackBarService.openRedSnackBar();
+                this.snackBarService.openRedSnackBar()
             }
-        });
+        })
     }
-    checkResponse(response: any) {
-        if (response.status === 'empty')
-            this.snackBarService.openSnackBar('Нет документов', 'OK');
-        else if (response.length > 0) {
-            this.list = response;
-        }
-    }
-
-    onSelectDoc(element: PrintAnswModel) {
+    selectDoc(element: PrintAnswModel) {
         this.summ = 0;
         this.doc = element;
         this.dataSource = new MatTableDataSource(element.documentBody);

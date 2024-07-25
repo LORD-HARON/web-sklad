@@ -133,7 +133,7 @@ export class ProcessesFormComponent implements OnInit {
     onOpenSelectCell(element: IProcess) {
         const dialogRef = this.dialog.open(SelectCellFormComponent, {
             width: '65em',
-            height: '35em',
+            height: '37em',
             data: { select: this.selectedProc },
         });
         dialogRef.afterClosed().subscribe(result => {

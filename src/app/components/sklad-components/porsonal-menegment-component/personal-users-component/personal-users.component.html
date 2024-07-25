@@ -1,0 +1,56 @@
+<div class="main">
+    <div class="control-conteiner">
+        <mat-form-field appearance="outline">
+            <mat-label>Имя пользователя</mat-label>
+            <input matInput type="text" [(ngModel)]="userName">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Группа</mat-label>
+            <mat-select [(ngModel)]="selectedGroup">
+                <mat-option *ngFor="let i of groupList" [value]="i">{{i}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-raised-button color="primary" [disabled]="!userName" (click)="addNewUser()">Создать</button>
+    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>Фильтр</mat-label>
+        <input matInput type="text" (keyup)="applyFilter($event)">
+        <mat-hint> Поиск по всем столбцам </mat-hint>
+    </mat-form-field>
+    <div class="table-conteiner">
+        <table mat-table [dataSource]="userList">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Логин </th>
+                <td mat-cell *matCellDef="let element"> {{element.login}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="group">
+                <th mat-header-cell *matHeaderCellDef> Группа </th>
+                <td mat-cell *matCellDef="let element"> {{element.group}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [matMenuTriggerFor]="menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="onPrintBadge(element.login)">
+                            <mat-icon>print</mat-icon>
+                            <span> Распечатать бейдж </span>
+                        </button>
+                        <button mat-menu-item (click)="deleteUser(element.login, element.group)">
+                            <mat-icon>delete_forever</mat-icon>
+                            <span> Удалить пользователя </span>
+                        </button>
+                    </mat-menu>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr id="row" mat-row *matRowDef="let row; columns: displayedColumns; let i = index" (click)="onSelectRow(i)"
+                [ngClass]="{ 'select-row': i === selectItem }"></tr>
+        </table>
+    </div>
+</div>

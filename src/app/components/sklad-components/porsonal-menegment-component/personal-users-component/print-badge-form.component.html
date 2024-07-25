@@ -1,0 +1,14 @@
+<div id="print-section">
+    <div class="badge">
+        <img [src]="imgSource" width="280" height="130">
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" class="btn btn-default" (click)="onCancelClick()">
+        Отмена
+    </button>
+    <button mat-raised-button color="primary" class="btn btn-default"
+        [printStyle]="{ img: { 'padding': '10px', 'border': '1px solid black'}}" printSectionId="print-section"
+        ngxPrint> Печать
+    </button>
+</div>

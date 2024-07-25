@@ -1,0 +1,77 @@
+<div class="main">
+    <div class="control-conteiner">
+        <mat-form-field appearance="outline">
+            <mat-label>Дата с:</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Дата по:</mat-label>
+            <input matInput [matDatepicker]="picker1" [(ngModel)]="finishDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+        <form class="name-form">
+            <mat-form-field appearance="outline">
+                <mat-label> Имя </mat-label>
+                <input type="text" placeholder="Поиск" data-placement="bottom" matTooltip="Поле ввода"
+                    aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+        </form>
+        <button mat-raised-button color="primary" (click)="onSearch()" [disabled]="showLoader == true">Поиск</button>
+        <button mat-raised-button [disabled]="showLoader == true">Очистить</button>
+        <button mat-raised-button [hidden]="loadedCompleat == false" #ngxPrint color="primary"
+            [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+            printSectionId="print-section" data-placement="bottom" matTooltip="Печать мотивации" ngxPrint>
+            Печать
+        </button>
+        <button mat-raised-button color="primary" (click)="onCalculatePositions(dataSource.data)"
+            [hidden]="loadedCompleat == false">
+            Позиции
+        </button>
+    </div>
+    <div class="table-conteiner" *ngIf="showLoader == false" id="print-section">
+        <table id="t-main" mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="user">
+                <th mat-header-cell *matHeaderCellDef> Кладовщик </th>
+                <td mat-cell *matCellDef="let element"> {{element.login}} </td>
+            </ng-container>
+            <ng-container matColumnDef="motivation">
+                <th mat-header-cell *matHeaderCellDef> Типы </th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="row">
+                        <div *ngFor="let item of element.motivation" style="margin-right: 10px;">
+                            <table class="t-type">
+                                <tr>
+                                    <td id="t_td" colspan="3"> {{item.typeName}} </td>
+                                </tr>
+                                <tr>
+                                    <td> Документов </td>
+                                    <td> Позиций </td>
+                                    <td> Единиц товара </td>
+                                </tr>
+                                <tr>
+                                    <td> {{item.countDoc}} </td>
+                                    <td> {{item.countPos}} </td>
+                                    <td> {{item.countCount}} </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+    <div class="loader-conteiner" *ngIf="showLoader == true">
+        <mat-progress-spinner class="example-margin" [mode]="'indeterminate'">
+        </mat-progress-spinner>
+    </div>
+</div>

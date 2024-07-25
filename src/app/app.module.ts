@@ -37,7 +37,7 @@ import { ProductComponent } from './components/sklad-components/product-componen
 import { TaskComponent } from './components/sklad-components/task-managment/task-component/task.component';
 import { PersonalMenegmentComponent } from './components/sklad-components/porsonal-menegment-component/personal-menegment.component';
 import { ListDocumentComponent } from './components/sklad-components/list-document-component/list-document.component';
-import { ErrorJournalComponent } from './components/sklad-components/error-journal-component/error-journal.component';
+import { JournalComponent } from './components/sklad-components/journal-component/journal.component';
 import { HistoryComponent } from './components/sklad-components/history-component/history.component';
 import { MotivationComponent } from './components/sklad-components/motivation-component/motivation.component';
 import { UnloadingDocumentsComponent } from './components/sklad-components/unloading-documents-component/unloading-documents.component';
@@ -65,6 +65,18 @@ import { MatSortModule } from '@angular/material/sort';
 import { DetailDocFormComponent } from './components/sklad-components/task-managment/task-dialog/detail-doc-form/detail-doc-form.component';
 import { SelectUserFormComponent } from './components/sklad-components/task-managment/task-dialog/select-user-form/select-user-form.component';
 import { PersonalListFormComponent } from './components/sklad-components/porsonal-menegment-component/personal-list-form/personal-list-form.component';
+import { ConfirmationNewTaskFormComponent } from './components/sklad-components/task-managment/task-dialog/confirmation-new-task/confirmation-new-task.component';
+import { PersonalUsersComponent } from './components/sklad-components/porsonal-menegment-component/personal-users-component/personal-users.component';
+import { PersonalBadgeFormConponent } from './components/sklad-components/porsonal-menegment-component/personal-users-component/personal-users.component';
+import { ChangeWhoSendDocComponent } from './components/sklad-components/porsonal-menegment-component/change-who-send-doc-component/change-who-send-doc.component';
+import { ChangeWhoSendDocDialog } from './components/sklad-components/porsonal-menegment-component/change-who-send-doc-component/change-who-send-doc.component';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MotivationSumPositionDialogComponent } from './components/sklad-components/motivation-component/motivation.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { InventoryDialogFormComponent } from './components/sklad-components/map-menegment/inventory-dialog-component/inventory-dialog.component';
+import { StillageDialogComponent } from './components/sklad-components/stillages/stillage-dialog.component/stillage-dialog.component';
+import { MatCardModule } from '@angular/material/card';
+import { MapEditorDialogActionComponent } from './components/sklad-components/map-menegment/map-editor.component/map-editor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +96,7 @@ import { PersonalListFormComponent } from './components/sklad-components/porsona
     TaskComponent,
     PersonalMenegmentComponent,
     ListDocumentComponent,
-    ErrorJournalComponent,
+    JournalComponent,
     HistoryComponent,
     MotivationComponent,
     UnloadingDocumentsComponent,
@@ -98,7 +110,16 @@ import { PersonalListFormComponent } from './components/sklad-components/porsona
     DocListComponent,
     DetailDocFormComponent,
     SelectUserFormComponent,
-    PersonalListFormComponent
+    PersonalListFormComponent,
+    ConfirmationNewTaskFormComponent,
+    PersonalUsersComponent,
+    PersonalBadgeFormConponent,
+    ChangeWhoSendDocComponent,
+    ChangeWhoSendDocDialog,
+    MotivationSumPositionDialogComponent,
+    InventoryDialogFormComponent,
+    StillageDialogComponent,
+    MapEditorDialogActionComponent
   ],
   imports: [
     StillagesModule,
@@ -134,11 +155,17 @@ import { PersonalListFormComponent } from './components/sklad-components/porsona
     MatProgressBarModule,
     MatChipsModule,
     MatTabsModule,
-    MatSortModule
+    MatSortModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatProgressSpinnerModule,
+    MatCardModule
   ],
   providers: [
     provideAnimationsAsync(),
-    DatePipe
+    DatePipe,
+    MatNativeDateModule,
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-Ru' }
   ],
   bootstrap: [AppComponent]
 })

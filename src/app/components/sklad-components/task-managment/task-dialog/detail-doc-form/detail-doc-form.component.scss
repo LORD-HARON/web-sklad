@@ -1,174 +1,47 @@
-table {
-    width: 95%;
-}
-table:hover {
-    cursor: pointer;
-}
-.table-container {   
+.main{
+  width: 100%;
+  height: 100%;
+  .header-conteiner{
     width: 100%;
-    height: 100%;
-    min-width: 200px;
+    height: 20%;
+    margin-top: 10px;
+    display: flex!important;
+    justify-content: space-around!important;
+    .header-conteiner-barcode-box{
+      display: flex!important;
+      flex-direction: column!important;
+      span{
+        font-size: 10px;
+        color: rgba(0, 0, 0, .87);
+      }
+    }
+    .header-conteiner-box{
+      display: flex!important;
+      flex-direction: column!important;
+      height: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }   
+  }
+  .table-conteiner{
+    width: 98%;
+    height: 68%;
+    margin: 15px;
+    border: 1px solid #dfdfdf;
+    border-radius: 20px;
     overflow: auto;
+    table{
+      width: 100%;
+    }
+  }
+  .control-conteiner{
+    display: flex;
+    justify-content: flex-end;
+    button{
+      margin-right: 10px;
+    }
+  }
 }
-mat-tab-group {
-    margin-right: 1em;
-    margin-left: 1em;
-    width: 100%; 
-    height: 100%;
-    border: 2px solid rgba(128, 128, 128, 0.25);
-    border-radius: 5px;
-}
-.title {
-    /* font-size: 0.9em !important; */
-    margin: 0.5em 1em !important;
-} 
-.tab-selected {
-    width: 100%; 
-    height: 100%;
-    border: 2px solid rgba(128, 128, 128, 0.25);
-    border-radius: 5px;
-    box-shadow: none;
-    margin-left: 1em;
-}
-hr#hr-select {
-    margin: 0%;
-}
-label#lab {
-    color: rgba(0, 0, 0, 0.5);
-    font-family: Roboto,"Helvetica Neue",sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-}
-div#bt-group {
-    /* margin-left: auto;
-    margin-right: 0em; */
-    position: absolute;
-    right: 5px;
-    bottom: 16px;
-}
-body { 
-  font-family: Roboto, Arial, sans-serif;
-  margin: 0;
-}
-.basic-container {
-  padding: 5px;
-}
-.version-info {
-  font-size: 8pt;
-  float: right;
-}
-.mat-row.hovered {
-  background: #eee;
-}
-.mat-row.highlighted {
-  background: rgba(146, 77, 77, 0.5);
-}
-mat-cell.mat-cell, mat-header-cell.mat-header-cell {
-  overflow: visible; 
-}
-mat-icon#push {
-  padding: 4px 0px 0px 0px;
-  cursor: pointer;
-}
-mat-icon#push:hover {
-  font-size: 26px;
-  color: blueviolet;
-}
-mat-form-field {
-  width: 7em;
-}
-::ng-deep .mat-form-field-flex > .mat-form-field-infix { 
-  padding: 0.4em 0px !important;
-}
-::ng-deep .mat-form-field-label-wrapper{ 
-  top: -1em; 
-}
-::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  transform: translateY(-1.1em) scale(.75);
-  width: 133.33333%;
-}
-::ng-deep .mat-form-field-appearance-legacy.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
-  transform: translateY(-1.1em) scale(.75);
-  width: 133.33333%;
-}
-::ng-deep .mat-form-field-wrapper {
-  padding-bottom: 0.2em;
-}
-.mat-column-metka {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}   
-.mat-column-docid {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}   
-.mat-column-docdate {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}   
-.mat-column-docloc {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-} 
-.mat-column-icon {
-  word-wrap: break-word !important;
-  white-space: unset !important;
-  flex: 0 0 20% !important;
-  width: 20% !important;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-
-  word-break: break-word;
-
-  -ms-hyphens: auto;
-  -moz-hyphens: auto;
-  -webkit-hyphens: auto;
-  hyphens: auto;
-}
-input {
-  width: 8em;
+img {
+  width: 20em;
 }

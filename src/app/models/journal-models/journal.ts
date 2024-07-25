@@ -5,6 +5,6 @@ export class JournalModel {
         public place: string,
         public count_e: string,
         public err_msg: string,
-        public date_msg: Date
+        public date_msg: Date = new Date()
     ) { }
 }
