@@ -10,6 +10,9 @@ import { TokenService } from "../../../services/token.service";
 import { MatDialog } from "@angular/material/dialog";
 import { formatDate } from "@angular/common";
 import { PrintComplateRequestModel } from "../../../models/task-models/print-complate-request";
+import { E } from "@angular/cdk/keycodes";
+import { DocumentService } from "../../../services/document.service";
+import { TokenModel } from "../../../models/token";
 @Component({
     selector: 'app-list-document',
     templateUrl: './list-document.component.html',
@@ -29,6 +32,7 @@ export class ListDocumentComponent {
     startDate: Date = new Date()
     finishDate: Date = new Date()
     docName: string = '';
+    docId: number
     summ: number = 0;
     list: PrintAnswModel[] = [];
     docBodys: DocumentBodyModel[] = [];
@@ -40,6 +44,7 @@ export class ListDocumentComponent {
         private taskService: TaskService,
         private snackBarService: SnackbarService,
         private tokenService: TokenService,
+        private documentService: DocumentService
     ) { }
 
     onSearch() {
@@ -67,6 +72,7 @@ export class ListDocumentComponent {
         })
     }
     selectDoc(element: PrintAnswModel) {
+        this.docId = element.docId
         this.summ = 0;
         this.doc = element;
         this.dataSource = new MatTableDataSource(element.documentBody);
@@ -74,5 +80,26 @@ export class ListDocumentComponent {
         this.docName = element.docName;
         this.docBodys.map(item => { this.summ += +item.count_e });
         this.dataSource.sort = this.sort;
+    }
+    generateDat() {
+        this.documentService.GenerateFiles(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case 'true':
+                        this.snackBarService.openSnackGreenBar('Файл успешно создан')
+                        break;
+                    case 'NULL':
+                        this.snackBarService.openRedSnackBar('Документ не найден')
+                        break;
+                    case 'error':
+                        this.snackBarService.openRedSnackBar('Ошибка создания файлов')
+                        break;
+                }
+            },
+            error: error => {
+                console.log(error);
+                this.snackBarService.openRedSnackBar()
+            }
+        })
     }
 }

@@ -3,7 +3,8 @@ export class PrintComplateRequestModel {
         public token: string,
         public docName: string,
         public worker: string,
+        public dateFrom: string,
         public dateTo: string,
-        public dateFrom: string
+
     ) { }
 }

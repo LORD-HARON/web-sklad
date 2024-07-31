@@ -2,7 +2,7 @@
     <mat-drawer mode="side" opened>
         <mat-list role="list">
             <mat-list-item role="listitem" *ngFor="let element of list" (click)="selectDoc(element)"
-                [ngClass]="{ 'list-item-selected': docName === element.docName }"> {{element.docName}}
+                [ngClass]="{ 'list-item-selected': docId === element.docId}"> {{element.docName}}
             </mat-list-item>
         </mat-list>
     </mat-drawer>
@@ -35,10 +35,11 @@
                 </mat-form-field>
             </div>
             <button mat-raised-button color="primary" (click)="onSearch()">Поиск</button>
-            <button mat-raised-button color="primary" class="btn btn-default" *ngIf="docName"
+            <button mat-raised-button color="primary" class="btn btn-default" *ngIf="docId"
                 [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
                 printSectionId="print-section" ngxPrint> Печать
             </button>
+            <button mat-raised-button color="primary" *ngIf="docId" (click)="generateDat()">Генерировать Dat</button>
         </div>
         <span style="margin-left: 10px;" *ngIf="docName">{{docName}} Общее количество: {{summ}}</span>
         <div class="table-conteiner" id="print-section">

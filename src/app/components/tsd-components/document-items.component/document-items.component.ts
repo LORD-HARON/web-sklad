@@ -8,11 +8,18 @@ import { TokenModel } from "../../../models/token";
 import { EditProductModel } from "../../../models/documents-models/edit-product";
 import { AgreeDialogComponent } from "../work-space.component/work-space.component";
 import { DocumentBodyModel } from "../../../models/documents-models/document-body";
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 
 @Component({
     selector: 'app-document-items',
     templateUrl: './document-items.component.html',
-    styleUrl: './document-items.component.scss'
+    styleUrl: './document-items.component.scss',
+    providers: [{
+        provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
+        useValue: {
+            subscriptSizing: 'dynamic'
+        }
+    }]
 })
 export class DocumentItemsComponent {
     constructor(
@@ -28,20 +35,30 @@ export class DocumentItemsComponent {
     docId: number
 
     items: DocumentBodyModel[] = []
+    showingItems: DocumentBodyModel[] = []
     totalPrice: number = 0
     ngOnInit(): void {
         this.GetDocumentItems()
     }
+    searchRow: string
+    FilterItems() {
+        this.showingItems = this.items.filter(i => i.article.includes(this.searchRow) || i.place.includes(this.searchRow) || i.name.includes(this.searchRow))
+    }
+    filterCansel() {
+        this.showingItems = this.items
+        this.searchRow = ''
+    }
     GetDocumentItems() {
-        this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), this.docId)).subscribe({
+        this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
             next: result => {
                 this.items = result
+                this.showingItems = result
                 result.forEach(element => {
                     console.log(element)
-                    if (!element.price || !element.count_e)
-                        this.totalPrice += 0
-                    else
-                        this.totalPrice += (Number(element.price.replace(',', '.')) * Number(element.count_e))
+                    // if (!element.price || !element.count_e)
+                    //     this.totalPrice += 0
+                    // else
+                    //     this.totalPrice += (Number(element.price.replace(',', '.')) * Number(element.count_e))
                 });
             },
             error: error => {
@@ -50,7 +67,7 @@ export class DocumentItemsComponent {
         })
     }
     DeleteItem(element: number) {
-        this.documentService.DeleteDocumentItem(new TokenModel(this.tokenService.getToken(), element)).subscribe({
+        this.documentService.DeleteDocumentItem(new TokenModel(this.tokenService.getToken(), String(element))).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':
@@ -75,21 +92,27 @@ export class DocumentItemsComponent {
         })
     }
     switchEdit: boolean = false
+    editItem: number
     count: number
     numb: number
-    EditItem(element: number, count?: string, numb?: number) {
+    place: string
+
+    EditItem(element: number, count?: string, numb?: number, place?: string) {
         if (this.switchEdit === false) {
             this.switchEdit = !this.switchEdit
+            this.editItem = element
             this.count = Number(count)
             this.numb = numb!
+            this.place = place!
         } else {
-            this.documentService.EditProduct(new EditProductModel(this.tokenService.getToken(), element, this.count, this.numb)).subscribe({
+            this.documentService.EditProduct(new EditProductModel(this.tokenService.getToken(), element, this.count, this.numb, this.place)).subscribe({
                 next: result => {
                     switch (result.status) {
                         case 'true':
                             this.snackBarService.openSnackGreenBar('Сохранено');
                             this.GetDocumentItems()
                             this.switchEdit = !this.switchEdit
+                            this.editItem = 0
                             break;
                         case 'BadAuth':
                             this.snackBarService.openRedSnackBar('Токен устарел');
@@ -110,12 +133,12 @@ export class DocumentItemsComponent {
         }
     }
     pushDoc() {
-        this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), this.docId)).subscribe({
+        this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':
                         this.snackBarService.openSnackGreenBar('Документ успешно отправлен на сервер');
-                        this.router.navigate([''])
+                        this.router.navigate(['tsd/menu'])
                         break;
                     case 'BadAuth':
                         this.snackBarService.openRedSnackBar('Токен устарел');

@@ -1,0 +1,64 @@
+<div class="main">
+    <button mat-raised-button style="color: white; background-color: darkorange; width: 100%;"
+        routerLink="/tsd/menu">Назад</button>
+    <div class="job-today">
+        <span>
+            Статистика за сегодня:
+        </span>
+        <span style="color: #F44336;" *ngIf="!todayData">
+            Данных за сегодня нет
+        </span>
+        <table class="t-type" *ngFor="let today of todayData">
+            <tr>
+                <td id="t_td" colspan="3" style="color: #F44336; font-weight: bold;">{{today.typeName}}</td>
+            </tr>
+            <tr>
+                <td> Документов </td>
+                <td> Позиций </td>
+                <td> Единиц товара </td>
+            </tr>
+            <tr>
+                <td>{{today.countDoc}}</td>
+                <td>{{today.countPos}}</td>
+                <td>{{today.countCount}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="job-by-date">
+        <div class="control-conteiner">
+            <mat-form-field appearance="outline">
+                <mat-label>Дата с:</mat-label>
+                <input matInput [matDatepicker]="picker" [(ngModel)]="startDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Дата по:</mat-label>
+                <input matInput [matDatepicker]="picker1" [(ngModel)]="finishDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker1"></mat-datepicker-toggle>
+                <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <button mat-raised-button style="color: white; background-color: darkorange;"
+                (click)="getData()">Поиск</button>
+        </div>
+        <div class="search-by-date">
+            <span>Статистика на дату:</span>
+            <table class="t-type" *ngFor="let i of dataByDate">
+                <tr>
+                    <td id="t_td" colspan="3" style="color: #F44336; font-weight: bold;">{{i.typeName}}</td>
+                </tr>
+                <tr>
+                    <td> Документов </td>
+                    <td> Позиций </td>
+                    <td> Единиц товара </td>
+                </tr>
+                <tr>
+                    <td>{{i.countDoc}}</td>
+                    <td>{{i.countCount}}</td>
+                    <td>{{i.countCount}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

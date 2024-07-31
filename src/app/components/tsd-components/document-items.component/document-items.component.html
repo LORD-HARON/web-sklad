@@ -10,13 +10,20 @@
             <button (click)="drawer.toggle()">
                 <img src="../../../../assets/ham.png">
             </button>
-            <span>Поиск продукции</span>
-            <span>Сумма документа: {{totalPrice}}</span>
+            <span>Список продукции</span>
         </nav>
-        <div class="list-conteiner" *ngFor="let i of items">
+        <div class="search-conteiner">
+            <mat-form-field appearance="outline">
+                <mat-label>Поиск:</mat-label>
+                <input matInput type="text" [(ngModel)]="searchRow">
+            </mat-form-field>
+            <button mat-raised-button style="background-color: darkorange; color: white;"
+                (click)="FilterItems()">Поиск</button>
+            <button mat-raised-button (click)="filterCansel()">Отмена</button>
+        </div>
+        <div class="list-conteiner" *ngFor="let i of showingItems">
             <div class="item-conteiner">
                 <div>
-                    <!-- <ng-container *ngIf="i.imgUrl"> -->
                     <img [src]="i.imgUrl!| urlImg">
                 </div>
                 <div>
@@ -24,15 +31,21 @@
                     <span>{{i.article}}</span>
                     <span>Штрихкод:</span>
                     <span>{{i.barcode}}</span>
-                    <span *ngIf="switchEdit===false">Колв-во:</span>
-                    <span *ngIf="switchEdit===false">{{i.count_e}}</span>
-                    <mat-form-field appearance="outline" *ngIf="switchEdit===true">
+                    <span>Место хранения:</span>
+                    <span *ngIf="switchEdit===false || editItem != i.id">{{i.place}}</span>
+                    <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
+                        <mat-label>Место хранения:</mat-label>
+                        <input matInput type="text" [(ngModel)]="place">
+                    </mat-form-field>
+                    <span *ngIf="switchEdit===false || editItem != i.id">Кол-во:</span>
+                    <span *ngIf="switchEdit===false || editItem != i.id">{{i.count_e}}</span>
+                    <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
                         <mat-label>Кол-во:</mat-label>
                         <input matInput type="number" [(ngModel)]="count">
                     </mat-form-field>
-                    <span *ngIf="switchEdit===false">№ в списке:</span>
-                    <span *ngIf="switchEdit===false">{{i.numb}}</span>
-                    <mat-form-field appearance="outline" *ngIf="switchEdit===true">
+                    <span *ngIf="switchEdit===false || editItem != i.id">№ в списке:</span>
+                    <span *ngIf="switchEdit===false || editItem != i.id">{{i.numb}}</span>
+                    <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
                         <mat-label>№ по списку:</mat-label>
                         <input matInput type="number" [(ngModel)]="numb">
                     </mat-form-field>
@@ -45,14 +58,15 @@
             <button mat-raised-button style="color: red;margin: 10px; font-weight: bold;" (click)="DeleteItem(i.id)">
                 Удалить
             </button>
-            <button mat-raised-button style="color: purple;margin: 10px; font-weight: bold;" *ngIf="switchEdit===false"
-                (click)="EditItem(i.id, i.count_e, i.numb)">
+            <button mat-raised-button style="color: purple;margin: 10px; font-weight: bold;"
+                *ngIf="switchEdit===false && editItem != i.id" (click)="EditItem(i.id, i.count_e, i.numb, i.place)">
                 Редактировать
             </button>
-            <button mat-raised-button style="color: green;margin: 10px; font-weight: bold;" *ngIf="switchEdit===true"
-                (click)="EditItem(i.id)">
+            <button mat-raised-button style="color: green;margin: 10px; font-weight: bold;"
+                *ngIf="switchEdit===true && editItem == i.id" (click)="EditItem(i.id)">
                 Сохранить
             </button>
+
         </div>
     </div>
 </mat-drawer-container>

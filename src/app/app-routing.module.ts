@@ -19,13 +19,17 @@ import { ListDocumentComponent } from './components/sklad-components/list-docume
 import { UnloadingDocumentsComponent } from './components/sklad-components/unloading-documents-component/unloading-documents.component';
 import { MapComponent } from './components/sklad-components/map-menegment/map-component/map.component';
 import { MapEditorComponent } from './components/sklad-components/map-menegment/map-editor.component/map-editor.component';
+import { MiniMapComponent } from './components/tsd-components/mini-map-component/mini-map.component';
+import { WorkerStatComponent } from './components/tsd-components/worker-stat-component/worker-stat.component';
 
 const tsdRoutes: Routes = [
   { path: 'menu', component: MenuComponent },
-  { path: 'work-space/:docId', component: WorkSpaceComponent, canActivate: [loginGuard] },
-  { path: 'document-items/:docId', component: DocumentItemsComponent, canActivate: [loginGuard] },
-  { path: 'documents', component: DocumentsComponent, canActivate: [loginGuard] },
-  { path: 'info', component: InfoComponent, canActivate: [loginGuard] },
+  { path: 'work-space/:docId', component: WorkSpaceComponent },
+  { path: 'document-items/:docId', component: DocumentItemsComponent },
+  { path: 'documents', component: DocumentsComponent },
+  { path: 'info', component: InfoComponent },
+  { path: 'mini-map', component: MiniMapComponent },
+  { path: 'stat', component: WorkerStatComponent }
 ]
 
 const serviceRoutes: Routes = [

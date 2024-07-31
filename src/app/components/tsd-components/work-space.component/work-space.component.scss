@@ -114,3 +114,14 @@
         }
     }
 }
+.toggle-box{
+    background-color: rgba(255, 111, 0, 0.1);
+    border: 1px solid #ff6f00;
+	border-radius: 12px;
+    padding: 4px;
+    width: 300px;
+    margin: 10px;
+    mat-slide-toggle{
+        user-select: none;
+    }
+}

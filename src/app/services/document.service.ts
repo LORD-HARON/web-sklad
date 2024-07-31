@@ -11,6 +11,7 @@ import { FindInfoReqModel } from "../models/documents-models/find-info-req"
 import { AddProductModel } from "../models/documents-models/add-product"
 import { DocumentBodyModel } from "../models/documents-models/document-body"
 import { EditProductModel } from "../models/documents-models/edit-product"
+import { E } from "@angular/cdk/keycodes"
 
 @Injectable({
     providedIn: "root"
@@ -29,6 +30,8 @@ export class DocumentService {
     deleteDocumentItemURL = environment.apiUrl + '/DeleteDocumentItem'
     editProductURL = environment.apiUrl + '/EditDocumentItem'
     pushDocumentURL = environment.apiUrl + '/PushDocument'
+    getMyDocsURL = environment.apiUrl + '/GetMyDocs'
+    generateFilesURL = environment.apiUrl + '/GenerateFiles'
     CreateDocument(data: CreateDocumentModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.createDocumentURL, data)
     }
@@ -36,6 +39,8 @@ export class DocumentService {
         return this.http.post<DocumentsListModel[]>(this.getDocumentListURL, data)
     }
     DeleteDocument(data: TokenModel): Observable<Status> {
+        console.log(data);
+
         return this.http.post<Status>(this.deleteDocumentURL, data)
     }
     GetDocument(data: TokenModel): Observable<DocumentsListModel> {
@@ -58,5 +63,11 @@ export class DocumentService {
     }
     PushDocument(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.pushDocumentURL, data)
+    }
+    GetMyDocs(data: TokenModel): Observable<DocumentsListModel[]> {
+        return this.http.post<DocumentsListModel[]>(this.getMyDocsURL, data)
+    }
+    GenerateFiles(data: TokenModel): Observable<Status> {
+        return this.http.post<Status>(this.generateFilesURL, data)
     }
 }

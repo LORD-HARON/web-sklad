@@ -7,6 +7,9 @@ import { Router } from "@angular/router";
 import { environment } from "../../../environment";
 import { CreateDocumentModel } from "../../../models/documents-models/create-document";
 import { DocumentService } from "../../../services/document.service";
+import { MapService } from "../../../services/map.service";
+import { TokenModel } from "../../../models/token";
+import { CellBodyModel } from "../../../models/map-models/cell-answ";
 
 @Component({
     selector: 'app-menu',
@@ -51,6 +54,11 @@ export class MenuComponent {
         });
     }
 
+    openCellSearchDialog() {
+        const dialogRef = this.dialog.open(CellSearchDialog)
+        dialogRef.afterClosed().subscribe(result => {
+        });
+    }
 }
 @Component({
     templateUrl: './create-document-dialog-window/create-document.dialog.html',
@@ -66,12 +74,13 @@ export class CreateDocumentDialog {
     docId: string
     docName: string
     docType: string
+    User: string = this.tokenService.getLogin()
     createDoc() {
         let doc = new CreateDocumentModel(this.docName, this.tokenService.getLogin(), this.docType, this.tokenService.getToken())
         this.documentService.CreateDocument(doc).subscribe({
             next: result => {
                 if (result) {
-                    this.router.navigate(["work-space", result.id])
+                    this.router.navigate(["tsd/work-space", result.id])
                     this.dialogRef.close("true")
                 }
                 else
@@ -82,6 +91,69 @@ export class CreateDocumentDialog {
                 this.dialogRef.close("error")
             }
         })
+    }
+    docInputHandler() {
+        if (this.docName.length >= 14) {
+            let LIT1 = this.docName.substring(3, 5)
+            let LIT2 = this.docName.substring(5, 7)
+            let NUM = this.docName.substring(7, 14)
+            this.docName = this.GetLIT(LIT1) + this.GetLIT(LIT2) + NUM
+        }
+    }
+    GetLIT(value: string) {
+        switch (value) {
+            case "01":
+                return "А";
+            case "02":
+                return "Б";
+            case "03":
+                return "В";
+            case "04":
+                return "Г";
+            case "05":
+                return "Д";
+            case "06":
+                return "Е";
+            case "07":
+                return "Ж";
+            case "08":
+                return "И";
+            case "09":
+                return "К";
+            case "10":
+                return "Л";
+            case "11":
+                return "М";
+            case "12":
+                return "Н";
+            case "13":
+                return "О";
+            case "14":
+                return "П";
+            case "15":
+                return "Р";
+            case "16":
+                return "С";
+            case "17":
+                return "Т";
+            case "18":
+                return "У";
+            case "19":
+                return "Ф"
+            case "20":
+                return "Х";
+            case "21":
+                return "Ч";
+            case "22":
+                return "Ш";
+            case "23":
+                return "Э";
+            case "24":
+                return "Ю";
+            case "25":
+                return "Я";
+            default: return "-";
+        };
     }
 }
 
@@ -97,3 +169,44 @@ export class ExitDialog {
         this.dialogRef.close("true")
     }
 }
+
+@Component({
+    templateUrl: './cell-search-dialog/cell-search.dialog.html',
+    styleUrls: ['./menu.component.scss']
+})
+export class CellSearchDialog {
+    constructor(
+        private dialogRef: MatDialogRef<CellSearchDialog>,
+        private mapService: MapService,
+        private tokenService: TokenService
+    ) { }
+
+    cellInput: string
+    cellBody: CellBodyModel[] = []
+    showTable: boolean = false
+    InputHandel(event: any) {
+        var number = event.target.value;
+        if (number.length >= 8) {
+            this.getCell()
+        }
+    }
+    close() {
+        this.dialogRef.close()
+    }
+    getCell() {
+        let cell = this.cellInput.replace('PLACE:', '')
+        this.mapService.GetCell(new TokenModel(this.tokenService.getToken(), cell)).subscribe({
+            next: result => {
+                this.cellBody = result.body
+                this.showTable = true
+                var input = document.getElementById('cellInput')!
+                input.blur();
+            },
+            error: error => {
+                console.log(error);
+            }
+        })
+    }
+
+}
+

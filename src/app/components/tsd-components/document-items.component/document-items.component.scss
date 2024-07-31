@@ -58,8 +58,18 @@
             margin-right: 10px;
         }
     }
+    .search-conteiner{
+        display: flex;
+        margin-top: 5px;
+        margin-bottom: 12px;
+        align-items: center;
+        & *{
+            margin-right: 5px;
+        }
+    }
     .list-conteiner{
         border: 1px solid darkorange;
+        
         .item-conteiner{
             display: flex;
             span{
@@ -77,6 +87,10 @@
             img{
                 width: 70px;
                 height: 70px;
+            }
+            mat-form-field{
+                margin-top: 10px;
+                margin-bottom: 10px;
             }
         }
     }

@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>Документ</h2>
+<h2 mat-dialog-title>Пользователь: {{User}}</h2>
 <mat-dialog-content>
     <mat-form-field appearance="outline" style="width: 100%; margin-top: 5px;">
-        <mat-label>Документ</mat-label>
-        <input matInput [(ngModel)]="docName">
+        <mat-label>Документ:</mat-label>
+        <input matInput [(ngModel)]="docName" cdkFocusInitial (input)="docInputHandler()">
     </mat-form-field>
     <mat-form-field appearance="outline" style="width: 100%;">
         <mat-label>Выберите тип документа</mat-label>
@@ -16,8 +16,9 @@
             <option value="Проверка">Проверка</option>
         </select>
     </mat-form-field>
-    <button mat-raised-button style="width: 100%;" (click)="createDoc()" [disabled]="!docType || !docName">СОЗДАТЬ
-        ДОКУМЕНТ</button>
+    <button mat-raised-button style="width: 100%;" (click)="createDoc()" [disabled]="!docType || !docName">
+        СОЗДАТЬ ДОКУМЕНТ
+    </button>
 </mat-dialog-content>
 <mat-dialog-actions align="end">
     <button mat-button mat-dialog-close>Отмена</button>

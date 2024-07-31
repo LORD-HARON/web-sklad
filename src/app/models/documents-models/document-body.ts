@@ -10,6 +10,6 @@ export class DocumentBodyModel {
         public place: string,
         public price?: string,
         public imgUrl?: string,
-        public count_s?: string
+        public count_s?: string,
     ) { }
 }

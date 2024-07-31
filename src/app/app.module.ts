@@ -77,6 +77,12 @@ import { InventoryDialogFormComponent } from './components/sklad-components/map-
 import { StillageDialogComponent } from './components/sklad-components/stillages/stillage-dialog.component/stillage-dialog.component';
 import { MatCardModule } from '@angular/material/card';
 import { MapEditorDialogActionComponent } from './components/sklad-components/map-menegment/map-editor.component/map-editor.component';
+import { MiniMapComponent } from './components/tsd-components/mini-map-component/mini-map.component';
+import { WorkerStatComponent } from './components/tsd-components/worker-stat-component/worker-stat.component';
+import { CellSearchDialog } from './components/tsd-components/menu.component/menu.component';
+import { AgreeDialogComponent } from './components/tsd-components/work-space.component/work-space.component';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { DocumentItemsDialog } from './components/tsd-components/documents.component/documents.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +125,12 @@ import { MapEditorDialogActionComponent } from './components/sklad-components/ma
     MotivationSumPositionDialogComponent,
     InventoryDialogFormComponent,
     StillageDialogComponent,
-    MapEditorDialogActionComponent
+    MapEditorDialogActionComponent,
+    MiniMapComponent,
+    WorkerStatComponent,
+    CellSearchDialog,
+    AgreeDialogComponent,
+    DocumentItemsDialog
   ],
   imports: [
     StillagesModule,
@@ -159,7 +170,8 @@ import { MapEditorDialogActionComponent } from './components/sklad-components/ma
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressSpinnerModule,
-    MatCardModule
+    MatCardModule,
+    MatSlideToggleModule
   ],
   providers: [
     provideAnimationsAsync(),

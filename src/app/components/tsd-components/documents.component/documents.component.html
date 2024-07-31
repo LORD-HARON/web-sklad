@@ -1,4 +1,28 @@
 <div class="main">
+    <div class="search-conteiner" *ngIf="showSearch">
+        <mat-form-field appearance="outline">
+            <mat-label>Поиск среди слитых документов:</mat-label>
+            <input matInput type="text" (input)="docInputHandler()" [(ngModel)]="docSerachingRow">
+        </mat-form-field>
+        <button mat-raised-button style="background-color: darkorange; color: white;"
+            (click)="serchDoc()">Поиск</button>
+        <button mat-raised-button (click)="clear()">Отмена</button>
+    </div>
+    <button mat-raised-button style="background-color: darkorange; color: white; width:100%"
+        (click)="showSearch = !showSearch">
+        <span *ngIf="showSearch">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path
+                    d="m296-224-56-56 240-240 240 240-56 56-184-183-184 183Zm0-240-56-56 240-240 240 240-56 56-184-183-184 183Z" />
+            </svg>
+        </span>
+        <span *ngIf="!showSearch">
+            <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#e8eaed">
+                <path
+                    d="M480-200 240-440l56-56 184 183 184-183 56 56-240 240Zm0-240L240-680l56-56 184 183 184-183 56 56-240 240Z" />
+            </svg>
+        </span>
+    </button>
     <div class="document-conteiner" *ngFor="let d of documentList">
         <div class="data-box">
             <span>Документ: {{d.doc_name}}</span>
@@ -7,8 +31,22 @@
             <span>Статус: {{d.doc_state}}</span>
         </div>
         <div class="control-box">
-            <button mat-raised-button style="color: red;" (click)="DeleteDocument(d.id)">Удалить</button>
-            <button mat-raised-button style="color: green;" (click)="LoadDocument(d.id)">Загрузить</button>
+            <button mat-raised-button style="color: red;" (click)="DeleteDocument(d.id)"
+                *ngIf="d.doc_state != 'Выгружен'">
+                Удалить
+            </button>
+            <button mat-raised-button style="color: green;" (click)="LoadDocument(d.id)"
+                *ngIf="d.doc_state != 'Выгружен'">
+                Загрузить
+            </button>
+            <button mat-raised-button style="color: green;" *ngIf="d.doc_state == 'Выгружен'"
+                (click)="openDialog(d.id)">
+                Просмотр содержимого
+            </button>
+            <button mat-raised-button style="color: darkorange;" (click)="pushDocAgain(d.id)"
+                *ngIf="d.doc_state == 'Выгружен'">
+                Создать dat файл
+            </button>
         </div>
     </div>
     <button class="back-button" (click)="Back()">Назад</button>

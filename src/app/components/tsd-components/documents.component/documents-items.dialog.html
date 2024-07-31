@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>Содержимое документа</h2>
+<mat-dialog-content class="dialog-conteiner">
+    <div class="data-conteiner">
+        <table>
+            <tr>
+                <td>
+                    Артикул
+                </td>
+                <td>
+                    Ячейка
+                </td>
+                <td>
+                    Кол-во
+                </td>
+            </tr>
+            <tr *ngFor="let i of items">
+                <td>
+                    {{i.article}}
+                </td>
+                <td>
+                    {{i.place}}
+                </td>
+                <td>
+                    {{i.count_e}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close cdkFocusInitial>Закрыть</button>
+</mat-dialog-actions>

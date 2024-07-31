@@ -51,7 +51,7 @@ export class VerticalThreeFiveRightActionComponent implements OnInit {
     onClickCell(floor: string, number: string) {
         if (this.stillageItem.stillageName) {
             this.nameCell = this.stillageItem.stillageName + '-' + floor + '-' + number;
-            if (this.router.url === '/service/map') {
+            if (this.router.url === '/service/map' || this.router.url === '/tsd/mini-map') {
                 this.onOpenDetailWindow(this.nameCell, this.stillageItem.stillageName, floor, number)
             } else {
                 this.getCellItem(floor, number);

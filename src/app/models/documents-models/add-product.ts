@@ -10,6 +10,7 @@ export class AddProductModel {
         public place: string,
         public numb: number,
         public price: string,
-        public imgURL: string
+        public imgURL: string,
+        public otherPosition: boolean
     ) { }
 }

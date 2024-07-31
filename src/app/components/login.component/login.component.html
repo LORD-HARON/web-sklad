@@ -21,9 +21,9 @@
         <div class="login-conteiner">
             <mat-form-field appearance="outline">
                 <mat-label>Предъявите бейдж</mat-label>
-                <input matInput [(ngModel)]="login">
+                <input matInput [(ngModel)]="login" (keyup.enter)="onClickTsdLogin()">
             </mat-form-field>
-            <button mat-raised-button (click)="onClickTsdLogin()">Вход</button>
+            <button mat-raised-button (click)="onClickTsdLogin()" [disabled]="!login">Вход</button>
         </div>
     </ng-template>
 </div>

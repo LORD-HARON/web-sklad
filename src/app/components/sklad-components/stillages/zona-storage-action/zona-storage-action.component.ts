@@ -60,7 +60,7 @@ export class ZonaStorageActionComponent implements OnInit {
             this.nameCell = this.celldown;
         }
         let zona = this.data.stillageName.split('-')[0];
-        if (this.router.url === '/service/map') {
+        if (this.router.url === '/service/map' || this.router.url === '/tsd/mini-map') {
             this.onOpenDetailWindow(this.nameCell, zona, '1', number)
         } else {
             this.getCellItem('1', number);

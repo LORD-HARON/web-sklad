@@ -1,0 +1,34 @@
+<h2 mat-dialog-title>Содержимое ячейки</h2>
+<mat-dialog-content>
+    <mat-form-field appearance="outline">
+        <mat-label>Номер ячейки</mat-label>
+        <input matInput cdkFocusInitial [(ngModel)]="cellInput" (input)="InputHandel($event)" id="cellInput">
+    </mat-form-field>
+    <button mat-raised-button (click)="getCell()">Сканировать</button>
+    <div class="table-container" *ngIf="showTable">
+        <table>
+            <tr>
+                <td>
+                    Артикул
+                </td>
+                <td>
+                    Кол-во
+                </td>
+            </tr>
+            <tr *ngFor="let i of cellBody">
+                <td>
+                    {{i.article}}
+                </td>
+                <td>
+                    {{i.count}}
+                </td>
+            </tr>
+        </table>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-raised-button style="background-color: darkorange; color: white;" routerLink="/tsd/mini-map"
+        (click)="close()">Открыть карту</button>
+    <button mat-raised-button mat-dialog-close color="primary"
+        style="background-color: darkorange; color: white;">Закрыть</button>
+</mat-dialog-actions>

@@ -3,6 +3,7 @@ export class EditProductModel {
         public token: string,
         public id: number,
         public count: number,
-        public numb: number
+        public numb: number,
+        public place: String
     ) { }
 }
