@@ -28,7 +28,7 @@ export class PersonalService {
     private updateSkladUserUrl = environment.apiUrl + '/UpdateSkladUser/'
     private authSkladUserUrl = environment.apiUrl + '/AuthSkladTsdUser/'
     private getSendedDocUsersUrl = environment.apiUrl + '/GetSendedDocUsers/'
-    private getMotivationUrl = environment.apiUrl + '/GetMotivation/'
+    private getMotivationUrl = environment.apiUrl + '/GetNewMotivation/'
     private getSkladUserURL = environment.apiUrl + '/GetSkladUser/'
     private getUserDocURL = environment.apiUrl + '/GetUserDoc/'
     private changeWhoSetDocURL = environment.apiUrl + '/ChangeWhoSetDoc/'

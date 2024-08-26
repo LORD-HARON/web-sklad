@@ -11,6 +11,7 @@ export class AddProductModel {
         public numb: number,
         public price: string,
         public imgURL: string,
-        public otherPosition: boolean
+        public otherPosition: boolean,
+        public ukz: string
     ) { }
 }

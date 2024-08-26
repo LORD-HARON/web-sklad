@@ -1,19 +1,26 @@
 <div class="main">
-    <div class="control-conteiner">
-
-        <mat-form-field appearance="outline">
-            <mat-label *ngIf="searchParametr == 'article'"> Артикул </mat-label>
-            <mat-label *ngIf="searchParametr == 'place'"> Место хранения </mat-label>
-            <mat-label *ngIf="searchParametr == 'worker'"> Кладовщик </mat-label>
-            <input matInput type="text" [(ngModel)]="searchValue">
-        </mat-form-field>
-        <button mat-raised-button color="primary" (click)="searchClick()">Поиск</button>
-        <button mat-raised-button [disabled]="!searchValue" (click)="searchValue=''">Очистить</button>
-        <mat-button-toggle-group [(ngModel)]="searchParametr">
-            <mat-button-toggle value="article">Артикул</mat-button-toggle>
-            <mat-button-toggle value="place">Место хранения</mat-button-toggle>
-            <mat-button-toggle value="worker">Кладовщик</mat-button-toggle>
-        </mat-button-toggle-group>
+    <button class="back-button" (click)="Back()">Назад</button>
+    <div class="search-conteiner">
+        <div class="search-conteiner-box">
+            <mat-button-toggle-group [(ngModel)]="searchParametr">
+                <mat-button-toggle value="article">Артикул</mat-button-toggle>
+                <mat-button-toggle value="place">Место хранения</mat-button-toggle>
+                <mat-button-toggle value="worker">Кладовщик</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <div class="search-conteiner-box">
+            <mat-form-field appearance="outline">
+                <mat-label *ngIf="searchParametr == 'article'"> Артикул </mat-label>
+                <mat-label *ngIf="searchParametr == 'place'"> Место хранения </mat-label>
+                <mat-label *ngIf="searchParametr == 'worker'"> Кладовщик </mat-label>
+                <input matInput type="text" [(ngModel)]="searchValue" (input)="inputHandler()">
+            </mat-form-field>
+        </div>
+        <div class="search-conteiner-box">
+            <button mat-raised-button (click)="searchClick()"
+                style="color: white; background-color: darkorange;">Поиск</button>
+            <button mat-raised-button [disabled]="!searchValue" (click)="searchValue=''">Очистить</button>
+        </div>
     </div>
     <div class="table-conteiner">
         <table mat-table [dataSource]="dataSource">
@@ -26,11 +33,6 @@
             <ng-container matColumnDef="barcode">
                 <th mat-header-cell *matHeaderCellDef> Штрихкод </th>
                 <td mat-cell *matCellDef="let element"> {{element.barcode}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Наименование </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
 
             <ng-container matColumnDef="place">
@@ -59,4 +61,3 @@
 
         </table>
     </div>
-</div>

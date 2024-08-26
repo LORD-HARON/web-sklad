@@ -43,8 +43,8 @@ export class InfoComponent {
 
     article: string
     barcode: string
-    info: FindInfoAnswModel = new FindInfoAnswModel('', '', '', '', '', '', '', '', '')
-    clear = new FindInfoAnswModel('', '', '', '', '', '', '', '', '')
+    info: FindInfoAnswModel = new FindInfoAnswModel('', '', '', '', '', '', '', '', '', '')
+    clear = new FindInfoAnswModel('', '', '', '', '', '', '', '', '', '')
 
     ngOnInit(): void {
     }
@@ -61,7 +61,8 @@ export class InfoComponent {
         }
     }
     FindInfo() {
-        let req = new FindInfoReqModel(this.article ? this.article : null, this.barcode ? this.barcode : null!)
+        let priceType = this.storeList.filter(x => x.storeloc == this.selectedStore)
+        let req = new FindInfoReqModel(this.article ? this.article : null, this.barcode ? this.barcode : null!, String(this.selectedStore), String(priceType[0].price_type))
         this.documentService.FindInfo(req).subscribe({
             next: res => {
                 var inputArticle = document.getElementById('inputArticle')!

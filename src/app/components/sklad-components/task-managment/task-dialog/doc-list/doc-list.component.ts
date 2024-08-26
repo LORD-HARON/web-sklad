@@ -148,7 +148,6 @@ export class DocListComponent implements OnInit {
     onClickListItem(selectItem: ListItem) {
         if (this.list.includes(selectItem)) {
             this.list = this.list.filter(item => item !== selectItem);
-
             switch (selectItem.title) {
                 case 'Приходные':
                     if (this.dataSourcePrihod.data.length > 0)
@@ -158,7 +157,6 @@ export class DocListComponent implements OnInit {
                             }
                         });
                     break;
-
                 case 'Заявки':
                     if (this.dataSourceZpc.data.length > 0)
                         this.dataSourceZpc.data.forEach(element => {
@@ -167,7 +165,6 @@ export class DocListComponent implements OnInit {
                             }
                         });
                     break;
-
                 case 'Перемещение':
                     if (this.dataSourcePerem.data.length > 0)
                         this.dataSourcePerem.data.forEach(element => {
@@ -176,7 +173,6 @@ export class DocListComponent implements OnInit {
                             }
                         });
                     break;
-
                 case 'Возвраты':
                     if (this.dataSourceVozv.data.length > 0)
                         this.dataSourceVozv.data.forEach(element => {
@@ -257,21 +253,18 @@ export class DocListComponent implements OnInit {
                     this.matTab1 = true;
                 }
                 break;
-
             case 1:
                 if (!this.matTab1) {
                     this.getDataSourceZpc();
                     this.matTab1 = true;
                 }
                 break;
-
             case 2:
                 if (!this.matTab2) {
                     this.getDataSourcePerem();
                     this.matTab1 = true;
                 }
                 break;
-
             case 3:
                 if (!this.matTab3) {
                     this.getDataSourceVozv();
@@ -310,27 +303,31 @@ export class DocListComponent implements OnInit {
     }
 
     getDataSourcePerem() {
-        this.procService.GetPerem(new TokenModel(this.tokenService.getToken())).subscribe(response => {
-            this.dataSourcePerem = new MatTableDataSource(response);
-            this.deleteZero(this.dataSourcePerem.data);
-            this.dataSourcePerem.sort = this.sortPerem;
-        },
-            error => {
+        this.procService.GetPerem(new TokenModel(this.tokenService.getToken())).subscribe({
+            next: response => {
+                this.dataSourcePerem = new MatTableDataSource(response);
+                this.deleteZero(this.dataSourcePerem.data);
+                this.dataSourcePerem.sort = this.sortPerem;
+            },
+            error: error => {
                 console.log(error);
                 this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-            });
+            }
+        });
     }
 
     getDataSourceVozv() {
-        this.procService.GetVozv(new TokenModel(this.tokenService.getToken())).subscribe(response => {
-            this.dataSourceVozv = new MatTableDataSource(response);
-            this.deleteZero(this.dataSourceVozv.data);
-            this.dataSourceVozv.sort = this.sortVozv;
-        },
-            error => {
+        this.procService.GetVozv(new TokenModel(this.tokenService.getToken())).subscribe({
+            next: response => {
+                this.dataSourceVozv = new MatTableDataSource(response);
+                this.deleteZero(this.dataSourceVozv.data);
+                this.dataSourceVozv.sort = this.sortVozv;
+            },
+            error: error => {
                 console.log(error);
                 this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
-            });
+            }
+        });
     }
 
     deleteZero(list: Array<AnswerDocModel>) {

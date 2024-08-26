@@ -8,6 +8,8 @@ export class FindInfoAnswModel {
         public price: string,
         public srSut: string,
         public img_url: string,
-        public link: string
+        public link: string,
+        public ukz: string
+
     ) { }
 }

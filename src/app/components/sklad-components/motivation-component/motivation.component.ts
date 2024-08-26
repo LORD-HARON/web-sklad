@@ -59,9 +59,9 @@ export class MotivationComponent implements OnInit {
     }
     onSearch() {
         if (this.myControl.value === 'Все')
-            this.getMotivation(formatDate(this.startDate, 'dd.MM.yyyy', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy', 'en-US'), '');
+            this.getMotivation(formatDate(this.startDate, 'dd.MM.yyyy 00:00:00', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy 23:59:59', 'en-US'), '');
         else
-            this.getMotivation(formatDate(this.startDate, 'dd.MM.yyyy', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy', 'en-US'), this.myControl.value);
+            this.getMotivation(formatDate(this.startDate, 'dd.MM.yyyy 00:00:00', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy 23:59:59', 'en-US'), this.myControl.value);
     }
     getMotivation(startDate: string, finishDate: string, user: string) {
         this.showLoader = true

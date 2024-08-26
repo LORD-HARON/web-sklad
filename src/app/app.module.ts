@@ -12,7 +12,7 @@ import { DocumentItemsComponent } from './components/tsd-components/document-ite
 import { DocumentsComponent } from './components/tsd-components/documents.component/documents.component';
 import { InfoComponent } from './components/tsd-components/info.component/info.component';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
@@ -83,6 +83,8 @@ import { CellSearchDialog } from './components/tsd-components/menu.component/men
 import { AgreeDialogComponent } from './components/tsd-components/work-space.component/work-space.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DocumentItemsDialog } from './components/tsd-components/documents.component/documents.component';
+import { A11yModule } from '@angular/cdk/a11y';
+import { ArticleHistoryComponent } from './components/tsd-components/article-history-component/article-history.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,7 +132,8 @@ import { DocumentItemsDialog } from './components/tsd-components/documents.compo
     WorkerStatComponent,
     CellSearchDialog,
     AgreeDialogComponent,
-    DocumentItemsDialog
+    DocumentItemsDialog,
+    ArticleHistoryComponent
   ],
   imports: [
     StillagesModule,
@@ -171,13 +174,17 @@ import { DocumentItemsDialog } from './components/tsd-components/documents.compo
     MatNativeDateModule,
     MatProgressSpinnerModule,
     MatCardModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    A11yModule
   ],
   providers: [
     provideAnimationsAsync(),
     DatePipe,
     MatNativeDateModule,
-    { provide: MAT_DATE_LOCALE, useValue: 'ru-Ru' }
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-Ru' },
+    // {
+    //   provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { subscriptSizing: 'dynamic' }
+    // }
   ],
   bootstrap: [AppComponent]
 })

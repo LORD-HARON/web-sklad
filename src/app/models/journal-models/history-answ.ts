@@ -8,7 +8,8 @@ export class HistDataModel {
         public doc_name: string,
         public doc_type: string,
         public doc_who: string,
-        public doc_date: string
+        public doc_date: string,
+        public doc_state: string,
     ) { }
 }
 export class HistAnswModel {

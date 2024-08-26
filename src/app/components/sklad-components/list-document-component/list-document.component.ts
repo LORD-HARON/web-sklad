@@ -56,7 +56,7 @@ export class ListDocumentComponent {
                 this.loadData('', this.searchValue)
                 break;
             case 'date':
-                this.loadData('', '', formatDate(this.startDate, 'dd.MM.yyyy', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy', 'en-US'))
+                this.loadData('', '', formatDate(this.startDate, 'dd.MM.yyyy 00:00:00', 'en-US'), formatDate(this.finishDate, 'dd.MM.yyyy 23:59:59', 'en-US'))
                 break;
         }
     }

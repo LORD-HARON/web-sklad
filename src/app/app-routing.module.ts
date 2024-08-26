@@ -21,15 +21,17 @@ import { MapComponent } from './components/sklad-components/map-menegment/map-co
 import { MapEditorComponent } from './components/sklad-components/map-menegment/map-editor.component/map-editor.component';
 import { MiniMapComponent } from './components/tsd-components/mini-map-component/mini-map.component';
 import { WorkerStatComponent } from './components/tsd-components/worker-stat-component/worker-stat.component';
+import { ArticleHistoryComponent } from './components/tsd-components/article-history-component/article-history.component';
 
 const tsdRoutes: Routes = [
   { path: 'menu', component: MenuComponent },
-  { path: 'work-space/:docId', component: WorkSpaceComponent },
-  { path: 'document-items/:docId', component: DocumentItemsComponent },
+  { path: 'work-space/:docId/:docType', component: WorkSpaceComponent },
+  { path: 'document-items/:docId/:docType', component: DocumentItemsComponent },
   { path: 'documents', component: DocumentsComponent },
   { path: 'info', component: InfoComponent },
   { path: 'mini-map', component: MiniMapComponent },
-  { path: 'stat', component: WorkerStatComponent }
+  { path: 'stat', component: WorkerStatComponent },
+  { path: 'article-hist', component: ArticleHistoryComponent }
 ]
 
 const serviceRoutes: Routes = [

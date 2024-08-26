@@ -4,6 +4,14 @@
         <button><img src="../../../../assets/list_product.png">СПИСОК ПРОДУКЦИИ</button>
         <button (click)="openAgreeDialog()"><img src="../../../../assets/compl_product.png">ЗАВЕРШИТЬ РАБОТУ</button>
         <button (click)="goBack()"><img src="../../../../assets/back_product.png">МЕНЮ</button>
+        <button (click)="goArticleHistory()">
+            <img src="../../../../assets/article.png">
+            ДВИЖЕНИЕ ПО АРТИКУЛУ
+        </button>
+        <button (click)="goMiniMap()">
+            <img src="../../../../assets/mini-map.png">
+            СОДЕРЖИМОЕ ЯЧЕЙКИ
+        </button>
     </mat-drawer>
     <div class="main">
         <nav class="navbar">
@@ -51,8 +59,10 @@
                     </mat-form-field>
                     <span>Наименование:</span>
                     <span>{{i.name}}</span>
-                    <span>Цена в момент добавления:</span>
-                    <span>{{i.price}}</span>
+                    <!-- <span>Цена в момент добавления:</span>
+                    <span>{{i.price}}</span> -->
+                    <span>УКЗ:</span>
+                    <span>{{i.ukz}}</span>
                 </div>
             </div>
             <button mat-raised-button style="color: red;margin: 10px; font-weight: bold;" (click)="DeleteItem(i.id)">
@@ -66,7 +76,6 @@
                 *ngIf="switchEdit===true && editItem == i.id" (click)="EditItem(i.id)">
                 Сохранить
             </button>
-
         </div>
     </div>
 </mat-drawer-container>

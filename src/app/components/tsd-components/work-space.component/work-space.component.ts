@@ -9,6 +9,7 @@ import { FindInfoReqModel } from "../../../models/documents-models/find-info-req
 import { AddProductModel } from "../../../models/documents-models/add-product";
 import { TokenModel } from "../../../models/token";
 import { FormControl, FormGroup } from "@angular/forms";
+import { MapService } from "../../../services/map.service";
 
 @Component({
     selector: 'app-work-space',
@@ -23,22 +24,27 @@ export class WorkSpaceComponent {
         private tokenService: TokenService,
         private snackBarService: SnackbarService,
         private dialog: MatDialog,
+        private mapService: MapService
     ) {
         route.params.subscribe(params => this.docId = params["docId"]);
+        route.params.subscribe(params => this.docType = params["docType"]);
     }
     docId: number
+    docType: string
     barcode: string
     count: number
     numberInQueue: number = 1
     place: string
-    productInfo: FindInfoAnswModel = new FindInfoAnswModel('', '', '', '', '', '', '', '', '')
-    clear = new FindInfoAnswModel('', '', '', '', '', '', '', '', '')
+    productInfo: FindInfoAnswModel = new FindInfoAnswModel('', '', '', '', '', '', '', '', '', '')
+    clear = new FindInfoAnswModel('', '', '', '', '', '', '', '', '', '')
     inputForm = new FormGroup({
         'place': new FormControl(''),
         'count': new FormControl(null),
         'number': new FormControl(1),
+        'placeTo': new FormControl(''),
     })
     otherPosition: boolean = false
+    showCountWarning: boolean = false
     GetProductInfo() {
         this.documentService.FindInfo(new FindInfoReqModel(null, String(this.barcode), '19', '21')).subscribe({
             next: result => {
@@ -49,6 +55,7 @@ export class WorkSpaceComponent {
                     this.productInfo = result
                 else
                     this.snackBarService.openRedSnackBar('Товар не найден');
+                this.showCountWarning = false
             },
             error: error => {
                 console.log(error)
@@ -57,8 +64,10 @@ export class WorkSpaceComponent {
     }
     AddProductToDoc() {
         let place = this.inputForm.value.place!.replace('PLACE:', '')
+        let placeTo = this.inputForm.value.placeTo!.replace('PLACE:', '')
+        place = this.docType == 'Ротация' ? `${place}-${placeTo}` : place
         if (this.productInfo.article) {
-            let prod = new AddProductModel(this.tokenService.getToken(), '', this.docId, this.productInfo.article, this.productInfo.barcode, this.productInfo.name, this.inputForm.value.count!, place, this.inputForm.value.number!, this.productInfo.price, this.productInfo.img_url, this.otherPosition)
+            let prod = new AddProductModel(this.tokenService.getToken(), '', this.docId, this.productInfo.article, this.productInfo.barcode, this.productInfo.name, this.inputForm.value.count!, place, this.inputForm.value.number!, this.productInfo.price, this.productInfo.img_url, this.otherPosition, this.productInfo.ukz)
             console.log(prod)
             this.documentService.AddProduct(prod).subscribe({
                 next: result => {
@@ -69,7 +78,8 @@ export class WorkSpaceComponent {
                             this.inputForm.setValue({
                                 place: '',
                                 count: null,
-                                number: this.inputForm.value.number! + 1
+                                number: this.inputForm.value.number! + 1,
+                                placeTo: ''
                             })
                             this.productInfo = this.clear
                             break;
@@ -83,6 +93,7 @@ export class WorkSpaceComponent {
                             this.snackBarService.openRedSnackBar('Ошибка');
                             break;
                     }
+                    this.showCountWarning = false
                 },
                 error: error => {
                     console.log(error)
@@ -101,10 +112,17 @@ export class WorkSpaceComponent {
 
     }
     openDocumentItems() {
-        this.router.navigate(["tsd/document-items", this.docId])
+        let type = this.docType
+        this.router.navigate(["tsd/document-items", this.docId, type])
     }
     goBack() {
         this.router.navigate(['tsd/menu'])
+    }
+    goArticleHistory() {
+        this.router.navigate(['tsd/article-hist'])
+    }
+    goMiniMap() {
+        this.router.navigate(['tsd/mini-map'])
     }
     pushDoc() {
         this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
@@ -129,6 +147,33 @@ export class WorkSpaceComponent {
                 console.log(error)
             }
         })
+    }
+    checkCount() {
+        if ((this.docType == 'Ротация' || this.docType == 'Отборка') && this.productInfo.article) {
+            let place = this.inputForm.value.place!.replace('PLACE:', '')
+            this.mapService.CheckCount(new TokenModel(this.tokenService.getToken(), place, this.productInfo.article)).subscribe({
+                next: result => {
+                    switch (result.status) {
+                        case 'true':
+                            this.showCountWarning = false
+                            break
+                        case 'false':
+                            this.showCountWarning = true
+                            break
+                        case 'error':
+                            this.snackBarService.openRedSnackBar()
+                            break
+                        case 'BadAuth':
+                            this.snackBarService.openRedSnackBar('Неверный токен')
+                            break
+                    }
+                },
+                error: error => {
+                    console.log(error);
+                    this.snackBarService.openRedSnackBar()
+                }
+            })
+        }
     }
     openAgreeDialog() {
         const dialogRef = this.dialog.open(AgreeDialogComponent)

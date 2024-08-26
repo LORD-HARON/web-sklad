@@ -65,7 +65,6 @@ export class TaskComponent {
     ngOnInit() {
         this.loadData();
     }
-
     loadData() {
         this.taskService.GetMainTask(new TokenModel(this.tokenService.getToken())).subscribe({
             next: response => {

@@ -53,12 +53,14 @@ export class MenuComponent {
             }
         });
     }
-
-    openCellSearchDialog() {
-        const dialogRef = this.dialog.open(CellSearchDialog)
-        dialogRef.afterClosed().subscribe(result => {
-        });
+    openCellSearch() {
+        this.router.navigate(['tsd/mini-map']);
     }
+    // openCellSearchDialog() {
+    //     const dialogRef = this.dialog.open(CellSearchDialog)
+    //     dialogRef.afterClosed().subscribe(result => {
+    //     });
+    // }
 }
 @Component({
     templateUrl: './create-document-dialog-window/create-document.dialog.html',
@@ -80,7 +82,7 @@ export class CreateDocumentDialog {
         this.documentService.CreateDocument(doc).subscribe({
             next: result => {
                 if (result) {
-                    this.router.navigate(["tsd/work-space", result.id])
+                    this.router.navigate(["tsd/work-space", result.id, result.doc_type])
                     this.dialogRef.close("true")
                 }
                 else

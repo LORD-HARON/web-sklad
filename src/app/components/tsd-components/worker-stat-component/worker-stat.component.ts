@@ -30,8 +30,8 @@ export class WorkerStatComponent implements OnInit {
         this.getData()
     }
     getData() {
-        let startDate = formatDate(this.startDate, 'dd.MM.yyyy', 'en-US')
-        let finishDate = formatDate(this.finishDate, 'dd.MM.yyyy', 'en-US')
+        let startDate = formatDate(this.startDate, 'dd.MM.yyyy 00:00:00', 'en-US')
+        let finishDate = formatDate(this.finishDate, 'dd.MM.yyyy 23:59:59', 'en-US')
         this.personalService.GetMotivation(new MotivationQueryModel(this.tokenService.getToken(), startDate, finishDate, this.tokenService.getLogin())).subscribe({
             next: result => {
                 if (this.getTodayData == false) {

@@ -17,6 +17,7 @@ export class MapService {
     getStillagesUrl = environment.apiUrl + '/GetStillages/'
     setStillagesUrl = environment.apiUrl + '/SetStillages/'
     getCellUrl = environment.apiUrl + '/GetCell/'
+    checkCountURL = environment.apiUrl + '/CheckCount/'
 
     GetSklad(data: TokenModel): Observable<StillagesModel> {
         return this.http.post<StillagesModel>(this.getStillagesUrl, data)
@@ -26,5 +27,8 @@ export class MapService {
     }
     GetCell(data: TokenModel): Observable<CellAnswModel> {
         return this.http.post<CellAnswModel>(this.getCellUrl, data)
+    }
+    CheckCount(data: TokenModel): Observable<Status> {
+        return this.http.post<Status>(this.checkCountURL, data)
     }
 }

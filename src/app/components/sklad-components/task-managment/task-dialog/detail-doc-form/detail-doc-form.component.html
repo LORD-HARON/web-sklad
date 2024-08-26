@@ -1,68 +1,67 @@
-<div class="main" id="print-section">
-    <div class="header-conteiner">
-        <div class="header-conteiner-barcode-box">
-            <span>Дата печати: {{date | date:"dd/MM/yyyy HH:mm"}}</span>
-            <img [src]="imgSource">
+<div class="main">
+    <div id="print-section" class="pring-section">
+        <div style="font-size: 10px;">
+            Дата печати: {{date | date:"dd/MM/yyyy HH:mm"}}
         </div>
-        <div class="header-conteiner-box">
-            <span>№:{{wDocAnswer.docname}}</span>
-            <span>Грузуотправитель:</span>
-            <span>Грузополучатель:</span>
-        </div>
-        <div class="header-conteiner-box">
-            <span>Дата:{{wDocAnswer.docdate}}</span>
-            <span>{{wDocAnswer.docfrom}}</span>
-            <span>{{wDocAnswer.docto}}</span>
+        <mat-grid-list cols="4" rowHeight="3em">
+            <mat-grid-tile [colspan]="1" [rowspan]="3"> <img [src]="imgSource"> </mat-grid-tile>
+            <mat-grid-tile [colspan]="1" [rowspan]="1"> №: {{wDocAnswer.docname}} </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1"> Дата: {{wDocAnswer.docdate}} </mat-grid-tile>
+            <mat-grid-tile> Грузоотправитель: </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1"> {{wDocAnswer.docfrom}} </mat-grid-tile>
+            <mat-grid-tile> Грузополучатель: </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1"> {{wDocAnswer.docto}} </mat-grid-tile>
+        </mat-grid-list>
+        <div class="table-conteiner">
+            <table mat-table [dataSource]="dataSource" class="table-hover" matSort>
+
+                <ng-container matColumnDef="num">
+                    <th mat-header-cell *matHeaderCellDef> № </th>
+                    <td mat-cell *matCellDef="let element"> {{element.num}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="article">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Артикул </th>
+                    <td mat-cell *matCellDef="let element"> {{element.article}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Наименование </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="count">
+                    <th mat-header-cell *matHeaderCellDef> Кол. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.count}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="mes">
+                    <th mat-header-cell *matHeaderCellDef> Ед. изм. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.mes}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="goods_main">
+                    <th mat-header-cell *matHeaderCellDef> Остаток основной</th>
+                    <td mat-cell *matCellDef="let element"> {{element.goods_main}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="brak">
+                    <th mat-header-cell *matHeaderCellDef> Остаток брак</th>
+                    <td mat-cell *matCellDef="let element"> {{element.goods_brak}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="place">
+                    <th mat-header-cell *matHeaderCellDef> Место хранения </th>
+                    <td mat-cell *matCellDef="let element"> {{element.place}} </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            </table>
         </div>
     </div>
-    <div class="table-conteiner">
-        <table mat-table [dataSource]="dataSource" class="table-hover" matSort>
 
-            <ng-container matColumnDef="num">
-                <th mat-header-cell *matHeaderCellDef> № </th>
-                <td mat-cell *matCellDef="let element"> {{element.num}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="article">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Артикул </th>
-                <td mat-cell *matCellDef="let element"> {{element.article}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef> Наименование </th>
-                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="count">
-                <th mat-header-cell *matHeaderCellDef> Кол. </th>
-                <td mat-cell *matCellDef="let element"> {{element.count}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="mes">
-                <th mat-header-cell *matHeaderCellDef> Ед. изм. </th>
-                <td mat-cell *matCellDef="let element"> {{element.mes}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="goods_main">
-                <th mat-header-cell *matHeaderCellDef> Остаток основной</th>
-                <td mat-cell *matCellDef="let element"> {{element.goods_main}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="brak">
-                <th mat-header-cell *matHeaderCellDef> Остаток брак</th>
-                <td mat-cell *matCellDef="let element"> {{element.goods_brak}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="place">
-                <th mat-header-cell *matHeaderCellDef> Место хранения </th>
-                <td mat-cell *matCellDef="let element"> {{element.place}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-
-        </table>
-    </div>
     <div class="control-conteiner">
         <button mat-raised-button color="primary" (click)="onCancelClick()">
             Отмена
@@ -70,8 +69,8 @@
         <button mat-raised-button (click)="onGetDateNow()" color="primary">
             Печать
         </button>
-        <button hidden #ngxPrint color="primary" class="btn btn-default"
-            [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse'}}"
+        <button hidden #ngxPrint color="primary"
+            [printStyle]="{th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse'}}"
             printSectionId="print-section" ngxPrint>
         </button>
     </div>

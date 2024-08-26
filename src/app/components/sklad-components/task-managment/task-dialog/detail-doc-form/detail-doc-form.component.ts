@@ -6,6 +6,7 @@ import { ProcService } from "../../../../../services/proc.service";
 import { SnackbarService } from "../../../../../services/snackbar.service";
 import { MAT_DIALOG_DATA, MatDialogRef } from "@angular/material/dialog";
 import { TokenModel } from "../../../../../models/token";
+import { TokenService } from "../../../../../services/token.service";
 
 export interface DataDialog {
     token: string;
@@ -38,6 +39,7 @@ export class DetailDocFormComponent implements OnInit {
         private procService: ProcService,
         private snackbarService: SnackbarService,
         public dialogRef: MatDialogRef<DetailDocFormComponent>,
+        private tokenService: TokenService,
         @Inject(MAT_DIALOG_DATA) public data: DataDialog,
     ) { }
 
@@ -67,6 +69,27 @@ export class DetailDocFormComponent implements OnInit {
 
     onGetDateNow() {
         this.date = new Date();
-        setTimeout(this.ngxPrint.nativeElement.click(), 1000);
+        this.procService.CheckDocument(new TokenModel(this.tokenService.getToken(), this.wDocAnswer.docname)).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case 'true':
+                        setTimeout(this.ngxPrint.nativeElement.click(), 1000);
+                        break;
+                    case 'false':
+                        this.snackbarService.openRedSnackBar('Документ уже в работе')
+                        break;
+                    case 'BadAuth':
+                        this.snackbarService.openRedSnackBar('Не верный токен')
+                        break;
+                    case 'error':
+                        this.snackbarService.openRedSnackBar()
+                        break;
+                }
+            },
+            error: error => {
+                console.log(error);
+                this.snackbarService.openRedSnackBar()
+            }
+        })
     }
 }

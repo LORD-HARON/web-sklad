@@ -9,10 +9,8 @@ export class UrlImgPipe implements PipeTransform {
     mileUrl = 'http://img.mile.by';
 
     transform(value: string): string {
-        console.log(value)
         try {
             let obj = JSON.parse(value);
-            console.log(this.mileUrl + obj.Url)
             if (obj.status === 'ok')
                 this.url = this.mileUrl + obj.Url;
             else this.url = '../../../../../assets/box.png';

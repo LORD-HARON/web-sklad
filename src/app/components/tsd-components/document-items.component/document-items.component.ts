@@ -31,9 +31,10 @@ export class DocumentItemsComponent {
         private dialog: MatDialog,
     ) {
         route.params.subscribe(params => this.docId = params["docId"]);
+        route.params.subscribe(params => this.docType = params["docType"]);
     }
     docId: number
-
+    docType: string
     items: DocumentBodyModel[] = []
     showingItems: DocumentBodyModel[] = []
     totalPrice: number = 0
@@ -53,13 +54,6 @@ export class DocumentItemsComponent {
             next: result => {
                 this.items = result
                 this.showingItems = result
-                result.forEach(element => {
-                    console.log(element)
-                    // if (!element.price || !element.count_e)
-                    //     this.totalPrice += 0
-                    // else
-                    //     this.totalPrice += (Number(element.price.replace(',', '.')) * Number(element.count_e))
-                });
             },
             error: error => {
                 console.log(error)
@@ -169,9 +163,15 @@ export class DocumentItemsComponent {
         });
     }
     goWorkSpace() {
-        this.router.navigate(["tsd/work-space", this.docId])
+        this.router.navigate(["tsd/work-space", this.docId, this.docType])
     }
     goBack() {
         this.router.navigate(['tsd/menu'])
+    }
+    goMiniMap() {
+        this.router.navigate(['tsd/mini-map'])
+    }
+    goArticleHistory() {
+        this.router.navigate(['tsd/article-hist'])
     }
 }

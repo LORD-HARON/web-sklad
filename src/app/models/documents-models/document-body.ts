@@ -11,5 +11,6 @@ export class DocumentBodyModel {
         public price?: string,
         public imgUrl?: string,
         public count_s?: string,
+        public ukz?: string
     ) { }
 }
