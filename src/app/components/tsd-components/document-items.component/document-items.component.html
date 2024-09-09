@@ -2,6 +2,14 @@
     <mat-drawer class="menu-conteiner" #drawer mode="over">
         <button (click)="goWorkSpace() "><img src="../../../../assets/find_product.png">ПОИСК ПРОДУКЦИИ</button>
         <button><img src="../../../../assets/list_product.png">СПИСОК ПРОДУКЦИИ</button>
+        <button (click)="goBase()">
+            <img src="../../../../assets/doc_product.png">
+            Основание
+        </button>
+        <button (click)="goGSM()">
+            <img src="../../../../assets/gsm.png">
+            DataMark
+        </button>
         <button (click)="openAgreeDialog()"><img src="../../../../assets/compl_product.png">ЗАВЕРШИТЬ РАБОТУ</button>
         <button (click)="goBack()"><img src="../../../../assets/back_product.png">МЕНЮ</button>
         <button (click)="goArticleHistory()">

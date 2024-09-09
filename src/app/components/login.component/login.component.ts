@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
         });
     }
     onClickTsdLogin() {
-        this.personalService.AuthSkladUser(new LoginQuery(this.login)).subscribe({
+        let log = this.login.replace('U:', '')
+        this.personalService.AuthSkladUser(new LoginQuery(log)).subscribe({
             next: response => {
                 if (this.checkResponse(response)) {
                     this.tokenService.setCookie(response);

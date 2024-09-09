@@ -1,0 +1,107 @@
+.menu-conteiner{
+    background-color: darkorange;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    button{
+        width: 100%;
+        margin-top: 5px;
+        padding: 0;
+        border: none;
+        font: inherit;
+        color: inherit;
+        background-color: transparent;
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.37);
+        height: 60px;
+        border: 1px solid rgba(216, 216, 216, 0.568);
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img{
+            width: 40px;
+            height: 40px;
+        }
+    }
+}
+.main{
+    width: 100vw;
+    height: 100vh;
+    font-weight: bold;
+    overflow: auto;
+    mat-form-field{
+        margin-bottom: -10px;
+    }
+    .navbar{
+        width: 100vw;
+        background-color: darkorange;
+        display: flex;
+        align-items: center;
+        button{
+            margin: 5px;
+            padding: 0;
+            border: none;
+            font: inherit;
+            color: inherit;
+            background-color: transparent;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        span{
+            font-size: 1.7em;
+        }
+    }
+    .info-conteiner{
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+    }
+    .base-items-conteiner{
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+    }
+    .base-item{
+        width: 100%;
+        display: flex;
+        border-top: 1px solid gainsboro;
+        img{
+            width: 100px;
+            height: 100px;
+        }
+        .items-info-conteiner{
+            display: flex;
+            flex-direction: column;
+            margin-left: 10px;
+            span{
+                &:first-child{
+                    color: #F44336;
+                    margin: 10px 0 10px 0;
+                }
+                font-size: 20px;
+                color: rgb(0, 0, 156);
+                span{
+                    color: darkorange;
+                    margin-left: 5px;
+                    text-shadow: 0.5px 0 0.5px #000, 
+                    0 0.5px 0.5px #000, 
+                    -0.5px 0 0.5px #000, 
+                    0 -0.5px 0.5px #000;
+                }
+            }
+        }
+    }
+}
+
+.ready-item{
+    color: rgb(0, 150, 0)!important;
+}
+.not-ready{
+    color: red!important;
+}

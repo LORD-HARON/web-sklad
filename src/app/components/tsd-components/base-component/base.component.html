@@ -1,0 +1,73 @@
+<mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer class="menu-conteiner" #drawer mode="over">
+        <button (click)="goWorkSpace()">
+            <img src="../../../../assets/find_product.png">
+            ПОИСК ПРОДУКЦИИ
+        </button>
+        <button (click)="openDocumentItems()">
+            <img src="../../../../assets/list_product.png">
+            СПИСОК ПРОДУКЦИИ
+        </button>
+        <button>
+            <img src="../../../../assets/doc_product.png">
+            Основание
+        </button>
+        <button (click)="goGSM()">
+            <img src="../../../../assets/gsm.png">
+            DataMark
+        </button>
+        <button (click)="openAgreeDialog()">
+            <img src="../../../../assets/compl_product.png">
+            ЗАВЕРШИТЬ РАБОТУ
+        </button>
+        <button (click)="goBack()">
+            <img src="../../../../assets/back_product.png">
+            Меню
+        </button>
+        <button (click)="goArticleHistory()">
+            <img src="../../../../assets/article.png">
+            ДВИЖЕНИЕ ПО АРТИКУЛУ
+        </button>
+        <button (click)="goMiniMap()">
+            <img src="../../../../assets/mini-map.png">
+            СОДЕРЖИМОЕ ЯЧЕЙКИ
+        </button>
+    </mat-drawer>
+    <div class="main">
+        <nav class="navbar">
+            <button (click)="drawer.toggle()">
+                <img src="../../../../assets/ham.png">
+            </button>
+            <span>Основание:</span>
+        </nav>
+        <div class="info-conteiner">
+            <span>Грузоотправитель:</span>
+            <span>Грузополучатель:</span>
+        </div>
+        <div class="base-items-conteiner">
+            <div class="base-item" *ngFor="let i of base">
+                <img [src]="i.img|urlImg">
+                <div class="items-info-conteiner">
+                    <span>
+                        {{i.name}}
+                    </span>
+                    <span>
+                        Артикул: <span>{{i.article}}</span>
+                    </span>
+                    <span>
+                        ШК:<span>{{i.barcode}}</span>
+                    </span>
+                    <span>
+                        Собрано: <span [ngClass]="i.ready == i.need ? 'ready-item' : 'not-ready'">{{i.ready}}</span>
+                    </span>
+                    <span>
+                        Необходимо:<span [ngClass]="i.ready == i.need ? 'ready-item' : 'not-ready'">{{i.need}}</span>
+                    </span>
+                    <span>
+                        Номер П/П:<span>{{i.number}}</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</mat-drawer-container>

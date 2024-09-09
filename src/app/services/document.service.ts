@@ -12,6 +12,10 @@ import { AddProductModel } from "../models/documents-models/add-product"
 import { DocumentBodyModel } from "../models/documents-models/document-body"
 import { EditProductModel } from "../models/documents-models/edit-product"
 import { E } from "@angular/cdk/keycodes"
+import { BaseModel } from "../models/base-models/base"
+import { AddGSMModel } from "../models/documents-models/add-gsm-codes"
+import { GSMModel } from "../models/documents-models/gsm"
+import { GetGSMModel } from "../models/documents-models/get-gsm"
 
 @Injectable({
     providedIn: "root"
@@ -32,6 +36,11 @@ export class DocumentService {
     pushDocumentURL = environment.apiUrl + '/PushDocument'
     getMyDocsURL = environment.apiUrl + '/GetMyDocs'
     generateFilesURL = environment.apiUrl + '/GenerateFiles'
+    getDocBaseurl = environment.apiUrl + '/GetDocBase'
+    addGSMCodesURL = environment.apiUrl + '/AddGSMCodes'
+    deleteGSMCodeURL = environment.apiUrl + '/DeleteGSMCode'
+    getGSMCodesURL = environment.apiUrl + '/GetGSMCodes'
+    clearGSMURL = environment.apiUrl + '/ClearGSM'
     CreateDocument(data: CreateDocumentModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.createDocumentURL, data)
     }
@@ -69,5 +78,20 @@ export class DocumentService {
     }
     GenerateFiles(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.generateFilesURL, data)
+    }
+    GetDocBase(data: TokenModel): Observable<BaseModel[]> {
+        return this.http.post<BaseModel[]>(this.getDocBaseurl, data)
+    }
+    AddGSMCodes(data: AddGSMModel): Observable<Status> {
+        return this.http.post<Status>(this.addGSMCodesURL, data)
+    }
+    DeleteGSMCode(data: TokenModel): Observable<Status> {
+        return this.http.post<Status>(this.deleteGSMCodeURL, data)
+    }
+    GetGSMCodes(data: TokenModel): Observable<GetGSMModel[]> {
+        return this.http.post<GetGSMModel[]>(this.getGSMCodesURL, data)
+    }
+    ClearGSM(data: TokenModel): Observable<Status> {
+        return this.http.post<Status>(this.clearGSMURL, data)
     }
 }

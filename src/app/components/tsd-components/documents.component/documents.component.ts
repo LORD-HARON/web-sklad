@@ -70,8 +70,8 @@ export class DocumentsComponent {
             }
         })
     }
-    LoadDocument(element: number, type: any) {
-        this.router.navigate(['tsd/work-space', element, type])
+    LoadDocument(element: number, type: any, name: any) {
+        this.router.navigate(['tsd/work-space', element, type, name])
     }
     Back() {
         this.router.navigate(['tsd/menu'])

@@ -82,7 +82,7 @@ export class CreateDocumentDialog {
         this.documentService.CreateDocument(doc).subscribe({
             next: result => {
                 if (result) {
-                    this.router.navigate(["tsd/work-space", result.id, result.doc_type])
+                    this.router.navigate(["tsd/work-space", result.id, result.doc_type, result.doc_name])
                     this.dialogRef.close("true")
                 }
                 else

@@ -32,9 +32,11 @@ export class DocumentItemsComponent {
     ) {
         route.params.subscribe(params => this.docId = params["docId"]);
         route.params.subscribe(params => this.docType = params["docType"]);
+        route.params.subscribe(params => this.docName = params["docName"]);
     }
     docId: number
     docType: string
+    docName: string
     items: DocumentBodyModel[] = []
     showingItems: DocumentBodyModel[] = []
     totalPrice: number = 0
@@ -163,7 +165,7 @@ export class DocumentItemsComponent {
         });
     }
     goWorkSpace() {
-        this.router.navigate(["tsd/work-space", this.docId, this.docType])
+        this.router.navigate(["tsd/work-space", this.docId, this.docType, this.docName])
     }
     goBack() {
         this.router.navigate(['tsd/menu'])
@@ -173,5 +175,13 @@ export class DocumentItemsComponent {
     }
     goArticleHistory() {
         this.router.navigate(['tsd/article-hist'])
+    }
+    goBase() {
+        this.router.navigate(['tsd/base', this.docId, this.docType, this.docName])
+    }
+    goGSM() {
+        let type = this.docType
+        let name = this.docName
+        this.router.navigate(['tsd/gsm', this.docId, type, name])
     }
 }

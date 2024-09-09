@@ -85,6 +85,9 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DocumentItemsDialog } from './components/tsd-components/documents.component/documents.component';
 import { A11yModule } from '@angular/cdk/a11y';
 import { ArticleHistoryComponent } from './components/tsd-components/article-history-component/article-history.component';
+import { BaseComponent } from './components/tsd-components/base-component/base.component';
+import { GSMComponent } from './components/tsd-components/gsm-component/gsm.component';
+import { GSMDeleteDialog } from './components/tsd-components/gsm-component/gsm.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -133,7 +136,10 @@ import { ArticleHistoryComponent } from './components/tsd-components/article-his
     CellSearchDialog,
     AgreeDialogComponent,
     DocumentItemsDialog,
-    ArticleHistoryComponent
+    ArticleHistoryComponent,
+    BaseComponent,
+    GSMComponent,
+    GSMDeleteDialog
   ],
   imports: [
     StillagesModule,

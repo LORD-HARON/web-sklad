@@ -8,6 +8,14 @@
             <img src="../../../../assets/list_product.png">
             СПИСОК ПРОДУКЦИИ
         </button>
+        <button (click)="goBase()">
+            <img src="../../../../assets/doc_product.png">
+            Основание
+        </button>
+        <button (click)="goGSM()">
+            <img src="../../../../assets/gsm.png">
+            DataMark
+        </button>
         <button (click)="openAgreeDialog()">
             <img src="../../../../assets/compl_product.png">
             ЗАВЕРШИТЬ РАБОТУ
@@ -69,16 +77,33 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="select-place-conteiner" *ngIf="productInfo.places !=null">
+                <span>
+                    Выбор места хранения:
+                </span>
+                <div class="select-place-item" (click)="selectPlaceItem(p.place)"
+                    [ngClass]="{'selected-place-item': selectedPlace == p.place}" *ngFor="let p of productInfo.places">
+                    <span>Место:</span> <span>{{p.place}}</span> <span>Кол-во:</span> <span>{{p.count}}</span>
+                </div>
+            </div>
             <div class="input-box-conteiner">
                 <form [formGroup]="inputForm">
                     <mat-form-field appearance="outline">
                         <mat-label *ngIf="docType != 'Ротация'">Место хранения:</mat-label>
                         <mat-label *ngIf="docType == 'Ротация'">Перемещение из:</mat-label>
                         <input matInput formControlName="place" type="string" (input)="checkCount()">
+                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="clearPlaceInput(1)">
+                            <mat-icon>close</mat-icon>
+                        </button>
                     </mat-form-field>
                     <mat-form-field appearance="outline" *ngIf="docType == 'Ротация'">
                         <mat-label>Перемещение в:</mat-label>
                         <input matInput formControlName="placeTo" type="string">
+                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="clearPlaceInput(2)">
+                            <mat-icon>close</mat-icon>
+                        </button>
                     </mat-form-field>
                     <mat-form-field appearance="outline">
                         <mat-label>Кол-во:</mat-label>
@@ -89,6 +114,48 @@
                         <input matInput type="number" formControlName="number">
                     </mat-form-field>
                 </form>
+            </div>
+            <div class="gsm-codes-conteiner">
+                <a
+                    (click)="showGSMConteiner = showGSMConteiner == 'arrow_drop_down'? 'arrow_drop_up':'arrow_drop_down' ">
+                    <span>DataMark-коды</span>
+                    <mat-icon>{{showGSMConteiner}}</mat-icon>
+                </a>
+                <div class="gsm-codes-input-conteiner" *ngIf="showGSMConteiner == 'arrow_drop_up'">
+                    <span>
+                        Записано/Необходимо:
+                    </span>
+                    <span [ngClass]="productInfo.gsm?.length == inputForm.value.count ? 'ready' : ''">
+                        {{productInfo.gsm?.length}}/{{inputForm.value.count}}
+                    </span>
+                    <mat-form-field appearance="outline">
+                        <mat-label>DataMark-коды</mat-label>
+                        <input matInput type="text" [(ngModel)]="gsm">
+                    </mat-form-field>
+                    <button mat-raised-button [disabled]="!productInfo.article || !gsm" (click)="addGSMCode()">
+                        Добавить код
+                    </button>
+                    <div class="gsm-table-conteiner">
+                        <table>
+                            <tr>
+                                Записанные коды на артикул
+                            </tr>
+                            <tr *ngFor="let g of productInfo.gsm">
+                                <td>
+                                    {{g}}
+                                </td>
+                                <td>
+                                    <button>
+                                        <button class="clear-button" mat-icon-button aria-label="Clear"
+                                            (click)="deleteGSMCode(g)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
             </div>
             <div class="toggle-box">
                 <mat-slide-toggle [(ngModel)]="otherPosition">Добавить как отдельную позицию</mat-slide-toggle>

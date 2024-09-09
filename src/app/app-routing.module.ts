@@ -22,16 +22,20 @@ import { MapEditorComponent } from './components/sklad-components/map-menegment/
 import { MiniMapComponent } from './components/tsd-components/mini-map-component/mini-map.component';
 import { WorkerStatComponent } from './components/tsd-components/worker-stat-component/worker-stat.component';
 import { ArticleHistoryComponent } from './components/tsd-components/article-history-component/article-history.component';
+import { BaseComponent } from './components/tsd-components/base-component/base.component';
+import { GSMComponent } from './components/tsd-components/gsm-component/gsm.component';
 
 const tsdRoutes: Routes = [
   { path: 'menu', component: MenuComponent },
-  { path: 'work-space/:docId/:docType', component: WorkSpaceComponent },
-  { path: 'document-items/:docId/:docType', component: DocumentItemsComponent },
+  { path: 'work-space/:docId/:docType/:docName', component: WorkSpaceComponent },
+  { path: 'document-items/:docId/:docType/:docName', component: DocumentItemsComponent },
   { path: 'documents', component: DocumentsComponent },
   { path: 'info', component: InfoComponent },
   { path: 'mini-map', component: MiniMapComponent },
   { path: 'stat', component: WorkerStatComponent },
-  { path: 'article-hist', component: ArticleHistoryComponent }
+  { path: 'article-hist', component: ArticleHistoryComponent },
+  { path: 'base/:docId/:docType/:docName', component: BaseComponent },
+  { path: 'gsm/:docId/:docType/:docName', component: GSMComponent }
 ]
 
 const serviceRoutes: Routes = [

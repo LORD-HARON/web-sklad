@@ -35,7 +35,7 @@
                 *ngIf="d.doc_state != 'Выгружен'">
                 Удалить
             </button>
-            <button mat-raised-button style="color: green;" (click)="LoadDocument(d.id, d.doc_type)"
+            <button mat-raised-button style="color: green;" (click)="LoadDocument(d.id, d.doc_type, d.doc_name)"
                 *ngIf="d.doc_state != 'Выгружен'">
                 Загрузить
             </button>

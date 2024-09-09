@@ -28,7 +28,6 @@ export class HistoryComponent {
         this.journalService.GetHistory(new HistFindModel(this.tokenService.getToken(), article, place, worker)).subscribe({
             next: result => {
                 this.dataSource = result.histData
-
             },
             error: error => {
                 console.log(error);

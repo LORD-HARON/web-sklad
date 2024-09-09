@@ -10,7 +10,8 @@ import { AddProductModel } from "../../../models/documents-models/add-product";
 import { TokenModel } from "../../../models/token";
 import { FormControl, FormGroup } from "@angular/forms";
 import { MapService } from "../../../services/map.service";
-
+import { HostListener } from '@angular/core';
+import { AddGSMModel } from "../../../models/documents-models/add-gsm-codes";
 @Component({
     selector: 'app-work-space',
     templateUrl: './work-space.component.html',
@@ -28,13 +29,16 @@ export class WorkSpaceComponent {
     ) {
         route.params.subscribe(params => this.docId = params["docId"]);
         route.params.subscribe(params => this.docType = params["docType"]);
+        route.params.subscribe(params => this.docName = params["docName"]);
     }
     docId: number
     docType: string
+    docName: string
     barcode: string
     count: number
     numberInQueue: number = 1
     place: string
+    showGSMConteiner: string = 'arrow_drop_down'
     productInfo: FindInfoAnswModel = new FindInfoAnswModel('', '', '', '', '', '', '', '', '', '')
     clear = new FindInfoAnswModel('', '', '', '', '', '', '', '', '', '')
     inputForm = new FormGroup({
@@ -45,10 +49,11 @@ export class WorkSpaceComponent {
     })
     otherPosition: boolean = false
     showCountWarning: boolean = false
+
     GetProductInfo() {
-        this.documentService.FindInfo(new FindInfoReqModel(null, String(this.barcode), '19', '21')).subscribe({
+        this.documentService.FindInfo(new FindInfoReqModel(null, String(this.barcode), '19', '21', this.docId)).subscribe({
             next: result => {
-                var input = document.getElementById('barcodeInput')!
+                let input = document.getElementById('barcodeInput')!
                 input.blur();
                 console.log(result)
                 if (result.article)
@@ -62,6 +67,49 @@ export class WorkSpaceComponent {
             }
         })
     }
+    selectedPlace: string = ''
+    selectPlaceItem(element: string) {
+        this.selectedPlace = element
+        if (this.docType == 'Ротация') {
+            let place = this.inputForm.value.place == '' ? this.selectedPlace : this.inputForm.value.place!
+            let placeTo = this.inputForm.value.place != '' ? this.selectedPlace : this.inputForm.value.placeTo!
+            this.inputForm.setValue({
+                place: place,
+                count: this.inputForm.value.count!,
+                number: this.inputForm.value.number!,
+                placeTo: placeTo
+            })
+        }
+        else {
+            this.inputForm.setValue({
+                place: this.selectedPlace,
+                count: this.inputForm.value.count!,
+                number: this.inputForm.value.number!,
+                placeTo: ''
+            })
+        }
+
+    }
+    clearPlaceInput(element: number) {
+        switch (element) {
+            case 1:
+                this.inputForm.setValue({
+                    place: '',
+                    count: this.inputForm.value.count!,
+                    number: this.inputForm.value.number!,
+                    placeTo: this.inputForm.value.placeTo!
+                })
+                break
+            case 2:
+                this.inputForm.setValue({
+                    place: this.inputForm.value.place!,
+                    count: this.inputForm.value.count!,
+                    number: this.inputForm.value.number!,
+                    placeTo: ''
+                })
+                break
+        }
+    }
     AddProductToDoc() {
         let place = this.inputForm.value.place!.replace('PLACE:', '')
         let placeTo = this.inputForm.value.placeTo!.replace('PLACE:', '')
@@ -73,7 +121,7 @@ export class WorkSpaceComponent {
                 next: result => {
                     switch (result.status) {
                         case 'true':
-                            this.snackBarService.openSnackGreenBar('Добавлено');
+                            this.snackBarService.openSnackGreenBar('Добавлено')
                             this.barcode = ''
                             this.inputForm.setValue({
                                 place: '',
@@ -82,6 +130,8 @@ export class WorkSpaceComponent {
                                 placeTo: ''
                             })
                             this.productInfo = this.clear
+                            var input = document.getElementById('barcodeInput')
+                            input!.focus()
                             break;
                         case 'BadAuth':
                             this.snackBarService.openRedSnackBar('Токен устарел');
@@ -113,7 +163,8 @@ export class WorkSpaceComponent {
     }
     openDocumentItems() {
         let type = this.docType
-        this.router.navigate(["tsd/document-items", this.docId, type])
+        let name = this.docName
+        this.router.navigate(["tsd/document-items", this.docId, type, name])
     }
     goBack() {
         this.router.navigate(['tsd/menu'])
@@ -123,6 +174,16 @@ export class WorkSpaceComponent {
     }
     goMiniMap() {
         this.router.navigate(['tsd/mini-map'])
+    }
+    goBase() {
+        let type = this.docType
+        let name = this.docName
+        this.router.navigate(['tsd/base', this.docId, type, name])
+    }
+    goGSM() {
+        let type = this.docType
+        let name = this.docName
+        this.router.navigate(['tsd/gsm', this.docId, type, name])
     }
     pushDoc() {
         this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
@@ -186,6 +247,47 @@ export class WorkSpaceComponent {
                     break;
             }
         });
+    }
+    gsm: string
+    addGSMCode() {
+        this.documentService.AddGSMCodes(new AddGSMModel(this.docId, this.productInfo.article, this.gsm)).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case 'true':
+                        this.snackBarService.openSnackGreenBar('GSM-код добавлен')
+                        this.productInfo.gsm?.push(this.gsm)
+                        this.gsm = ''
+                        break;
+                    case 'NULL':
+                        this.snackBarService.openRedSnackBar('Пустой запрос')
+                        break;
+                }
+            },
+            error: error => {
+                console.log(error);
+            }
+        })
+    }
+    deleteGSMCode(element: string) {
+        this.documentService.DeleteGSMCode(new TokenModel(this.tokenService.getToken(), element)).subscribe({
+            next: result => {
+                switch (result.status) {
+                    case 'true':
+                        this.snackBarService.openSnackGreenBar('GSM-код удален')
+                        let index = this.productInfo.gsm?.findIndex(x => x == element)
+                        if (index! > -1) {
+                            this.productInfo.gsm?.splice(index!, 1)
+                        }
+                        break;
+                    case 'NULL':
+                        this.snackBarService.openRedSnackBar('Пустой запрос')
+                        break;
+                }
+            },
+            error: error => {
+                console.log(error);
+            }
+        })
     }
 }
 

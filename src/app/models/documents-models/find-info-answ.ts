@@ -9,7 +9,15 @@ export class FindInfoAnswModel {
         public srSut: string,
         public img_url: string,
         public link: string,
-        public ukz: string
+        public ukz: string,
+        public places?: FindInfoPlacesModel[],
+        public gsm?: string[]
+    ) { }
+}
 
+export class FindInfoPlacesModel {
+    constructor(
+        public place: string,
+        public count: string
     ) { }
 }
