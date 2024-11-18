@@ -8,7 +8,7 @@
             <img src="../../../../assets/list_product.png">
             СПИСОК ПРОДУКЦИИ
         </button>
-        <button>
+        <button (click)="goBase()">
             <img src="../../../../assets/doc_product.png">
             Основание
         </button>
@@ -44,7 +44,7 @@
         <div class="data-mark-input-conteiner">
             <mat-form-field appearance="outline">
                 <mat-label>DataMark-коды</mat-label>
-                <input matInput type="text" [(ngModel)]="gsm" id="barcodeInput">
+                <input matInput type="text" [(ngModel)]="gsm" id="barcodeInput" (input)="inputAdd($event)">
             </mat-form-field>
             <button mat-raised-button (click)="addDataMark()" [disabled]="!selectedArticle || !gsm">
                 Добавить код

@@ -3,7 +3,8 @@
         <div class="nav-conteiner">
             <a (click)="selectedTemp = 'users'" [ngClass]="{ 'selected': selectedTemp == 'users' }">Персонал</a>
             <a (click)="selectedTemp = 'group'" [ngClass]="{ 'selected': selectedTemp == 'group' }">Группы</a>
-            <a (click)="selectedTemp = 'docChange'" [ngClass]="{ 'selected': selectedTemp == 'docChange' }">
+            <a (click)="selectedTemp = 'docChange'" [ngClass]="{ 'selected': selectedTemp == 'docChange' }"
+                *ngIf="login == 'strelcova_n' || admin == true">
                 Изменение документа
             </a>
         </div>

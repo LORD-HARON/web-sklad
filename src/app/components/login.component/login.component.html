@@ -8,7 +8,7 @@
             </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>Пароль</mat-label>
-                <input matInput type="{{inputType}}" formControlName='password'>
+                <input matInput type="{{inputType}}" formControlName='password' (keyup.enter)="onClickLogin()">
                 <button matSuffix mat-icon-button (mousedown)="inputType = 'text'" (mouseup)="inputType = 'password'"
                     (mouseleave)="inputType = 'password'">
                     <mat-icon>visibility</mat-icon>

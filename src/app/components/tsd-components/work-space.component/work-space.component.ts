@@ -152,11 +152,10 @@ export class WorkSpaceComponent {
             })
         } else
             this.snackBarService.openRedSnackBar('Отсканируйте ШК');
-
     }
     InputHandel(event: any) {
         var number = event.target.value;
-        if (number.length >= 13) {
+        if (number.length >= 12) {
             this.GetProductInfo()
         }
 
@@ -249,6 +248,12 @@ export class WorkSpaceComponent {
         });
     }
     gsm: string
+    inputAdd(event: any) {
+        var number = event.target.value;
+        if (number.length > 82) {
+            this.addGSMCode()
+        }
+    }
     addGSMCode() {
         this.documentService.AddGSMCodes(new AddGSMModel(this.docId, this.productInfo.article, this.gsm)).subscribe({
             next: result => {
@@ -257,6 +262,9 @@ export class WorkSpaceComponent {
                         this.snackBarService.openSnackGreenBar('GSM-код добавлен')
                         this.productInfo.gsm?.push(this.gsm)
                         this.gsm = ''
+                        break;
+                    case 'false':
+                        this.snackBarService.openRedSnackBar('Данный код уже записан')
                         break;
                     case 'NULL':
                         this.snackBarService.openRedSnackBar('Пустой запрос')

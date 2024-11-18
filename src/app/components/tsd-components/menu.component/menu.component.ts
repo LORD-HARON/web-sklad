@@ -95,7 +95,7 @@ export class CreateDocumentDialog {
         })
     }
     docInputHandler() {
-        if (this.docName.length >= 14) {
+        if (this.docName.length == 14) {
             let LIT1 = this.docName.substring(3, 5)
             let LIT2 = this.docName.substring(5, 7)
             let NUM = this.docName.substring(7, 14)
@@ -154,7 +154,7 @@ export class CreateDocumentDialog {
                 return "Ю";
             case "25":
                 return "Я";
-            default: return "-";
+            default: return value;
         };
     }
 }

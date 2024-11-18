@@ -51,6 +51,12 @@ export class GSMComponent implements OnInit {
     }
     sumCodes: number = 0
     sumCount: number = 0
+    inputAdd(event: any) {
+        var number = event.target.value;
+        if (number.length > 82 && this.selectedArticle) {
+            this.addDataMark()
+        }
+    }
     inputFilter() {
         if (this.filter != '')
             this.showingGSMCodes = this.gsmCodes.filter(i => i.article.includes(this.filter))
@@ -86,6 +92,9 @@ export class GSMComponent implements OnInit {
                         this.gsm = ''
                         var input = document.getElementById('barcodeInput')
                         input!.focus()
+                        break;
+                    case 'false':
+                        this.snackBarService.openRedSnackBar('Данный код уже записан')
                         break;
                     case 'null':
                         this.snackBarService.openRedSnackBar('Пустой запрос')
