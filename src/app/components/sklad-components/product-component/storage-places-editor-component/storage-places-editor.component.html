@@ -1,0 +1,30 @@
+<div class="main">
+    <div class="conteiner">
+        Редактор количества товара
+        <hr>
+
+        <mat-grid-list cols="2" rowHeight="3em">
+            <mat-grid-tile>Артикул: </mat-grid-tile>
+            <mat-grid-tile>{{data.article}}</mat-grid-tile>
+            <mat-grid-tile>Место хранения:</mat-grid-tile>
+            <mat-grid-tile>{{data.place}}</mat-grid-tile>
+        </mat-grid-list>
+        <mat-form-field id="only" appearance="outline">
+            <mat-label> Количество </mat-label>
+            <input matInput placeholder="Введите имя" [(ngModel)]="data.count">
+            <span matSuffix>
+                <div>{{data.units}}</div>
+            </span>
+        </mat-form-field>
+        <hr>
+        <div class="form-inline">
+            <button mat-raised-button class="btn btn-default" (click)="onNoClick()">
+                Закрыть
+            </button>
+            <button mat-raised-button color="primary" class="btn btn-default" (click)="onEdit()">
+                Сохранить
+            </button>
+        </div>
+    </div>
+
+</div>

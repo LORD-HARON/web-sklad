@@ -1,9 +1,9 @@
-import { Component } from "@angular/core";
+import { Component, Inject, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DocumentService } from "../../../services/document.service";
 import { TokenService } from "../../../services/token.service";
 import { SnackbarService } from "../../../services/snackbar.service";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { FindInfoAnswModel } from "../../../models/documents-models/find-info-answ";
 import { FindInfoReqModel } from "../../../models/documents-models/find-info-req";
 import { AddProductModel } from "../../../models/documents-models/add-product";
@@ -124,7 +124,7 @@ export class WorkSpaceComponent {
                             this.snackBarService.openSnackGreenBar('Добавлено')
                             this.barcode = ''
                             this.inputForm.setValue({
-                                place: '',
+                                place: this.inputForm.value.place!,
                                 count: null,
                                 number: this.inputForm.value.number! + 1,
                                 placeTo: ''
@@ -235,8 +235,20 @@ export class WorkSpaceComponent {
             })
         }
     }
+    itemsCount: number = 0
+    GetDocumentItems() {
+        this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
+            next: result => {
+                this.itemsCount = result.length
+            },
+            error: error => {
+                console.log(error)
+            }
+        })
+    }
     openAgreeDialog() {
-        const dialogRef = this.dialog.open(AgreeDialogComponent)
+        this.GetDocumentItems()
+        const dialogRef = this.dialog.open(AgreeDialogComponent, { data: this.itemsCount })
         dialogRef.afterClosed().subscribe(result => {
             switch (result) {
                 case "true":
@@ -302,11 +314,16 @@ export class WorkSpaceComponent {
 @Component({
     templateUrl: './agree.dialog.component/agree.dialog.component.html',
 })
-export class AgreeDialogComponent {
+export class AgreeDialogComponent implements OnInit {
+
     constructor(
         public dialogRef: MatDialogRef<AgreeDialogComponent>,
+        @Inject(MAT_DIALOG_DATA) public data: number,
     ) { }
     closeDialog(element: string) {
         this.dialogRef.close(element)
+    }
+    ngOnInit(): void {
+        this.data = this.data != null ? this.data : 0
     }
 }

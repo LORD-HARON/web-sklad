@@ -61,7 +61,7 @@
                         {{h}}
                     </td>
                 </tr>
-                <tr *ngFor="let i of productList" (click)="onSelectRow(i.article)"
+                <tr *ngFor="let i of productList" (click)="onSelectRow(i)"
                     [ngClass]="{ 'select-row': selectedRow == i.article}">
                     <td>
                         {{i.article}}
@@ -126,11 +126,23 @@
                         <table>
                             <tr>
                                 <td>
-                                    Места хранения
+                                    <div style="display:  flex; align-items: center; justify-content: center;">
+                                        Места хранения
+                                        <button mat-mini-fab aria-label="Example icon button with a menu icon"
+                                            (click)='openPlaceForm(productProp.place)' matTooltip="Просмотр документа"
+                                            style="margin-left: 5px; background-color: white;">
+                                            <mat-icon>remove_red_eye</mat-icon>
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                             <tr *ngFor="let p of productProp.place">
                                 {{p}}
+                                <button mat-mini-fab style="margin-left: 10px;" *ngIf="p!= ''"
+                                    (click)="openStoragePlacesDialog(p)">
+                                    <mat-icon aria-hidden="false" aria-label="Example home icon"> edit
+                                    </mat-icon>
+                                </button>
                             </tr>
                         </table>
                     </div>

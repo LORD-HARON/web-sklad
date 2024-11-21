@@ -88,6 +88,8 @@ import { ArticleHistoryComponent } from './components/tsd-components/article-his
 import { BaseComponent } from './components/tsd-components/base-component/base.component';
 import { GSMComponent } from './components/tsd-components/gsm-component/gsm.component';
 import { GSMDeleteDialog } from './components/tsd-components/gsm-component/gsm.component';
+import { PlaceListFormComponennt } from './components/sklad-components/product-component/place-list-form-component/place-list-form.component';
+import { StoragePlacesEditorComponent } from './components/sklad-components/product-component/storage-places-editor-component/storage-places-editor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -139,7 +141,9 @@ import { GSMDeleteDialog } from './components/tsd-components/gsm-component/gsm.c
     ArticleHistoryComponent,
     BaseComponent,
     GSMComponent,
-    GSMDeleteDialog
+    GSMDeleteDialog,
+    PlaceListFormComponennt,
+    StoragePlacesEditorComponent
   ],
   imports: [
     StillagesModule,

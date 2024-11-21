@@ -92,10 +92,10 @@
                         <mat-label *ngIf="docType != 'Ротация'">Место хранения:</mat-label>
                         <mat-label *ngIf="docType == 'Ротация'">Перемещение из:</mat-label>
                         <input matInput formControlName="place" type="string" (input)="checkCount()">
-                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                        <!-- <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
                             (click)="clearPlaceInput(1)">
                             <mat-icon>close</mat-icon>
-                        </button>
+                        </button> -->
                     </mat-form-field>
                     <mat-form-field appearance="outline" *ngIf="docType == 'Ротация'">
                         <mat-label>Перемещение в:</mat-label>

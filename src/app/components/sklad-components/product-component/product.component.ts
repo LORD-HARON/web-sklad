@@ -9,6 +9,9 @@ import { ProductPropAnswModel } from "../../../models/product-models/product-pro
 import { ProductQueryModel } from "../../../models/product-models/product-query";
 import { ProductResponceModel } from "../../../models/product-models/product-responce";
 import { ProductPropQuery } from "../../../models/product-models/product-prop-query";
+import { PlaceListFormComponennt } from "./place-list-form-component/place-list-form.component";
+import { MatDialog } from "@angular/material/dialog";
+import { StoragePlacesEditorComponent } from "./storage-places-editor-component/storage-places-editor.component";
 
 interface PoductNode {
     id: string;
@@ -30,7 +33,8 @@ export class ProductComponent implements OnInit {
     constructor(
         private tokenService: TokenService,
         private productService: ProductService,
-        private snackBarService: SnackbarService
+        private snackBarService: SnackbarService,
+        private dialog: MatDialog
     ) { }
 
     productProp: ProductPropAnswModel = new ProductPropAnswModel('', '', '', '', '', '', [], []);
@@ -183,9 +187,11 @@ export class ProductComponent implements OnInit {
         }
     }
     selectedRow: string = ''
-    onSelectRow(article: string) {
-        this.selectedRow = article
-        this.productService.GetProductProp(new ProductPropQuery(this.tokenService.getToken(), article)).subscribe({
+    selectedFullRow: ProductResponceModel
+    onSelectRow(article: ProductResponceModel) {
+        this.selectedRow = article.article
+        this.selectedFullRow = article
+        this.productService.GetProductProp(new ProductPropQuery(this.tokenService.getToken(), article.article)).subscribe({
             next: responce => {
                 this.productProp = responce
             },
@@ -195,5 +201,30 @@ export class ProductComponent implements OnInit {
             }
         })
     }
+    openPlaceForm(listPlaces: Array<string>) {
+        const dialogRef = this.dialog.open(PlaceListFormComponennt, {
+            width: '970px',
+            data: { productList: this.selectedFullRow, placeList: listPlaces },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result) {
+                this.onSelectRow(this.selectedFullRow)
+            }
+        });
+    }
 
+    openStoragePlacesDialog(element: string) {
+        let str = element.split(' | ');
+        let place = str[0];
+        let count = str[1];
+        const dialogRef = this.dialog.open(StoragePlacesEditorComponent, {
+            width: "300px",
+            data: { article: this.productProp.article, place: place, count: count, units: this.productProp.mesabbrev },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+            if (result === 'true') {
+                this.onSelectRow(this.selectedFullRow)
+            }
+        });
+    }
 }

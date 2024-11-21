@@ -1,0 +1,59 @@
+<div class="main">
+    <div class="tables" id="print-section">
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th *ngFor="let h of displayedColumnsProduct">
+                        {{h}}
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {{data.productList.article}}
+                    </td>
+                    <td>
+                        {{data.productList.name}}
+                    </td>
+                    <td>
+                        {{data.productList.status}}
+                    </td>
+                    <td>
+                        {{data.productList.barcode}}
+                    </td>
+                    <td>
+                        {{data.productList.quantity}}
+                    </td>
+                    <td>
+                        {{data.productList.braquantity}}
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <div class="table-container">
+            <table>
+                <tr>
+                    <th *ngFor="let hp of displayedColumnsPlaces">
+                        {{hp}}
+                    </th>
+                </tr>
+                <tr *ngFor="let places of dataPlace">
+                    <td>{{places.num}}</td>
+                    <td>{{places.place}}</td>
+                    <td>{{places.count}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <br>
+    <div mat-dialog-actions>
+        <button mat-raised-button color="primary" class="btn btn-default" (click)="onNoClick()">
+            Закрыть
+        </button>
+        <button mat-mini-fab color="primary" class="btn btn-default"
+            [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
+            printSectionId="print-section" ngxPrint>
+            <mat-icon>print</mat-icon>
+        </button>
+    </div>
+</div>
