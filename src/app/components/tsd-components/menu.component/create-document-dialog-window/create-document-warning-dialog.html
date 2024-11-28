@@ -1,0 +1,7 @@
+<mat-dialog-content>
+    <span>Внимание документ с именем {{data.docName}} создан пользователем {{data.createUser}}</span>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button (click)="cancel()">Отмена</button>
+    <button mat-button (click)="apply()">Все равно создать</button>
+</mat-dialog-actions>

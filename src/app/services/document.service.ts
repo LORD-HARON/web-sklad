@@ -16,6 +16,7 @@ import { BaseModel } from "../models/base-models/base"
 import { AddGSMModel } from "../models/documents-models/add-gsm-codes"
 import { GSMModel } from "../models/documents-models/gsm"
 import { GetGSMModel } from "../models/documents-models/get-gsm"
+import { CheckDocumentModel } from "../models/documents-models/check-documen"
 
 @Injectable({
     providedIn: "root"
@@ -25,6 +26,7 @@ export class DocumentService {
         private http: HttpClient
     ) { }
     createDocumentURL = environment.apiUrl + '/CreateDoc'
+    checkDocumentURL = environment.apiUrl + '/CheckDoc'
     getDocumentListURL = environment.apiUrl + '/GetDocumentList'
     deleteDocumentURL = environment.apiUrl + '/DeleteDocument'
     getDocumentURL = environment.apiUrl + '/GetDocument'
@@ -41,8 +43,13 @@ export class DocumentService {
     deleteGSMCodeURL = environment.apiUrl + '/DeleteGSMCode'
     getGSMCodesURL = environment.apiUrl + '/GetGSMCodes'
     clearGSMURL = environment.apiUrl + '/ClearGSM'
+
+
     CreateDocument(data: CreateDocumentModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.createDocumentURL, data)
+    }
+    CheckDocument(data: CreateDocumentModel): Observable<CheckDocumentModel | null> {
+        return this.http.post<CheckDocumentModel | null>(this.checkDocumentURL, data)
     }
     GetDocumentList(data: TokenModel): Observable<DocumentsListModel[]> {
         return this.http.post<DocumentsListModel[]>(this.getDocumentListURL, data)

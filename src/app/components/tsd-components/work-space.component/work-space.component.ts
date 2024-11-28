@@ -126,7 +126,7 @@ export class WorkSpaceComponent {
                             this.inputForm.setValue({
                                 place: this.inputForm.value.place!,
                                 count: null,
-                                number: this.inputForm.value.number! + 1,
+                                number: null,
                                 placeTo: ''
                             })
                             this.productInfo = this.clear
@@ -235,20 +235,8 @@ export class WorkSpaceComponent {
             })
         }
     }
-    itemsCount: number = 0
-    GetDocumentItems() {
-        this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
-            next: result => {
-                this.itemsCount = result.length
-            },
-            error: error => {
-                console.log(error)
-            }
-        })
-    }
     openAgreeDialog() {
-        this.GetDocumentItems()
-        const dialogRef = this.dialog.open(AgreeDialogComponent, { data: this.itemsCount })
+        const dialogRef = this.dialog.open(AgreeDialogComponent, { data: this.docId })
         dialogRef.afterClosed().subscribe(result => {
             switch (result) {
                 case "true":
@@ -319,11 +307,24 @@ export class AgreeDialogComponent implements OnInit {
     constructor(
         public dialogRef: MatDialogRef<AgreeDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: number,
+        public tokenService: TokenService,
+        public documentService: DocumentService
     ) { }
+    count: number = 0
+    GetDocumentItems() {
+        this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), String(this.data))).subscribe({
+            next: result => {
+                this.count = result ? result.length : 0
+            },
+            error: error => {
+                console.log(error)
+            }
+        })
+    }
     closeDialog(element: string) {
         this.dialogRef.close(element)
     }
     ngOnInit(): void {
-        this.data = this.data != null ? this.data : 0
+        this.GetDocumentItems()
     }
 }

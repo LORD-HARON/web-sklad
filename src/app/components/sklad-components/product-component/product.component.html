@@ -130,7 +130,7 @@
                                         Места хранения
                                         <button mat-mini-fab aria-label="Example icon button with a menu icon"
                                             (click)='openPlaceForm(productProp.place)' matTooltip="Просмотр документа"
-                                            style="margin-left: 5px; background-color: white;">
+                                            style="margin-left: 5px; background-color: white;" *ngIf="selectedFullRow">
                                             <mat-icon>remove_red_eye</mat-icon>
                                         </button>
                                     </div>

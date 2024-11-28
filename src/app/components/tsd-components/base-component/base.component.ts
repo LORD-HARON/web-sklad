@@ -53,7 +53,7 @@ export class BaseComponent implements OnInit {
         });
     }
     openAgreeDialog() {
-        const dialogRef = this.dialog.open(AgreeDialogComponent)
+        const dialogRef = this.dialog.open(AgreeDialogComponent, { data: this.docId })
         dialogRef.afterClosed().subscribe(result => {
             switch (result) {
                 case "true":

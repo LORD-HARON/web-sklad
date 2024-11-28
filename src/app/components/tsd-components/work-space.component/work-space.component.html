@@ -65,11 +65,15 @@
                             [ngStyle]="{'color': productInfo.ukz == 'да' ? 'green' : 'red'}">{{productInfo.ukz}}</span>
                     </div>
                     <div>
+                        <span>Ед.измерения:</span>
+                        <span>{{productInfo.edism}}</span>
+                    </div>
+                    <div>
                         <span style="color: red" *ngIf="showCountWarning">Нулевое/отрицательное кол-во в ячейке</span>
                     </div>
                     <mat-form-field appearance="outline">
                         <mat-label>Штрихкод:</mat-label>
-                        <input cdkFocusInitial id="barcodeInput" matInput type="number" [(ngModel)]="barcode"
+                        <input cdkFocusInitial id="barcodeInput" matInput type="text" [(ngModel)]="barcode"
                             (input)="InputHandel($event)" (keyup.enter)="GetProductInfo()" cdkFocusInitial>
                         <button class="clear-button" matSuffix mat-icon-button aria-label="Clear" (click)="barcode=''">
                             <mat-icon>close</mat-icon>

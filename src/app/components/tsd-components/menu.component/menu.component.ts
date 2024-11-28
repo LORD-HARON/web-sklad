@@ -1,5 +1,5 @@
-import { Component } from "@angular/core";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { Component, Inject, inject } from "@angular/core";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { LoginService } from "../../../services/login.service";
 import { TokenService } from "../../../services/token.service";
@@ -10,6 +10,7 @@ import { DocumentService } from "../../../services/document.service";
 import { MapService } from "../../../services/map.service";
 import { TokenModel } from "../../../models/token";
 import { CellBodyModel } from "../../../models/map-models/cell-answ";
+import { CheckDocumentModel } from "../../../models/documents-models/check-documen";
 
 @Component({
     selector: 'app-menu',
@@ -72,27 +73,64 @@ export class CreateDocumentDialog {
         public dialogRef: MatDialogRef<CreateDocumentDialog>,
         private documentService: DocumentService,
         private tokenService: TokenService,
+        private dialog: MatDialog,
     ) { }
     docId: string
     docName: string
     docType: string
     User: string = this.tokenService.getLogin()
+
     createDoc() {
-        let doc = new CreateDocumentModel(this.docName, this.tokenService.getLogin(), this.docType, this.tokenService.getToken())
-        this.documentService.CreateDocument(doc).subscribe({
-            next: result => {
-                if (result) {
-                    this.router.navigate(["tsd/work-space", result.id, result.doc_type, result.doc_name])
-                    this.dialogRef.close("true")
+        if (this.checkDoc()) {
+            const dialog = this.dialog.open(CreateDocumentWarningDialog, { data: this.checkDocAnswer })
+            dialog.afterClosed().subscribe(res => {
+                switch (res) {
+                    case 'true':
+
+                        break
+                    case 'false':
+
+                        break
+                    default:
+                        break
                 }
-                else
+            })
+        } else {
+            let doc = new CreateDocumentModel(this.docName, this.tokenService.getLogin(), this.docType, this.tokenService.getToken())
+            this.documentService.CreateDocument(doc).subscribe({
+                next: result => {
+                    if (result) {
+                        this.router.navigate(["tsd/work-space", result.id, result.doc_type, result.doc_name])
+                        this.dialogRef.close("true")
+                    }
+                    else
+                        this.dialogRef.close("error")
+                },
+                error: error => {
+                    console.log(error)
                     this.dialogRef.close("error")
+                }
+            })
+        }
+    }
+
+    sendQueryToCreateDoc() {
+
+    }
+
+    checkDocAnswer: CheckDocumentModel
+    checkDoc(): boolean {
+        let res
+        this.documentService.CheckDocument(new CreateDocumentModel(this.docName, this.tokenService.getLogin(), '', '')).subscribe({
+            next: result => {
+                if (result)
+                    this.checkDocAnswer = result
             },
             error: error => {
-                console.log(error)
-                this.dialogRef.close("error")
+                console.log(error);
             }
         })
+        return this.checkDocAnswer != null ? true : false
     }
     docInputHandler() {
         if (this.docName.length == 14) {
@@ -100,6 +138,9 @@ export class CreateDocumentDialog {
             let LIT2 = this.docName.substring(5, 7)
             let NUM = this.docName.substring(7, 14)
             this.docName = this.GetLIT(LIT1) + this.GetLIT(LIT2) + NUM
+            if (LIT1 == "-" || LIT2 == "-") {
+            } else
+                this.docName = LIT1 + LIT2 + NUM
         }
     }
     GetLIT(value: string) {
@@ -159,6 +200,22 @@ export class CreateDocumentDialog {
     }
 }
 
+@Component({
+    templateUrl: './create-document-dialog-window/create-document-warning-dialog.html',
+    styleUrl: './menu.component.scss'
+})
+export class CreateDocumentWarningDialog {
+    constructor(
+        public dialogRef: MatDialogRef<CreateDocumentWarningDialog>,
+        @Inject(MAT_DIALOG_DATA) public data: CheckDocumentModel,
+    ) { }
+    apply() {
+        this.dialogRef.close("true")
+    }
+    cancel() {
+        this.dialogRef.close('false')
+    }
+}
 @Component({
     templateUrl: './confirm-dialog/confirm-dialog.html',
     styleUrls: ['./menu.component.scss']
