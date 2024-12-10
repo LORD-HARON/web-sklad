@@ -12,6 +12,7 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { MapService } from "../../../services/map.service";
 import { HostListener } from '@angular/core';
 import { AddGSMModel } from "../../../models/documents-models/add-gsm-codes";
+import { DocumentBodyModel } from "../../../models/documents-models/document-body";
 @Component({
     selector: 'app-work-space',
     templateUrl: './work-space.component.html',
@@ -34,6 +35,7 @@ export class WorkSpaceComponent {
     docId: number
     docType: string
     docName: string
+    article: string
     barcode: string
     count: number
     numberInQueue: number = 1
@@ -50,12 +52,14 @@ export class WorkSpaceComponent {
     otherPosition: boolean = false
     showCountWarning: boolean = false
 
-    GetProductInfo() {
-        this.documentService.FindInfo(new FindInfoReqModel(null, String(this.barcode), '19', '21', this.docId)).subscribe({
+    GetProductInfo(type: string) {
+        let data = type == 'barcode' ? new FindInfoReqModel(null, String(this.barcode), '19', '21', this.docId) : new FindInfoReqModel(this.article, null, '19', '21', this.docId)
+        this.documentService.FindInfo(data).subscribe({
             next: result => {
-                let input = document.getElementById('barcodeInput')!
-                input.blur();
-                console.log(result)
+                let input = document.getElementById('articleInput')!
+                let input1 = document.getElementById('barcodeInput')!
+                input.blur()
+                input1.blur()
                 if (result.article)
                     this.productInfo = result
                 else
@@ -123,6 +127,7 @@ export class WorkSpaceComponent {
                         case 'true':
                             this.snackBarService.openSnackGreenBar('Добавлено')
                             this.barcode = ''
+                            this.article = ''
                             this.inputForm.setValue({
                                 place: this.inputForm.value.place!,
                                 count: null,
@@ -156,7 +161,7 @@ export class WorkSpaceComponent {
     InputHandel(event: any) {
         var number = event.target.value;
         if (number.length >= 12) {
-            this.GetProductInfo()
+            this.GetProductInfo('barcode')
         }
 
     }
@@ -314,7 +319,8 @@ export class AgreeDialogComponent implements OnInit {
     GetDocumentItems() {
         this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), String(this.data))).subscribe({
             next: result => {
-                this.count = result ? result.length : 0
+                const newSet = new Set(result.map(x => x.article))
+                this.count = Array.from(newSet) ? Array.from(newSet).length : 0
             },
             error: error => {
                 console.log(error)

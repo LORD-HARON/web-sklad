@@ -4,6 +4,6 @@ export class EditProductModel {
         public id: number,
         public count: number,
         public numb: number,
-        public place: String
+        public place: string
     ) { }
 }

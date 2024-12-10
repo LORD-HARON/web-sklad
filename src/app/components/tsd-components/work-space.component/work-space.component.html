@@ -55,10 +55,19 @@
                     <img src="../../../../assets/box.png">
                 </ng-container>
                 <div class="input-search-conteiner" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
-                    <div>
+                    <!-- <div>
                         <span>Артикул:</span>
                         <span>{{productInfo.article}}</span>
-                    </div>
+                    </div> -->
+                    <mat-form-field appearance="outline">
+                        <mat-label>Артикул:</mat-label>
+                        <input id="articleInput" matInput type="text" [(ngModel)]="article"
+                            (keyup.enter)="GetProductInfo('article')">
+                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="article=''; barcode='';">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    </mat-form-field>
                     <div>
                         <span>UKZ:</span>
                         <span
@@ -74,8 +83,9 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Штрихкод:</mat-label>
                         <input cdkFocusInitial id="barcodeInput" matInput type="text" [(ngModel)]="barcode"
-                            (input)="InputHandel($event)" (keyup.enter)="GetProductInfo()" cdkFocusInitial>
-                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear" (click)="barcode=''">
+                            (input)="InputHandel($event)" (keyup.enter)="GetProductInfo('barcode')" cdkFocusInitial>
+                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                            (click)="article=''; barcode='';">
                             <mat-icon>close</mat-icon>
                         </button>
                     </mat-form-field>

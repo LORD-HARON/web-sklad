@@ -115,8 +115,8 @@ export class CreateDocumentDialog {
     }
 
     sendQueryToCreateDoc() {
-
     }
+
 
     checkDocAnswer: CheckDocumentModel
     checkDoc(): boolean {
@@ -133,14 +133,15 @@ export class CreateDocumentDialog {
         return this.checkDocAnswer != null ? true : false
     }
     docInputHandler() {
-        if (this.docName.length == 14) {
+        let oldName = this.docName
+        if (this.docName.length >= 14) {
             let LIT1 = this.docName.substring(3, 5)
             let LIT2 = this.docName.substring(5, 7)
             let NUM = this.docName.substring(7, 14)
             this.docName = this.GetLIT(LIT1) + this.GetLIT(LIT2) + NUM
             if (LIT1 == "-" || LIT2 == "-") {
             } else
-                this.docName = LIT1 + LIT2 + NUM
+                this.docName = oldName
         }
     }
     GetLIT(value: string) {

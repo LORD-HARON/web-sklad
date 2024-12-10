@@ -53,6 +53,7 @@ const serviceRoutes: Routes = [
 
 const routes: Routes = [
   { path: '', redirectTo: '/service/product', pathMatch: 'full' },
+  { path: 'tsd', redirectTo: '/tsd/menu', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'tsd', component: TsdComponent, children: tsdRoutes, canActivateChild: [loginGuard] },
   { path: 'service', component: ServiceComponent, children: serviceRoutes, canActivateChild: [loginGuard] }
