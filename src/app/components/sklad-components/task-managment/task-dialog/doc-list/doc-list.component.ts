@@ -36,14 +36,16 @@ export class DocListComponent implements OnInit {
     @ViewChild('sortZpc', { static: true }) sortZpc: MatSort;
     @ViewChild('sortPerem', { static: true }) sortPerem: MatSort;
     @ViewChild('sortVozv', { static: true }) sortVozv: MatSort;
+    @ViewChild('sortObl', { static: true }) sortObl: MatSort
 
     displayedColumns = ['docLabel', 'docId', 'docDate', 'docLoc', 'icon'];
     displayedListColumns = ['title'];
 
-    dataSourcePrihod: MatTableDataSource<AnswerDocModel>;
-    dataSourceZpc: MatTableDataSource<AnswerDocModel>;
-    dataSourcePerem: MatTableDataSource<AnswerDocModel>;
-    dataSourceVozv: MatTableDataSource<AnswerDocModel>;
+    dataSourcePrihod: MatTableDataSource<AnswerDocModel>
+    dataSourceZpc: MatTableDataSource<AnswerDocModel>
+    dataSourcePerem: MatTableDataSource<AnswerDocModel>
+    dataSourceVozv: MatTableDataSource<AnswerDocModel>
+    dataSourceObl: MatTableDataSource<AnswerDocModel>
 
     dataSource: Array<AnswerDocModel> = [];
     filterArray: Array<AnswerDocModel> = [];
@@ -64,6 +66,7 @@ export class DocListComponent implements OnInit {
     matTab1: boolean = false;
     matTab2: boolean = false;
     matTab3: boolean = false;
+    matTab4: boolean = false;
 
     constructor(
         public dialog: MatDialog,
@@ -181,8 +184,15 @@ export class DocListComponent implements OnInit {
                             }
                         });
                     break;
+                case 'Обязатества':
+                    if (this.dataSourceObl.data.length > 0)
+                        this.dataSourceObl.data.forEach(element => {
+                            if (element.docId === selectItem.item) {
+                                element.highLighted = false;
+                            }
+                        });
+                    break;
             }
-
         }
     }
 
@@ -195,6 +205,8 @@ export class DocListComponent implements OnInit {
             this.setHighlightedFalse(this.dataSourcePerem);
         if (title === 'Возвраты')
             this.setHighlightedFalse(this.dataSourceVozv);
+        if (title === 'Обязатества')
+            this.setHighlightedFalse(this.dataSourceObl)
     }
 
     setHighlightedFalse(dataSource: MatTableDataSource<AnswerDocModel>) {
@@ -260,12 +272,18 @@ export class DocListComponent implements OnInit {
                 }
                 break;
             case 2:
+                if (!this.matTab4) {
+                    this.getDataSourceObl();
+                    this.matTab1 = true;
+                }
+                break;
+            case 3:
                 if (!this.matTab2) {
                     this.getDataSourcePerem();
                     this.matTab1 = true;
                 }
                 break;
-            case 3:
+            case 4:
                 if (!this.matTab3) {
                     this.getDataSourceVozv();
                     this.matTab1 = true;
@@ -328,6 +346,20 @@ export class DocListComponent implements OnInit {
                 this.snackbarService.openSnackBar(this.messageNoConnect, this.action, this.styleNoConnect);
             }
         });
+    }
+
+    getDataSourceObl() {
+        this.procService.getObl(new TokenModel(this.tokenService.getToken())).subscribe({
+            next: result => {
+                this.dataSourceObl = new MatTableDataSource(result);
+                this.deleteZero(this.dataSourceObl.data);
+                this.dataSourceObl.sort = this.sortObl;
+            },
+            error: error => {
+                console.log(error);
+                this.snackbarService.openRedSnackBar()
+            }
+        })
     }
 
     deleteZero(list: Array<AnswerDocModel>) {
@@ -430,6 +462,27 @@ export class DocListComponent implements OnInit {
 
             if (this.dataSourceVozv.paginator) {
                 this.dataSourceVozv.paginator.firstPage();
+            }
+        }
+    }
+    applyFilterObl(event: any) {
+        let filterValue = event.target.value
+        if (this.dataSource.length < this.dataSourceObl.data.length)
+            this.dataSource = this.dataSourceObl.data;
+
+        let arrStr = filterValue.split(' ');
+        if (arrStr.length > 1) {
+            this.filterArray = this.dataSourceObl.data.filter(item => arrStr.includes(item.docId)).map(item => (new AnswerDocModel(item.docId, item.docDate, item.docloc, item.docLabel, item.highLighted)));
+
+            this.dataSourceObl.data = this.filterArray;
+        } else {
+            if (this.dataSource.length > this.dataSourceObl.data.length)
+                this.dataSourceObl.data = this.dataSource;
+
+            this.dataSourceObl.filter = filterValue.trim().toLowerCase();
+
+            if (this.dataSourceObl.paginator) {
+                this.dataSourceObl.paginator.firstPage();
             }
         }
     }

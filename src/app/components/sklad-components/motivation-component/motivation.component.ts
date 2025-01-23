@@ -53,6 +53,9 @@ export class MotivationComponent implements OnInit {
             }
         })
     }
+    clearFilter() {
+        this.myControl.setValue('')
+    }
     private _filter(value: string): string[] {
         const filterValue = value.toLowerCase();
         return this.docUserList.login.filter(option => option.toLowerCase().includes(filterValue));

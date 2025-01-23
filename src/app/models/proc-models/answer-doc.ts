@@ -4,6 +4,7 @@ export class AnswerDocModel {
         public docDate: string,
         public docloc: string,
         public docLabel: string,
-        public highLighted: boolean
+        public highLighted: boolean,
+        public inProgress?: boolean
     ) { }
 }

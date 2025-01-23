@@ -4,11 +4,9 @@ import { DocumentService } from "../../../services/document.service";
 import { TokenService } from "../../../services/token.service";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { MatDialog } from "@angular/material/dialog";
-import { MapService } from "../../../services/map.service";
 import { AgreeDialogComponent } from "../work-space.component/work-space.component";
 import { TokenModel } from "../../../models/token";
 import { ProcService } from "../../../services/proc.service";
-import { WDocAnswerModel } from "../../../models/proc-models/wdoc-answ";
 import { BaseModel } from "../../../models/base-models/base";
 
 @Component({

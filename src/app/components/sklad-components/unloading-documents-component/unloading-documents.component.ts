@@ -183,6 +183,7 @@ export class UnloadingDocumentsComponent {
         worksheet.getColumn(8).alignment = { wrapText: true };
         worksheet.getColumn(8).width = 40;
 
+
         this.setWorkSheetNpc(this.listNpc, worksheet, 'НПЦ');
         this.setWorkSheetZpc(this.listZpc, worksheet, 'ЗПЦ');
 
@@ -193,7 +194,7 @@ export class UnloadingDocumentsComponent {
         this.listZpc.forEach(element => {
             workbook = this.addWorkSheetZpc(element, workbook);
         });
-
+        console.log(123);
         workbook.xlsx.writeBuffer().then((data) => {
             let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
             saveAs(blob, `Док ${this.datePipe.transform(new Date(), 'yyyy-MM-dd')}.xlsx`);

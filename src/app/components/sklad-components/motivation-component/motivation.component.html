@@ -25,7 +25,7 @@
             </mat-form-field>
         </form>
         <button mat-raised-button color="primary" (click)="onSearch()" [disabled]="showLoader == true">Поиск</button>
-        <button mat-raised-button [disabled]="showLoader == true">Очистить</button>
+        <button mat-raised-button [disabled]="showLoader == true" (click)="clearFilter()">Очистить</button>
         <button mat-raised-button [hidden]="loadedCompleat == false" #ngxPrint color="primary"
             [printStyle]="{ th: {'border': '1px solid black'}, td: {'border': '1px solid black'}, table: {'border-collapse': 'collapse', 'width': '100%'}}"
             printSectionId="print-section" data-placement="bottom" matTooltip="Печать мотивации" ngxPrint>

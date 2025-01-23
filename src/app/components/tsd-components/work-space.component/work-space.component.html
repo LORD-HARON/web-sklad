@@ -62,7 +62,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Артикул:</mat-label>
                         <input id="articleInput" matInput type="text" [(ngModel)]="article"
-                            (keyup.enter)="GetProductInfo('article')">
+                            (keyup.enter)="GetProductInfo('article')" (input)="AutoSearchArticle($event)">
                         <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
                             (click)="article=''; barcode='';">
                             <mat-icon>close</mat-icon>
@@ -77,9 +77,9 @@
                         <span>Ед.измерения:</span>
                         <span>{{productInfo.edism}}</span>
                     </div>
-                    <div>
+                    <!-- <div>
                         <span style="color: red" *ngIf="showCountWarning">Нулевое/отрицательное кол-во в ячейке</span>
-                    </div>
+                    </div> -->
                     <mat-form-field appearance="outline">
                         <mat-label>Штрихкод:</mat-label>
                         <input cdkFocusInitial id="barcodeInput" matInput type="text" [(ngModel)]="barcode"
@@ -102,6 +102,11 @@
             </div>
             <div class="input-box-conteiner">
                 <form [formGroup]="inputForm">
+                    <div>
+                        <span style="color: red;" *ngIf="showCountWarning == true">
+                            В данной ячейке, кол-во равно или меньше 0
+                        </span>
+                    </div>
                     <mat-form-field appearance="outline">
                         <mat-label *ngIf="docType != 'Ротация'">Место хранения:</mat-label>
                         <mat-label *ngIf="docType == 'Ротация'">Перемещение из:</mat-label>

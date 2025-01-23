@@ -17,6 +17,7 @@ import { AddGSMModel } from "../models/documents-models/add-gsm-codes"
 import { GSMModel } from "../models/documents-models/gsm"
 import { GetGSMModel } from "../models/documents-models/get-gsm"
 import { CheckDocumentModel } from "../models/documents-models/check-documen"
+import { Token } from "@angular/compiler"
 
 @Injectable({
     providedIn: "root"
@@ -43,7 +44,6 @@ export class DocumentService {
     deleteGSMCodeURL = environment.apiUrl + '/DeleteGSMCode'
     getGSMCodesURL = environment.apiUrl + '/GetGSMCodes'
     clearGSMURL = environment.apiUrl + '/ClearGSM'
-
 
     CreateDocument(data: CreateDocumentModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.createDocumentURL, data)

@@ -58,10 +58,15 @@ export class WorkSpaceComponent {
             next: result => {
                 let input = document.getElementById('articleInput')!
                 let input1 = document.getElementById('barcodeInput')!
-                input.blur()
-                input1.blur()
-                if (result.article)
+                if (result.barcode.length <= 12) {
+                    input.blur()
+                    input1.blur()
+                }
+                if (result.article) {
                     this.productInfo = result
+                    this.article = this.productInfo.article
+                    this.barcode = this.productInfo.barcode
+                }
                 else
                     this.snackBarService.openRedSnackBar('Товар не найден');
                 this.showCountWarning = false
@@ -118,9 +123,8 @@ export class WorkSpaceComponent {
         let place = this.inputForm.value.place!.replace('PLACE:', '')
         let placeTo = this.inputForm.value.placeTo!.replace('PLACE:', '')
         place = this.docType == 'Ротация' ? `${place}-${placeTo}` : place
-        if (this.productInfo.article) {
+        if (this.productInfo.article && place && this.inputForm.value.count) {
             let prod = new AddProductModel(this.tokenService.getToken(), '', this.docId, this.productInfo.article, this.productInfo.barcode, this.productInfo.name, this.inputForm.value.count!, place, this.inputForm.value.number!, this.productInfo.price, this.productInfo.img_url, this.otherPosition, this.productInfo.ukz)
-            console.log(prod)
             this.documentService.AddProduct(prod).subscribe({
                 next: result => {
                     switch (result.status) {
@@ -156,7 +160,7 @@ export class WorkSpaceComponent {
                 }
             })
         } else
-            this.snackBarService.openRedSnackBar('Отсканируйте ШК');
+            this.snackBarService.openRedSnackBar('Заполните поля');
     }
     InputHandel(event: any) {
         var number = event.target.value;
@@ -226,15 +230,20 @@ export class WorkSpaceComponent {
                             this.showCountWarning = true
                             break
                         case 'error':
-                            this.snackBarService.openRedSnackBar()
+                            this.showCountWarning = false
+                            break
+                        case 'NULL':
+                            this.showCountWarning = false
                             break
                         case 'BadAuth':
+                            this.showCountWarning = false
                             this.snackBarService.openRedSnackBar('Неверный токен')
                             break
                     }
                 },
                 error: error => {
                     console.log(error);
+                    this.showCountWarning = false
                     this.snackBarService.openRedSnackBar()
                 }
             })
@@ -301,6 +310,12 @@ export class WorkSpaceComponent {
                 console.log(error);
             }
         })
+    }
+    AutoSearchArticle(event: any) {
+        var number = event.target.value;
+        if (number.length >= 7) {
+            this.GetProductInfo('article')
+        }
     }
 }
 

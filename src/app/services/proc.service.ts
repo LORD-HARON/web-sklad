@@ -19,6 +19,7 @@ export class ProcService {
     getZPCUrl = environment.apiUrl + '/GetZPC/'
     getPeremUrl = environment.apiUrl + '/GetPerem/'
     getVozvUrl = environment.apiUrl + '/GetVozv/'
+    getOblUrl = environment.apiUrl + '/GetObl/'
     getDocUrl = environment.apiUrl + '/GetDoc/'
     checkDocumentURl = environment.apiUrl + '/CheckDocument/'
 
@@ -33,6 +34,9 @@ export class ProcService {
     }
     GetVozv(data: TokenModel): Observable<AnswerDocModel[]> {
         return this.http.post<AnswerDocModel[]>(this.getVozvUrl, data)
+    }
+    getObl(data: TokenModel): Observable<AnswerDocModel[]> {
+        return this.http.post<AnswerDocModel[]>(this.getOblUrl, data)
     }
     GetDoc(data: TokenModel): Observable<WDocAnswerModel> {
         return this.http.post<WDocAnswerModel>(this.getDocUrl, data)

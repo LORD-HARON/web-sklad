@@ -133,15 +133,21 @@ export class CreateDocumentDialog {
         return this.checkDocAnswer != null ? true : false
     }
     docInputHandler() {
-        let oldName = this.docName
-        if (this.docName.length >= 14) {
-            let LIT1 = this.docName.substring(3, 5)
-            let LIT2 = this.docName.substring(5, 7)
+        // let oldName = this.docName
+        if (this.docName.length == 14) {
+            let LIT1 = this.GetLIT(this.docName.substring(3, 5))
+            let LIT2 = this.GetLIT(this.docName.substring(5, 7))
             let NUM = this.docName.substring(7, 14)
-            this.docName = this.GetLIT(LIT1) + this.GetLIT(LIT2) + NUM
-            if (LIT1 == "-" || LIT2 == "-") {
-            } else
-                this.docName = oldName
+
+            if (LIT1 != "-" && LIT2 != "-") {
+                console.log(LIT1);
+                console.log(LIT2)
+
+                console.log(12312);
+                this.docName = LIT1 + LIT2 + NUM
+            }
+            // else
+            //     this.docName = oldName
         }
     }
     GetLIT(value: string) {
@@ -196,7 +202,7 @@ export class CreateDocumentDialog {
                 return "Ю";
             case "25":
                 return "Я";
-            default: return value;
+            default: return '-';
         };
     }
 }
