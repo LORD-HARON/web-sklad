@@ -1,0 +1,72 @@
+<mat-drawer-container [hasBackdrop]="true">
+    <mat-drawer class="menu-conteiner" #drawer mode="over">
+        <button (click)="[selectItem('1'), drawer.toggle()]">
+            <img src="../../../../assets/find_product.png">
+            ПОИСК ПРОДУКЦИИ
+        </button>
+        <button (click)="[selectItem('2'), drawer.toggle()]">
+            <img src="../../../../assets/list_product.png">
+            СПИСОК ПРОДУКЦИИ
+        </button>
+        <button (click)="[selectItem('3'), drawer.toggle()]">
+            <img src="../../../../assets/doc_product.png">
+            Основание
+        </button>
+        <button (click)="[selectItem('4'), drawer.toggle()]">
+            <img src="../../../../assets/gsm.png">
+            DataMark
+        </button>
+        <button (click)="openAgreeDialog()">
+            <img src="../../../../assets/compl_product.png">
+            ЗАВЕРШИТЬ РАБОТУ
+        </button>
+        <button (click)="goBack()">
+            <img src="../../../../assets/back_product.png">
+            Меню
+        </button>
+        <button (click)="goArticleHistory()">
+            <img src="../../../../assets/article.png">
+            ДВИЖЕНИЕ ПО АРТИКУЛУ
+        </button>
+        <button (click)="goMiniMap()">
+            <img src="../../../../assets/mini-map.png">
+            СОДЕРЖИМОЕ ЯЧЕЙКИ
+        </button>
+    </mat-drawer>
+    <div class="main">
+        <nav class="navbar" [ngSwitch]="selectedItem">
+            <button (click)="drawer.toggle()">
+                <img src="../../../assets/ham.png">
+            </button>
+            <ng-template ngSwitchCase=1>
+                <span>Поиск продукции</span>
+            </ng-template>
+            <ng-template ngSwitchCase=2>
+                <span>Список продукции</span>
+            </ng-template>
+            <ng-template ngSwitchCase=3>
+                <span>Основание</span>
+            </ng-template>
+            <ng-template ngSwitchCase=4>
+                <span>Data Mark</span>
+            </ng-template>
+        </nav>
+        <div [ngSwitch]="selectedItem">
+            <ng-template ngSwitchCase=1>
+                <app-work-space [data]="docData"></app-work-space>
+            </ng-template>
+            <ng-template ngSwitchCase=2>
+                <app-document-items [data]="docData"></app-document-items>
+            </ng-template>
+            <ng-template ngSwitchCase=3>
+                <app-base [data]="docData"></app-base>
+            </ng-template>
+            <ng-template ngSwitchCase=4>
+                <app-gsm [data]="docData"></app-gsm>
+            </ng-template>
+            <ng-template ngSwitchDefault>
+                <app-work-space [data]="docData"></app-work-space>
+            </ng-template>
+        </div>
+    </div>
+</mat-drawer-container>

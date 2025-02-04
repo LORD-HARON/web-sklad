@@ -24,18 +24,17 @@ import { WorkerStatComponent } from './components/tsd-components/worker-stat-com
 import { ArticleHistoryComponent } from './components/tsd-components/article-history-component/article-history.component';
 import { BaseComponent } from './components/tsd-components/base-component/base.component';
 import { GSMComponent } from './components/tsd-components/gsm-component/gsm.component';
+import { NavbarComponent } from './components/tsd-components/navbar.component/navbar.component';
+
 
 const tsdRoutes: Routes = [
   { path: 'menu', component: MenuComponent },
-  { path: 'work-space/:docId/:docType/:docName', component: WorkSpaceComponent },
-  { path: 'document-items/:docId/:docType/:docName', component: DocumentItemsComponent },
   { path: 'documents', component: DocumentsComponent },
   { path: 'info', component: InfoComponent },
   { path: 'mini-map', component: MiniMapComponent },
   { path: 'stat', component: WorkerStatComponent },
   { path: 'article-hist', component: ArticleHistoryComponent },
-  { path: 'base/:docId/:docType/:docName', component: BaseComponent },
-  { path: 'gsm/:docId/:docType/:docName', component: GSMComponent }
+  { path: 'doc/:docId/:docType/:docName', component: NavbarComponent }
 ]
 
 const serviceRoutes: Routes = [

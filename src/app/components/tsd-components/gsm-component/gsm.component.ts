@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { DocumentService } from "../../../services/document.service";
 import { SnackbarService } from "../../../services/snackbar.service";
 import { TokenService } from "../../../services/token.service";
@@ -6,11 +6,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { TokenModel } from "../../../models/token";
 import { GSMModel } from "../../../models/documents-models/gsm";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
-import { AgreeDialogComponent } from "../work-space.component/work-space.component";
 import { GetGSMModel } from "../../../models/documents-models/get-gsm";
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from "@angular/material/form-field";
 import { AddGSMModel } from "../../../models/documents-models/add-gsm-codes";
-
+import { DocData } from "../navbar.component/navbar.component";
 @Component({
     selector: 'app-gsm',
     templateUrl: './gsm.component.html',
@@ -30,15 +29,9 @@ export class GSMComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private dialog: MatDialog,
-    ) {
-        route.params.subscribe(params => this.docId = params["docId"]);
-        route.params.subscribe(params => this.docType = params["docType"]);
-        route.params.subscribe(params => this.docName = params["docName"]);
-    }
+    ) { }
+    @Input() data: DocData
     displayTable: string[] = ['Артикул', 'DataMark', 'Отскан/Необход', 'Удалить все']
-    docId: number
-    docType: string
-    docName: string
 
     gsmCodes: GetGSMModel[]
     showingGSMCodes: GetGSMModel[]
@@ -64,7 +57,7 @@ export class GSMComponent implements OnInit {
             this.showingGSMCodes = this.gsmCodes
     }
     GetGSM() {
-        this.documentService.GetGSMCodes(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
+        this.documentService.GetGSMCodes(new TokenModel(this.tokenService.getToken(), String(this.data.docId))).subscribe({
             next: result => {
                 if (result)
                     this.gsmCodes = result
@@ -83,7 +76,7 @@ export class GSMComponent implements OnInit {
         })
     }
     addDataMark() {
-        this.documentService.AddGSMCodes(new AddGSMModel(this.docId, this.selectedArticle, this.gsm)).subscribe({
+        this.documentService.AddGSMCodes(new AddGSMModel(this.data.docId, this.selectedArticle, this.gsm)).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':
@@ -127,7 +120,7 @@ export class GSMComponent implements OnInit {
     }
 
     clearDataMark(element: string) {
-        this.documentService.ClearGSM(new TokenModel('', String(this.docId), element)).subscribe({
+        this.documentService.ClearGSM(new TokenModel('', String(this.data.docId), element)).subscribe({
             next: result => {
                 switch (result.status) {
                     case 'true':
@@ -148,42 +141,6 @@ export class GSMComponent implements OnInit {
         })
     }
 
-    openAgreeDialog() {
-        const dialogRef = this.dialog.open(AgreeDialogComponent, { data: this.docId })
-        dialogRef.afterClosed().subscribe(result => {
-            switch (result) {
-                case "true":
-                    this.pushDoc();
-                    break;
-                case "false":
-                    break;
-            }
-        });
-    }
-    pushDoc() {
-        this.documentService.PushDocument(new TokenModel(this.tokenService.getToken(), String(this.docId))).subscribe({
-            next: result => {
-                switch (result.status) {
-                    case 'true':
-                        this.snackBarService.openSnackGreenBar('Документ успешно отправлен на сервер');
-                        this.router.navigate(['/tsd/menu'])
-                        break;
-                    case 'BadAuth':
-                        this.snackBarService.openRedSnackBar('Токен устарел');
-                        break;
-                    case 'NULL':
-                        this.snackBarService.openRedSnackBar('NULL');
-                        break;
-                    case 'error':
-                        this.snackBarService.openRedSnackBar('Ошибка');
-                        break;
-                }
-            },
-            error: error => {
-                console.log(error)
-            }
-        })
-    }
     openDeleteDialog(element: string) {
         const dialogRef = this.dialog.open(GSMDeleteDialog)
         dialogRef.afterClosed().subscribe(result => {
@@ -193,26 +150,6 @@ export class GSMComponent implements OnInit {
                     break;
             }
         });
-    }
-    openDocumentItems() {
-        let type = this.docType
-        let name = this.docName
-        this.router.navigate(["tsd/document-items", this.docId, type, name])
-    }
-    goWorkSpace() {
-        this.router.navigate(["tsd/work-space", this.docId, this.docType, this.docName])
-    }
-    goBack() {
-        this.router.navigate(['tsd/menu'])
-    }
-    goArticleHistory() {
-        this.router.navigate(['tsd/article-hist'])
-    }
-    goMiniMap() {
-        this.router.navigate(['tsd/mini-map'])
-    }
-    goBase() {
-        this.router.navigate(['tsd/base'])
     }
 }
 

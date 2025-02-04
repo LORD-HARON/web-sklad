@@ -18,6 +18,8 @@ import { GSMModel } from "../models/documents-models/gsm"
 import { GetGSMModel } from "../models/documents-models/get-gsm"
 import { CheckDocumentModel } from "../models/documents-models/check-documen"
 import { Token } from "@angular/compiler"
+import { NewAddProductModel } from "../models/documents-models/new-add-product"
+import { DocumentBodyAnswerModel } from "../models/documents-models/document-body-answer"
 
 @Injectable({
     providedIn: "root"
@@ -35,6 +37,7 @@ export class DocumentService {
     addProductURL = environment.apiUrl + '/AddProductToDoc'
     getDocumentBodyURL = environment.apiUrl + '/GetDocumentBody'
     deleteDocumentItemURL = environment.apiUrl + '/DeleteDocumentItem'
+    deleteDocumentItemPlaceURL = environment.apiUrl + '/DeleteDocumentItemPlace'
     editProductURL = environment.apiUrl + '/EditDocumentItem'
     pushDocumentURL = environment.apiUrl + '/PushDocument'
     getMyDocsURL = environment.apiUrl + '/GetMyDocs'
@@ -44,6 +47,7 @@ export class DocumentService {
     deleteGSMCodeURL = environment.apiUrl + '/DeleteGSMCode'
     getGSMCodesURL = environment.apiUrl + '/GetGSMCodes'
     clearGSMURL = environment.apiUrl + '/ClearGSM'
+    newAddProductURL = environment.apiUrl + '/NewAddProductToDoc'
 
     CreateDocument(data: CreateDocumentModel): Observable<DocumentsListModel> {
         return this.http.post<DocumentsListModel>(this.createDocumentURL, data)
@@ -55,8 +59,6 @@ export class DocumentService {
         return this.http.post<DocumentsListModel[]>(this.getDocumentListURL, data)
     }
     DeleteDocument(data: TokenModel): Observable<Status> {
-        console.log(data);
-
         return this.http.post<Status>(this.deleteDocumentURL, data)
     }
     GetDocument(data: TokenModel): Observable<DocumentsListModel> {
@@ -68,11 +70,14 @@ export class DocumentService {
     AddProduct(data: AddProductModel): Observable<Status> {
         return this.http.post<Status>(this.addProductURL, data)
     }
-    GetDocumentBody(data: TokenModel): Observable<DocumentBodyModel[]> {
-        return this.http.post<DocumentBodyModel[]>(this.getDocumentBodyURL, data)
+    GetDocumentBody(data: TokenModel): Observable<DocumentBodyAnswerModel[]> {
+        return this.http.post<DocumentBodyAnswerModel[]>(this.getDocumentBodyURL, data)
     }
     DeleteDocumentItem(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.deleteDocumentItemURL, data)
+    }
+    DeleteDocumentItemPlace(data: TokenModel): Observable<Status> {
+        return this.http.post<Status>(this.deleteDocumentItemPlaceURL, data)
     }
     EditProduct(data: EditProductModel): Observable<Status> {
         return this.http.post<Status>(this.editProductURL, data)
@@ -100,5 +105,8 @@ export class DocumentService {
     }
     ClearGSM(data: TokenModel): Observable<Status> {
         return this.http.post<Status>(this.clearGSMURL, data)
+    }
+    NewAddProductToDoc(data: NewAddProductModel): Observable<Status> {
+        return this.http.post<Status>(this.newAddProductURL, data)
     }
 }

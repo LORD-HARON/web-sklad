@@ -1,185 +1,141 @@
-<mat-drawer-container [hasBackdrop]="true">
-    <mat-drawer class="menu-conteiner" #drawer mode="over">
-        <button>
-            <img src="../../../../assets/find_product.png">
-            ПОИСК ПРОДУКЦИИ
-        </button>
-        <button (click)="openDocumentItems()">
-            <img src="../../../../assets/list_product.png">
-            СПИСОК ПРОДУКЦИИ
-        </button>
-        <button (click)="goBase()">
-            <img src="../../../../assets/doc_product.png">
-            Основание
-        </button>
-        <button (click)="goGSM()">
-            <img src="../../../../assets/gsm.png">
-            DataMark
-        </button>
-        <button (click)="openAgreeDialog()">
-            <img src="../../../../assets/compl_product.png">
-            ЗАВЕРШИТЬ РАБОТУ
-        </button>
-        <button (click)="goBack()">
-            <img src="../../../../assets/back_product.png">
-            Меню
-        </button>
-        <button (click)="goArticleHistory()">
-            <img src="../../../../assets/article.png">
-            ДВИЖЕНИЕ ПО АРТИКУЛУ
-        </button>
-        <button (click)="goMiniMap()">
-            <img src="../../../../assets/mini-map.png">
-            СОДЕРЖИМОЕ ЯЧЕЙКИ
-        </button>
-    </mat-drawer>
-    <div class="main">
-        <nav class="navbar">
-            <button (click)="drawer.toggle()">
-                <img src="../../../../assets/ham.png">
-            </button>
-            <span>Поиск продукции</span>
-        </nav>
-        <div class="search-conteiner">
-            <span>
-                Наименование товара
-            </span>
-            <span>
-                {{productInfo.name}}
-            </span>
-            <div class="input-conteiner">
-                <ng-container *ngIf="productInfo.img_url">
-                    <img [src]="productInfo.img_url | urlImg">
-                </ng-container>
-                <ng-container *ngIf="!productInfo.img_url">
-                    <img src="../../../../assets/box.png">
-                </ng-container>
-                <div class="input-search-conteiner" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
-                    <!-- <div>
+<div class="main">
+    <div class="search-conteiner">
+        <span>
+            Наименование товара
+        </span>
+        <span>
+            {{productInfo.name}}
+        </span>
+        <div class="input-conteiner">
+            <ng-container *ngIf="productInfo.img_url">
+                <img [src]="productInfo.img_url | urlImg">
+            </ng-container>
+            <ng-container *ngIf="!productInfo.img_url">
+                <img src="../../../../assets/box.png">
+            </ng-container>
+            <div class="input-search-conteiner" cdkTrapFocus [cdkTrapFocusAutoCapture]="true">
+                <!-- <div>
                         <span>Артикул:</span>
                         <span>{{productInfo.article}}</span>
                     </div> -->
-                    <mat-form-field appearance="outline">
-                        <mat-label>Артикул:</mat-label>
-                        <input id="articleInput" matInput type="text" [(ngModel)]="article"
-                            (keyup.enter)="GetProductInfo('article')" (input)="AutoSearchArticle($event)">
-                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="article=''; barcode='';">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <div>
-                        <span>UKZ:</span>
-                        <span
-                            [ngStyle]="{'color': productInfo.ukz == 'да' ? 'green' : 'red'}">{{productInfo.ukz}}</span>
-                    </div>
-                    <div>
-                        <span>Ед.измерения:</span>
-                        <span>{{productInfo.edism}}</span>
-                    </div>
-                    <!-- <div>
-                        <span style="color: red" *ngIf="showCountWarning">Нулевое/отрицательное кол-во в ячейке</span>
-                    </div> -->
-                    <mat-form-field appearance="outline">
-                        <mat-label>Штрихкод:</mat-label>
-                        <input cdkFocusInitial id="barcodeInput" matInput type="text" [(ngModel)]="barcode"
-                            (input)="InputHandel($event)" (keyup.enter)="GetProductInfo('barcode')" cdkFocusInitial>
-                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="article=''; barcode='';">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Артикул:</mat-label>
+                    <input id="articleInput" matInput type="text" [(ngModel)]="article"
+                        (keyup.enter)="GetProductInfo('article')" (input)="AutoSearchArticle($event)">
+                    <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="clearProductInfo()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+                <div>
+                    <span>UKZ:</span>
+                    <span [ngStyle]="{'color': productInfo.ukz == 'да' ? 'green' : 'red'}">{{productInfo.ukz}}</span>
                 </div>
-            </div>
-            <div class="select-place-conteiner" *ngIf="productInfo.places !=null">
-                <span>
-                    Выбор места хранения:
-                </span>
-                <div class="select-place-item" (click)="selectPlaceItem(p.place)"
-                    [ngClass]="{'selected-place-item': selectedPlace == p.place}" *ngFor="let p of productInfo.places">
-                    <span>Место:</span> <span>{{p.place}}</span> <span>Кол-во:</span> <span>{{p.count}}</span>
+                <div>
+                    <span>Ед.измерения:</span>
+                    <span>{{productInfo.edism}}</span>
                 </div>
+                <mat-form-field appearance="outline">
+                    <mat-label>Штрихкод:</mat-label>
+                    <input cdkFocusInitial id="barcodeInput" matInput type="text" [(ngModel)]="barcode"
+                        (input)="InputHandel($event)" (keyup.enter)="GetProductInfo('barcode')" cdkFocusInitial>
+                    <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
+                        (click)="clearProductInfo()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
             </div>
-            <div class="input-box-conteiner">
-                <form [formGroup]="inputForm">
-                    <div>
-                        <span style="color: red;" *ngIf="showCountWarning == true">
+        </div>
+        <div class="input-box-conteiner">
+            <form [formGroup]="productForm">
+                <div formArrayName="places">
+                    <fieldset *ngFor="let place of places.controls; let i = index" formGroupName="{{i}}"
+                        style="display: flex; flex-direction: column;">
+                        <div class="select-place-conteiner" *ngIf="showingPlaceSelector()">
+                            <span>
+                                Выбор места хранения:
+                            </span>
+                            <div class="select-place-item" (click)="selectPlaceItem(p.place,i)"
+                                [ngClass]="{'selected-place-item': selectedPlace == p.place}"
+                                *ngFor="let p of productInfo.places">
+                                <span>Место:</span> <span>{{p.place}}</span> <span>Кол-во:</span>
+                                <span>{{p.count}}</span>
+                            </div>
+                        </div>
+                        <span style="color: red;" *ngIf="place.value.warn == true">
                             В данной ячейке, кол-во равно или меньше 0
                         </span>
-                    </div>
-                    <mat-form-field appearance="outline">
-                        <mat-label *ngIf="docType != 'Ротация'">Место хранения:</mat-label>
-                        <mat-label *ngIf="docType == 'Ротация'">Перемещение из:</mat-label>
-                        <input matInput formControlName="place" type="string" (input)="checkCount()">
-                        <!-- <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="clearPlaceInput(1)">
-                            <mat-icon>close</mat-icon>
-                        </button> -->
-                    </mat-form-field>
-                    <mat-form-field appearance="outline" *ngIf="docType == 'Ротация'">
-                        <mat-label>Перемещение в:</mat-label>
-                        <input matInput formControlName="placeTo" type="string">
-                        <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
-                            (click)="clearPlaceInput(2)">
-                            <mat-icon>close</mat-icon>
+                        <mat-form-field appearance="outline">
+                            <mat-label *ngIf="data.docType != 'Ротация'">Место хранения:</mat-label>
+                            <mat-label *ngIf="data.docType == 'Ротация'">Перемещение из:</mat-label>
+                            <input matInput formControlName="place" (input)="NewCheckCount(i)">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Кол-во</mat-label>
+                            <input matInput formControlName="count" type="number" (input)="SumCount()">
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" *ngIf="data.docType == 'Ротация'">
+                            <mat-label>Перемещение в:</mat-label>
+                            <input matInput formControlName="placeTo">
+                        </mat-form-field>
+                        <button mat-raised-button style="background-color: #F44336; color: white;"
+                            (click)="[removePlace(i), SumCount()]" *ngIf="i != 0">
+                            Удалить размещение
                         </button>
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-label>Кол-во:</mat-label>
-                        <input matInput formControlName="count" type="number">
-                    </mat-form-field>
-                    <mat-form-field appearance="outline">
-                        <mat-label>№ по порядку</mat-label>
-                        <input matInput type="number" formControlName="number">
-                    </mat-form-field>
-                </form>
-            </div>
-            <div class="gsm-codes-conteiner">
-                <a
-                    (click)="showGSMConteiner = showGSMConteiner == 'arrow_drop_down'? 'arrow_drop_up':'arrow_drop_down' ">
-                    <span>DataMark-коды</span>
-                    <mat-icon>{{showGSMConteiner}}</mat-icon>
-                </a>
-                <div class="gsm-codes-input-conteiner" *ngIf="showGSMConteiner == 'arrow_drop_up'">
-                    <span>
-                        Записано/Необходимо:
-                    </span>
-                    <span [ngClass]="productInfo.gsm?.length == inputForm.value.count ? 'ready' : ''">
-                        {{productInfo.gsm?.length}}/{{inputForm.value.count}}
-                    </span>
-                    <mat-form-field appearance="outline">
-                        <mat-label>DataMark-коды</mat-label>
-                        <input matInput type="text" [(ngModel)]="gsm" (input)="inputAdd($event)">
-                    </mat-form-field>
-                    <button mat-raised-button [disabled]="!productInfo.article || !gsm" (click)="addGSMCode()">
-                        Добавить код
-                    </button>
-                    <div class="gsm-table-conteiner">
-                        <table>
-                            <tr>
-                                Записанные коды на артикул
-                            </tr>
-                            <tr *ngFor="let g of productInfo.gsm">
-                                <td>
-                                    {{g}}
-                                </td>
-                                <td>
-                                    <button>
-                                        <button class="clear-button" mat-icon-button aria-label="Clear"
-                                            (click)="deleteGSMCode(g)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
+                    </fieldset>
+                </div>
+                <button mat-raised-button (click)="addPlace()">Добавить размещение</button>
+                <mat-form-field appearance="outline">
+                    <mat-label>№ по порядку:</mat-label>
+                    <input matInput formControlName="numb">
+                </mat-form-field>
+            </form>
+        </div>
+        <!-- <div class="gsm-codes-conteiner">
+            <a (click)="showGSMConteiner = showGSMConteiner == 'arrow_drop_down'? 'arrow_drop_up':'arrow_drop_down' ">
+                <span>DataMark-коды</span>
+                <mat-icon>{{showGSMConteiner}}</mat-icon>
+            </a>
+            <div class="gsm-codes-input-conteiner" *ngIf="showGSMConteiner == 'arrow_drop_up'">
+                <span>
+                    Записано/Необходимо:
+                </span>
+                <span [ngClass]="productInfo.gsm?.length == inputForm.value.count ? 'ready' : ''">
+                    {{productInfo.gsm?.length}}/{{inputForm.value.count}}
+                </span>
+                <mat-form-field appearance="outline">
+                    <mat-label>DataMark-коды</mat-label>
+                    <input matInput type="text" [(ngModel)]="gsm" (input)="inputAdd($event)">
+                </mat-form-field>
+                <button mat-raised-button [disabled]="!productInfo.article || !gsm" (click)="addGSMCode()">
+                    Добавить код
+                </button>
+                <div class="gsm-table-conteiner">
+                    <table>
+                        <tr>
+                            Записанные коды на артикул
+                        </tr>
+                        <tr *ngFor="let g of productInfo.gsm">
+                            <td>
+                                {{g}}
+                            </td>
+                            <td>
+                                <button>
+                                    <button class="clear-button" mat-icon-button aria-label="Clear"
+                                        (click)="deleteGSMCode(g)">
+                                        <mat-icon>delete</mat-icon>
                                     </button>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
             </div>
-            <div class="toggle-box">
-                <mat-slide-toggle [(ngModel)]="otherPosition">Добавить как отдельную позицию</mat-slide-toggle>
-            </div>
-            <button (click)="AddProductToDoc()">Добавить в список продукции</button>
+        </div> -->
+        <div class="toggle-box">
+            <mat-slide-toggle [(ngModel)]="otherPosition">Добавить как отдельную позицию</mat-slide-toggle>
         </div>
+        <span>Общее кол-во: {{sumCount}}</span>
+        <button (click)="NewAddProductToDoc()">Добавить в список продукции</button>
     </div>
-</mat-drawer-container>
+</div>

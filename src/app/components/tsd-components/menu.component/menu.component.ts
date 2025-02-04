@@ -4,7 +4,6 @@ import { SnackbarService } from "../../../services/snackbar.service";
 import { LoginService } from "../../../services/login.service";
 import { TokenService } from "../../../services/token.service";
 import { Router } from "@angular/router";
-import { environment } from "../../../environment";
 import { CreateDocumentModel } from "../../../models/documents-models/create-document";
 import { DocumentService } from "../../../services/document.service";
 import { MapService } from "../../../services/map.service";
@@ -28,6 +27,7 @@ export class MenuComponent {
     LogOut() {
         this.tokenService.deleteCookie();
         this.router.navigate(['login']);
+        localStorage.clear();
     }
     openExitDialog() {
         const dialogRef = this.dialog.open(ExitDialog)
@@ -100,7 +100,7 @@ export class CreateDocumentDialog {
             this.documentService.CreateDocument(doc).subscribe({
                 next: result => {
                     if (result) {
-                        this.router.navigate(["tsd/work-space", result.id, result.doc_type, result.doc_name])
+                        this.router.navigate(["tsd/doc", result.id, result.doc_type, result.doc_name])
                         this.dialogRef.close("true")
                     }
                     else

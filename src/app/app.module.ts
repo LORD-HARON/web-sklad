@@ -80,7 +80,7 @@ import { MapEditorDialogActionComponent } from './components/sklad-components/ma
 import { MiniMapComponent } from './components/tsd-components/mini-map-component/mini-map.component';
 import { WorkerStatComponent } from './components/tsd-components/worker-stat-component/worker-stat.component';
 import { CellSearchDialog } from './components/tsd-components/menu.component/menu.component';
-import { AgreeDialogComponent } from './components/tsd-components/work-space.component/work-space.component';
+import { AgreeDialogComponent } from './components/tsd-components/navbar.component/navbar.component';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { DocumentItemsDialog } from './components/tsd-components/documents.component/documents.component';
 import { A11yModule } from '@angular/cdk/a11y';
@@ -91,6 +91,7 @@ import { GSMDeleteDialog } from './components/tsd-components/gsm-component/gsm.c
 import { PlaceListFormComponennt } from './components/sklad-components/product-component/place-list-form-component/place-list-form.component';
 import { StoragePlacesEditorComponent } from './components/sklad-components/product-component/storage-places-editor-component/storage-places-editor.component';
 import { CreateDocumentWarningDialog } from './components/tsd-components/menu.component/menu.component';
+import { NavbarComponent } from './components/tsd-components/navbar.component/navbar.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -145,7 +146,8 @@ import { CreateDocumentWarningDialog } from './components/tsd-components/menu.co
     GSMDeleteDialog,
     PlaceListFormComponennt,
     StoragePlacesEditorComponent,
-    CreateDocumentWarningDialog
+    CreateDocumentWarningDialog,
+    NavbarComponent
   ],
   imports: [
     StillagesModule,

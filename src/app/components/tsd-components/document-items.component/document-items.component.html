@@ -1,89 +1,107 @@
-<mat-drawer-container [hasBackdrop]="true">
-    <mat-drawer class="menu-conteiner" #drawer mode="over">
-        <button (click)="goWorkSpace() "><img src="../../../../assets/find_product.png">ПОИСК ПРОДУКЦИИ</button>
-        <button><img src="../../../../assets/list_product.png">СПИСОК ПРОДУКЦИИ</button>
-        <button (click)="goBase()">
-            <img src="../../../../assets/doc_product.png">
-            Основание
-        </button>
-        <button (click)="goGSM()">
-            <img src="../../../../assets/gsm.png">
-            DataMark
-        </button>
-        <button (click)="openAgreeDialog()"><img src="../../../../assets/compl_product.png">ЗАВЕРШИТЬ РАБОТУ</button>
-        <button (click)="goBack()"><img src="../../../../assets/back_product.png">МЕНЮ</button>
-        <button (click)="goArticleHistory()">
-            <img src="../../../../assets/article.png">
-            ДВИЖЕНИЕ ПО АРТИКУЛУ
-        </button>
-        <button (click)="goMiniMap()">
-            <img src="../../../../assets/mini-map.png">
-            СОДЕРЖИМОЕ ЯЧЕЙКИ
-        </button>
-    </mat-drawer>
-    <div class="main">
-        <nav class="navbar">
-            <button (click)="drawer.toggle()">
-                <img src="../../../../assets/ham.png">
-            </button>
-            <span>Список продукции</span>
-        </nav>
-        <div class="search-conteiner">
-            <mat-form-field appearance="outline">
-                <mat-label>Поиск:</mat-label>
-                <input matInput type="text" [(ngModel)]="searchRow">
-            </mat-form-field>
-            <button mat-raised-button style="background-color: darkorange; color: white;"
-                (click)="FilterItems()">Поиск</button>
-            <button mat-raised-button (click)="filterCansel()">Отмена</button>
-        </div>
-        <div class="list-conteiner" *ngFor="let i of showingItems">
-            <div class="item-conteiner">
-                <div>
-                    <img [src]="i.imgUrl!| urlImg">
-                </div>
-                <div>
-                    <span>Артикул:</span>
-                    <span>{{i.article}}</span>
-                    <span>Штрихкод:</span>
-                    <span>{{i.barcode}}</span>
-                    <span>Место хранения:</span>
-                    <span *ngIf="switchEdit===false || editItem != i.id">{{i.place}}</span>
-                    <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
-                        <mat-label>Место хранения:</mat-label>
-                        <input matInput type="text" [(ngModel)]="place">
-                    </mat-form-field>
-                    <span *ngIf="switchEdit===false || editItem != i.id">Кол-во:</span>
-                    <span *ngIf="switchEdit===false || editItem != i.id">{{i.count_e}}</span>
-                    <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
-                        <mat-label>Кол-во:</mat-label>
-                        <input matInput type="number" [(ngModel)]="count">
-                    </mat-form-field>
-                    <span *ngIf="switchEdit===false || editItem != i.id">№ в списке:</span>
-                    <span *ngIf="switchEdit===false || editItem != i.id">{{i.numb}}</span>
-                    <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
-                        <mat-label>№ по списку:</mat-label>
-                        <input matInput type="number" [(ngModel)]="numb">
-                    </mat-form-field>
-                    <span>Наименование:</span>
-                    <span>{{i.name}}</span>
-                    <!-- <span>Цена в момент добавления:</span>
-                    <span>{{i.price}}</span> -->
-                    <span>УКЗ:</span>
-                    <span>{{i.ukz}}</span>
-                </div>
-            </div>
-            <button mat-raised-button style="color: red;margin: 10px; font-weight: bold;" (click)="DeleteItem(i.id)">
-                Удалить
-            </button>
-            <button mat-raised-button style="color: purple;margin: 10px; font-weight: bold;"
-                *ngIf="switchEdit===false && editItem != i.id" (click)="EditItem(i.id, i.count_e, i.numb, i.place)">
-                Редактировать
-            </button>
-            <button mat-raised-button style="color: green;margin: 10px; font-weight: bold;"
-                *ngIf="switchEdit===true && editItem == i.id" (click)="EditItem(i.id)">
-                Сохранить
-            </button>
-        </div>
+<div class="main">
+    <div class="search-conteiner">
+        <mat-form-field appearance="outline">
+            <mat-label>Поиск:</mat-label>
+            <input matInput type="text" [(ngModel)]="searchRow">
+        </mat-form-field>
+        <button mat-raised-button style="background-color: darkorange; color: white;"
+            (click)="FilterItems()">Поиск</button>
+        <button mat-raised-button (click)="filterCansel()">Отмена</button>
     </div>
-</mat-drawer-container>
+    <div class="list-conteiner" *ngFor="let item of showingItems">
+        <div class="item-conteiner">
+            <div>
+                <img [src]="item.imgUrl!| urlImg">
+            </div>
+            <!-- <div>
+                <span>Артикул:</span>
+                <span>{{i.article}}</span>
+                <span>Штрихкод:</span>
+                <span>{{i.barcode}}</span>
+                <span>Место хранения:</span>
+                <span *ngIf="switchEdit===false || editItem != i.id">{{i.place}}</span>
+                <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
+                    <mat-label>Место хранения:</mat-label>
+                    <input matInput type="text" [(ngModel)]="place">
+                </mat-form-field>
+                <span *ngIf="switchEdit===false || editItem != i.id">Кол-во:</span>
+                <span *ngIf="switchEdit===false || editItem != i.id">{{i.count_e}}</span>
+                <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
+                    <mat-label>Кол-во:</mat-label>
+                    <input matInput type="number" [(ngModel)]="count">
+                </mat-form-field>
+                <span *ngIf="switchEdit===false || editItem != i.id">№ в списке:</span>
+                <span *ngIf="switchEdit===false || editItem != i.id">{{i.numb}}</span>
+                <mat-form-field appearance="outline" *ngIf="switchEdit===true && editItem == i.id">
+                    <mat-label>№ по списку:</mat-label>
+                    <input matInput type="number" [(ngModel)]="numb">
+                </mat-form-field>
+                <span>Наименование:</span>
+                <span>{{i.name}}</span>
+                <span>УКЗ:</span>
+                <span>{{i.ukz}}</span>
+            </div> -->
+            <div>
+                <span>Артикул:</span>
+                <span>{{item.article}}</span>
+                <span>Штрихкод:</span>
+                <span>{{item.barcode}}</span>
+                <span>Наименование:</span>
+                <span>{{item.name}}</span>
+                <span>УКЗ:</span>
+                <span>{{item.ukz}}</span>
+                <span *ngIf="switchEdit===false || editItem != item.article">Номер в списке:</span>
+                <span *ngIf="switchEdit===false || editItem != item.article">{{item.numb}}</span>
+                <span>Общее кол-во:</span>
+                <span>{{item.totalCount}}</span>
+                <div *ngIf="switchEdit===false || editItem != item.article">
+                    <div *ngFor="let place of item.places">
+                        <span>Ячейка:</span>
+                        <span>{{place.cell}}</span>
+                        <span>Кол-во:</span>
+                        <span>{{place.count_e}}</span>
+                    </div>
+                </div>
+                <form [formGroup]="productForm" *ngIf="switchEdit===true && editItem == item.article">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Номер в списке:</mat-label>
+                        <input matInput formControlName="numb">
+                    </mat-form-field>
+                    <div formArrayName="places">
+                        <div *ngFor="let place of places.controls; let i = index" formGroupName="{{i}}">
+                            <button mat-raised-button style="color: red" (click)="DeleteItemPlace(i)">Удалить место
+                                хранения</button>
+                            <span style="color: red;" *ngIf="place.value.warn == true">
+                                В данной ячейке, кол-во равно или меньше 0
+                            </span>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Место хранения:</mat-label>
+                                <input matInput formControlName="place" (input)="NewCheckCount(i, item.article)">
+                            </mat-form-field>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Кол-во</mat-label>
+                                <input matInput formControlName="count" type="number">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <button mat-raised-button style="color: orangered;" (click)="addNewPlace()">
+                        Добавить место хранения
+                    </button>
+                </form>
+            </div>
+        </div>
+        <button mat-raised-button style="color: red;margin: 10px; font-weight: bold;"
+            (click)="DeleteItem(item.article)">
+            Удалить
+        </button>
+        <button mat-raised-button style="color: purple;margin: 10px; font-weight: bold;"
+            *ngIf="(switchEdit===false && editItem != item.article) && data.docType != 'Ротация'"
+            (click)="NewEditItem(item)">
+            Редактировать
+        </button>
+        <button mat-raised-button style="color: green;margin: 10px; font-weight: bold;"
+            *ngIf="switchEdit===true && editItem == item.article" (click)="NewEditItem(item)">
+            Сохранить
+        </button>
+    </div>
+</div>

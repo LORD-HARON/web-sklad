@@ -10,7 +10,7 @@ export class FindInfoAnswModel {
         public img_url: string,
         public link: string,
         public ukz: string,
-        public places?: FindInfoPlacesModel[],
+        public places?: FindInfoPlacesModel[] | null,
         public gsm?: string[]
     ) { }
 }

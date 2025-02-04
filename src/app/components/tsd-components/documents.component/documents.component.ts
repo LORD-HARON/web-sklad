@@ -71,7 +71,7 @@ export class DocumentsComponent {
         })
     }
     LoadDocument(element: number, type: any, name: any) {
-        this.router.navigate(['tsd/work-space', element, type, name])
+        this.router.navigate(['tsd/doc/', element, type, name])
     }
     Back() {
         this.router.navigate(['tsd/menu'])
@@ -200,7 +200,7 @@ export class DocumentItemsDialog implements OnInit {
     ngOnInit(): void {
         this.documentService.GetDocumentBody(new TokenModel(this.tokenService.getToken(), this.data)).subscribe({
             next: result => {
-                this.items = result
+                // this.items = result
             },
             error: error => {
                 console.log(error);
