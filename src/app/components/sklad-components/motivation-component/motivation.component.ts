@@ -41,11 +41,18 @@ export class MotivationComponent implements OnInit {
         this.personalService.GetSendedDocUsers(new TokenModel(this.tokenService.getToken())).subscribe({
             next: result => {
                 this.docUserList.login = this.docUserList.login.concat(result.login);
-                this.filteredOptions = this.myControl.valueChanges
-                    .pipe(
-                        startWith(''),
-                        map(value => this._filter(value))
-                    );
+                // this.filteredOptions = this.myControl.valueChanges
+                //     .pipe(
+                //         startWith(''),
+                //         map(value => this._filter(value))
+                //     );
+                this.filteredOptions = this.myControl.valueChanges.pipe(
+                    startWith(''),
+                    map(value => {
+                        const name = typeof value === 'string' ? value : value?.name;
+                        return name ? this._filter(name as string) : this.docUserList.login.slice();
+                    }),
+                );
             },
             error: error => {
                 console.log(error);

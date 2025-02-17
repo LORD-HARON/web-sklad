@@ -102,61 +102,7 @@
                     </tr>
                 </table>
             </mat-tab>
-            <mat-tab label="Заказы">
-                <table mat-table [dataSource]="dataSourceObl" #sortPrihod="matSort" matSort class="table-hover">
-                    <ng-container matColumnDef="docLabel">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Метка </th>
-                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
-                            {{element.docLabel}}
-                            <mat-icon matTooltip="В работе или выполнен" *ngIf="element.inProgress">
-                                check
-                            </mat-icon>
-                        </td>
 
-                    </ng-container>
-
-                    <ng-container matColumnDef="docId">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Документ </th>
-                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
-                            {{element.docId}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="docDate">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата </th>
-                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
-                            {{element.docDate}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="docLoc">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Склад </th>
-                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
-                            {{element.docLoc}} </td>
-                    </ng-container>
-
-                    <ng-container matColumnDef="icon">
-                        <th mat-header-cell *matHeaderCellDef>
-                            <div class="search-conteiner">
-                                <mat-form-field appearance="outline">
-                                    <mat-label>Поиск</mat-label>
-                                    <input matInput (keyup)="applyFilterObl($event)">
-                                </mat-form-field>
-                            </div>
-                        </th>
-                        <td mat-cell *matCellDef="let element">
-                            <mat-icon id="push" aria-hidden="false" aria-label="Example home icon"
-                                (click)='openDeatilDocForm(element)' matTooltip="Просмотр документа"> remove_red_eye
-                            </mat-icon>
-
-                        </td>
-                    </ng-container>
-
-                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                        [ngClass]="{ hovered: row.hovered, highLighted: row.highLighted }"
-                        (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
-                    </tr>
-                </table>
-            </mat-tab>
             <mat-tab label="Перемещение">
                 <table mat-table [dataSource]="dataSourcePerem" #sortPrihod="matSort" matSort class="table-hover">
                     <ng-container matColumnDef="docLabel">
@@ -245,6 +191,61 @@
                     </ng-container>
                     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true">
                     </tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                        [ngClass]="{ hovered: row.hovered, highLighted: row.highLighted }"
+                        (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">
+                    </tr>
+                </table>
+            </mat-tab>
+            <mat-tab label="Заказы">
+                <table mat-table [dataSource]="dataSourceObl" #sortPrihod="matSort" matSort class="table-hover">
+                    <ng-container matColumnDef="docLabel">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Метка </th>
+                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
+                            {{element.docLabel}}
+                            <mat-icon matTooltip="В работе или выполнен" *ngIf="element.inProgress">
+                                check
+                            </mat-icon>
+                        </td>
+
+                    </ng-container>
+
+                    <ng-container matColumnDef="docId">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Документ </th>
+                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
+                            {{element.docId}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="docDate">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Дата </th>
+                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
+                            {{element.docDate}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="docLoc">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Склад </th>
+                        <td mat-cell *matCellDef="let element" (click)="onClickTabItem(element, 'Обязательства')">
+                            {{element.docLoc}} </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="icon">
+                        <th mat-header-cell *matHeaderCellDef>
+                            <div class="search-conteiner">
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Поиск</mat-label>
+                                    <input matInput (keyup)="applyFilterObl($event)">
+                                </mat-form-field>
+                            </div>
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                            <mat-icon id="push" aria-hidden="false" aria-label="Example home icon"
+                                (click)='openDeatilDocForm(element)' matTooltip="Просмотр документа"> remove_red_eye
+                            </mat-icon>
+
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"
                         [ngClass]="{ hovered: row.hovered, highLighted: row.highLighted }"
                         (mouseover)="row.hovered = true" (mouseout)="row.hovered = false">

@@ -20,7 +20,7 @@
                     </div> -->
                 <mat-form-field appearance="outline">
                     <mat-label>Артикул:</mat-label>
-                    <input id="articleInput" matInput type="text" [(ngModel)]="article"
+                    <input id="articleInput" matInput type="tel" [(ngModel)]="article"
                         (keyup.enter)="GetProductInfo('article')" (input)="AutoSearchArticle($event)">
                     <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
                         (click)="clearProductInfo()">
@@ -37,7 +37,7 @@
                 </div>
                 <mat-form-field appearance="outline">
                     <mat-label>Штрихкод:</mat-label>
-                    <input cdkFocusInitial id="barcodeInput" matInput type="text" [(ngModel)]="barcode"
+                    <input cdkFocusInitial id="barcodeInput" matInput type="tel" [(ngModel)]="barcode"
                         (input)="InputHandel($event)" (keyup.enter)="GetProductInfo('barcode')" cdkFocusInitial>
                     <button class="clear-button" matSuffix mat-icon-button aria-label="Clear"
                         (click)="clearProductInfo()">
@@ -72,7 +72,8 @@
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>Кол-во</mat-label>
-                            <input matInput formControlName="count" type="number" (input)="SumCount()">
+                            <input matInput formControlName="count" type="number" (input)="SumCount()"
+                                autocomplete="off">
                         </mat-form-field>
                         <mat-form-field appearance="outline" *ngIf="data.docType == 'Ротация'">
                             <mat-label>Перемещение в:</mat-label>
@@ -85,9 +86,12 @@
                     </fieldset>
                 </div>
                 <button mat-raised-button (click)="addPlace()">Добавить размещение</button>
+                <div>
+                    <span style="color: black;">Общее кол-во: {{sumCount}}</span>
+                </div>
                 <mat-form-field appearance="outline">
                     <mat-label>№ по порядку:</mat-label>
-                    <input matInput formControlName="numb">
+                    <input matInput formControlName="numb" type="number" autocomplete="off">
                 </mat-form-field>
             </form>
         </div>
@@ -135,7 +139,7 @@
         <div class="toggle-box">
             <mat-slide-toggle [(ngModel)]="otherPosition">Добавить как отдельную позицию</mat-slide-toggle>
         </div>
-        <span>Общее кол-во: {{sumCount}}</span>
+
         <button (click)="NewAddProductToDoc()">Добавить в список продукции</button>
     </div>
 </div>

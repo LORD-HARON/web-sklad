@@ -54,6 +54,8 @@ export class WorkSpaceComponent implements OnInit {
     otherPosition: boolean = false
     showCountWarning: boolean = false
     GetProductInfo(type: string) {
+        console.log(String(this.barcode));
+
         let data = type == 'barcode'
             ? new FindInfoReqModel(null, String(this.barcode), '19', '21', this.data.docId)
             : new FindInfoReqModel(this.article, null, '19', '21', this.data.docId)
@@ -69,7 +71,14 @@ export class WorkSpaceComponent implements OnInit {
                     this.productInfo = result
                     this.article = this.productInfo.article
                     this.barcode = this.productInfo.barcode
-                    this.initForm()
+                    if (this.data.docType != 'Приемка' && this.data.docType != 'Импорт')
+                        this.initForm()
+                    else {
+                        this.productForm.get('numb')?.setValue('')
+                        this.places.controls.forEach(x => {
+                            x.get('count')?.setValue('')
+                        })
+                    }
                 }
                 else
                     this.snackBarService.openRedSnackBar('Товар не найден');
@@ -222,7 +231,15 @@ export class WorkSpaceComponent implements OnInit {
                             this.barcode = ''
                             this.article = ''
                             this.productInfo = this.clear
-                            this.initForm()
+                            if (this.data.docType != 'Приемка' && this.data.docType != 'Импорт')
+                                this.initForm()
+                            else {
+                                this.productForm.get('numb')?.setValue('')
+                                this.places.controls.forEach(x => {
+                                    x.get('count')?.setValue('')
+                                })
+                            }
+
                             this.sumCount = 0
                             var input = document.getElementById('barcodeInput')
                             input!.focus()
