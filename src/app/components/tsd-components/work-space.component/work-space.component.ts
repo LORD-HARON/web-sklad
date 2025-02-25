@@ -210,6 +210,10 @@ export class WorkSpaceComponent implements OnInit {
             })
         }
     }
+    CheckCellBarcode(index: number) {
+        let place = this.places.value[index].place!.replace('PLACE:', '')
+        this.places.controls[index].get('place')?.setValue(place)
+    }
     NewAddProductToDoc() {
         let check = this.places.value.find((x: any) => {
             if (x.place == '' || x.count == '' || (this.data.docType == 'Ротация' && x.placeTo == ''))

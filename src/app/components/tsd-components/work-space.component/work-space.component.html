@@ -68,7 +68,7 @@
                         <mat-form-field appearance="outline">
                             <mat-label *ngIf="data.docType != 'Ротация'">Место хранения:</mat-label>
                             <mat-label *ngIf="data.docType == 'Ротация'">Перемещение из:</mat-label>
-                            <input matInput formControlName="place" (input)="NewCheckCount(i)">
+                            <input matInput formControlName="place" (input)="[NewCheckCount(i),CheckCellBarcode(i)]">
                         </mat-form-field>
                         <mat-form-field appearance="outline">
                             <mat-label>Кол-во</mat-label>
